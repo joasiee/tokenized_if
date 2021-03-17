@@ -157,7 +157,7 @@ export class CommitManager {
     }
     logger.info(`[baseline_verifyAndPush] Found Shield/MerkleTree for contract address: ${address}`);
 
-    const txManager = await txManagerServiceFactory(process.env.ETH_CLIENT_TYPE);
+    const txManager = await txManagerServiceFactory(process.env.CMGR_ETH_CLIENT_TYPE);
 
     let result;
     try {
@@ -172,17 +172,17 @@ export class CommitManager {
 
   async init() {
     dotenv.config();
-    const port = process.env.SERVER_PORT;
+    const port = process.env.CMGR_SERVER_PORT;
 
     logger.info("Starting commmitment manager server...");
 
     const dbUrl = 'mongodb://' +
-      `${process.env.DATABASE_USER}` + ':' +
-      `${process.env.DATABASE_PASSWORD}` + '@' +
-      `${process.env.DATABASE_HOST}` + '/' +
-      `${process.env.DATABASE_NAME}`;
+      `${process.env.CMGR_DATABASE_USER}` + ':' +
+      `${process.env.CMGR_DATABASE_PASSWORD}` + '@' +
+      `${process.env.CMGR_DATABASE_HOST}` + '/' +
+      `${process.env.CMGR_DATABASE_NAME}`;
 
-    logger.debug(`Attempting to connect to db: ${process.env.DATABASE_HOST}/${process.env.DATABASE_NAME}`)
+    logger.debug(`Attempting to connect to db: ${process.env.CMGR_DATABASE_HOST}/${process.env.CMGR_DATABASE_NAME}`)
 
     await dbConnect(dbUrl);
     await get_ws_provider(); // Establish websocket connection

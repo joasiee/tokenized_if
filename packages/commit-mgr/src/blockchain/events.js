@@ -24,7 +24,7 @@ export const subscribeMerkleEvents = (contractAddress) => {
     error = {
       code: -32603,
       message: `WEBSOCKET: could not establish connection`,
-      data: `Attempted endpoint: ${process.env.ETH_CLIENT_WS}`
+      data: `Attempted endpoint: ${process.env.CMGR_ETH_CLIENT_WS}`
     };
     return error;
   }

@@ -10,7 +10,7 @@ export class EthClient implements ITxManager {
   }
 
   async signTx(toAddress: string, fromAddress: string, txData: any) {
-    const wallet = new Wallet(process.env.WALLET_PRIVATE_KEY, http_provider);
+    const wallet = new Wallet(process.env.CMGR_WALLET_PRIVATE_KEY, http_provider);
     const nonce = await wallet.getTransactionCount();
     logger.debug(`nonce: ${nonce}`);
     const gasPrice = await wallet.getGasPrice();
@@ -23,7 +23,7 @@ export class EthClient implements ITxManager {
       from: fromAddress,
       data: txData,
       nonce,
-      chainId: parseInt(process.env.CHAIN_ID, 10),
+      chainId: parseInt(process.env.CMGR_CHAIN_ID, 10),
       gasLimit: 0,
       gasPrice: gasPriceSet
     };

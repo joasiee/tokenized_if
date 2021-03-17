@@ -12,11 +12,11 @@ dotenv.config();
 
 let ws_provider;
 
-export const http_provider = new ethers.providers.JsonRpcProvider(process.env.ETH_CLIENT_HTTP);
+export const http_provider = new ethers.providers.JsonRpcProvider(process.env.CMGR_ETH_CLIENT_HTTP);
 export const get_ws_provider = () => {
   if (!ws_provider) {
     try {
-      ws_provider = new ethers.providers.WebSocketProvider(process.env.ETH_CLIENT_WS);
+      ws_provider = new ethers.providers.WebSocketProvider(process.env.CMGR_ETH_CLIENT_WS);
       ws_provider._websocket.on("error", (error) => {
         logger.error(`[WEBSOCKET] "error" event: ${error.stack}`);
         ws_provider = undefined;
@@ -25,9 +25,9 @@ export const get_ws_provider = () => {
         logger.error(`[WEBSOCKET] "close" event: ${event}`);
         ws_provider = undefined;
       });
-      logger.info(`Established websocket connection: ${process.env.ETH_CLIENT_WS}`);
+      logger.info(`Established websocket connection: ${process.env.CMGR_ETH_CLIENT_WS}`);
     } catch (err) {
-      logger.error(`[WEBSOCKET] Cannot establish connection: ${process.env.ETH_CLIENT_WS}`);
+      logger.error(`[WEBSOCKET] Cannot establish connection: ${process.env.CMGR_ETH_CLIENT_WS}`);
     }
   }
   return ws_provider;
@@ -62,7 +62,7 @@ export const checkChainLogs = async (contractAddress, fromBlock) => {
   logger.info(`Checking chain logs for missed newLeaf events starting at block ${fromBlock} for contract: ${contractAddress}`);
   // besu has a bug where 'eth_getLogs' expects 'fromBlock' to be a string instead of integer
   let convertedBlockNum = blockNum;
-  switch (process.env.ETH_CLIENT_TYPE) {
+  switch (process.env.CMGR_ETH_CLIENT_TYPE) {
     case "besu":
       convertedBlockNum = `${blockNum}`;
       break;
@@ -102,7 +102,7 @@ export const checkChainLogs = async (contractAddress, fromBlock) => {
 }
 
 export const jsonrpc = async (method, params, id) => {
-  const response = await axios.post(process.env.ETH_CLIENT_HTTP, {
+  const response = await axios.post(process.env.CMGR_ETH_CLIENT_HTTP, {
     jsonrpc: "2.0",
     id: id || 1,
     method: method,

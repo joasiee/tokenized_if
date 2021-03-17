@@ -1,0 +1,15 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "packages/commit-mgr"
+    },
+    {
+      "path": "packages/tokenized_if"
+    }
+  ],
+  "exclude": [
+    "legacy/**/*",
+    "ops/**/*"
+  ]
+}

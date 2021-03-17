@@ -21,9 +21,9 @@ dotenv.config();
 const relayRequest = (methodName: any) => {
   return new jayson.Method(
     async (args: any, context: any, done: any) => {
-      const rpcUrl = url.parse(process.env.ETH_CLIENT_HTTP);
+      const rpcUrl = url.parse(process.env.CMGR_ETH_CLIENT_HTTP);
       let client;
-      const ethClientHttp = process.env.ETH_CLIENT_HTTP.split(":");
+      const ethClientHttp = process.env.CMGR_ETH_CLIENT_HTTP.split(":");
       if (ethClientHttp[0] === "https") {
         client = promiseJayson.Client.https(rpcUrl);
       } else {

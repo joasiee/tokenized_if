@@ -1,0 +1,17 @@
+{
+  "name": "tokenized_if",
+  "version": "1.0.0",
+  "description": "REST-API for tokenizing inventory, serving as collateral to obtain financing.",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@baseline/commit-mgr": "1.0.0"
+  },
+  "devDependencies": {
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  }
+}

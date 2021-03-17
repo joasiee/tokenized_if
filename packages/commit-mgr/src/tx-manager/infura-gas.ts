@@ -13,7 +13,7 @@ export class InfuraGas implements ITxManager {
   }
 
   async signTx(toAddress: string, fromAddress: string, txData: string) {
-    const wallet = new Wallet(process.env.WALLET_PRIVATE_KEY, http_provider);
+    const wallet = new Wallet(process.env.CMGR_WALLET_PRIVATE_KEY, http_provider);
     const nonce = await wallet.getTransactionCount();
     logger.debug(`nonce: ${nonce}`);
 
@@ -21,7 +21,7 @@ export class InfuraGas implements ITxManager {
       to: toAddress,
       from: fromAddress,
       data: txData,
-      chainId: parseInt(process.env.CHAIN_ID, 10),
+      chainId: parseInt(process.env.CMGR_CHAIN_ID, 10),
       gasLimit: 0,
       nonce
     };
@@ -34,7 +34,7 @@ export class InfuraGas implements ITxManager {
     const relayTransactionHash = ethers.utils.keccak256(
       ethers.utils.defaultAbiCoder.encode(
         ['address', 'bytes', 'uint', 'uint'],
-        [toAddress, txData, gasLimit, process.env.CHAIN_ID] // Rinkeby chainId is 4
+        [toAddress, txData, gasLimit, process.env.CMGR_CHAIN_ID] // Rinkeby chainId is 4
       )
     );
 
