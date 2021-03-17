@@ -1,69 +1,191 @@
 import dotenv from "dotenv";
-import express from "express";
-import bodyParser from "body-parser";
-import cors from "cors";
 
-import { rpcServer } from "./rpc-server";
-import { logger, reqLogger, reqErrorLogger } from "./logger";
+import { logger } from "./logger";
 import { dbConnect } from "./db";
 import { get_ws_provider, restartSubscriptions } from "./blockchain";
+import { checkChainLogs, subscribeMerkleEvents, jsonrpc, unsubscribeMerkleEvents } from "./blockchain";
+import { merkleTrees } from "./db/models/MerkleTree";
+import { updateTree, getSiblingPathByLeafIndex } from "./merkle-tree";
+import { getLeafByLeafIndex, getLeavesByLeafIndexRange } from "./merkle-tree/leaves.js";
+import { concatenateThenHash } from "./merkle-tree/hash.js";
+import { txManagerServiceFactory } from "./tx-manager";
 
-const main = async () => {
-  dotenv.config();
-  const port = process.env.SERVER_PORT;
+export class CommitManager {
 
-  logger.info("Starting commmitment manager server...");
+  constructor() {
+    this.init();
+  }
 
-  const dbUrl = 'mongodb://' +
-    `${process.env.DATABASE_USER}` + ':' +
-    `${process.env.DATABASE_PASSWORD}` + '@' +
-    `${process.env.DATABASE_HOST}` + '/' +
-    `${process.env.DATABASE_NAME}`;
+  getCommit(address: string, index: number): any {
+    return getLeafByLeafIndex(address, index);
+  }
 
-  logger.debug(`Attempting to connect to db: ${process.env.DATABASE_HOST}/${process.env.DATABASE_NAME}`)
+  getCommits(address: string, startIndex: number, count: number): any[] {
+    if (count < 1) {
+      logger.error("[baseline_getCommits] Count must be greater than 0");
+      return;
+    };
+    const endLeafIndex = startIndex + count - 1;
+    return getLeavesByLeafIndexRange(address, startIndex, endLeafIndex);
+  }
 
-  await dbConnect(dbUrl);
-  await get_ws_provider(); // Establish websocket connection
-  await restartSubscriptions(); // Enable event listeners for active MerkleTrees
+  getRoot(address: string): any {
+    let root;
+    try {
+      root = updateTree(address);
+    } catch (err) {
+      logger.error(`[baseline_getRoot] ${err}`);
+      return;
+    }
+    return root;
+  }
 
-  const app = express();
+  getProof(address: string, leafIndex: number): any {
+    let pathNodes;
+    try {
+      pathNodes = getSiblingPathByLeafIndex(address, leafIndex);
+    } catch (err) {
+      logger.error(`[baseline_getProof] ${err}`);
+      return;
+    }
+    return pathNodes;
+  }
+  
+  async getTracked(): Promise<string[]> {
+    const trackedContracts = await merkleTrees.find({
+      _id: { $regex: /_0$/ },
+      active: true
+    }).select('_id').lean();
+    const contractAddresses = [];
+    for (const contract of trackedContracts) {
+      const address = contract._id.slice(0, -2); // Cut off trailing "_0"
+      contractAddresses.push(address);
+    }
+    logger.info(`Found ${contractAddresses.length} tracked contracts`);
+    return contractAddresses;
+  }
+  
+  async track(address: string): Promise<boolean> {
+    const merkleTree = await merkleTrees.findOne({ _id: `${address}_0` });
+    if (merkleTree && merkleTree.active === true) {
+      logger.info(`[baseline_track] Already tracking ${address}`);
+      return false;
+    }
 
-  app.use(reqLogger('COMMIT-MGR')); // Log requests
-  app.use(reqErrorLogger('COMMIT-MGR')); // Log errors
-  app.use(bodyParser.json({ limit: "2mb" })); // Pre-parse body content
-  app.use(cors());
-  app.use(rpcServer.middleware());
+    const methodSignature = "0x01e3e915"; // function selector for "treeHeight()"
+    const res = await jsonrpc("eth_call", [
+      {
+        "to": address,
+        "data": methodSignature
+      },
+      "latest"
+    ]);
+    if (res.error) {
+      logger.error(`[baseline_track] ${res.error}`);
+      return res.result;
+    }
+    const treeHeight = Number(res.result);
+    if (!treeHeight) {
+      logger.error("[baseline_track] Could not retreive treeHeight from blockchain");
+      return false;
+    }
+    logger.info(`[baseline_track] found treeHeight of ${treeHeight} for contract ${address}`);
 
-  app.get('/status', async (req: any, res: any) => {
-    res.sendStatus(200);
-  });
+    await merkleTrees.findOneAndUpdate(
+      { _id: `${address}_0` },
+      {
+        _id: `${address}_0`,
+        treeHeight,
+        active: true
+      },
+      { upsert: true, new: true, setDefaultsOnInsert: true },
+    );
 
-  // Single endpoint to handle all JSON-RPC requests
-  app.post("/jsonrpc", async (req: any, res: any, next: any) => {
-    const context = {
-      headers: req.headers,
-      params: req.params,
-      body: req.body,
-      ipAddress:
-        req.headers["x-forwarded-for"] ||
-        req.connection.remoteAddress ||
-        req.socket.remoteAddress,
+    await checkChainLogs(address, 0)
+    subscribeMerkleEvents(address);
+    return true;
+  }
+
+  async untrack(address: string, prune?: boolean): Promise<boolean> {
+    const foundTree = await merkleTrees.find({
+      _id: { $regex: new RegExp(address) }
+    }).select('_id').lean();
+
+    if (foundTree.length === 0) {
+      logger.error(`[baseline_untrack] Merkle Tree not found in db: ${address}`);
+      return false;
     };
 
-    await rpcServer.call(req.body, context, (err: any, result: any) => {
-      if (err) {
-        const errorMessage = err.error.data ? `${err.error.message}: ${err.error.data}` : `${err.error.message}`;
-        logger.error(`Response error: ${errorMessage}`);
-        res.send(err);
-        return;
+    unsubscribeMerkleEvents(address);
+
+    // If prune === true, wipe tree from storage
+    if (prune === true) {
+      await merkleTrees.deleteMany({ _id: { $regex: new RegExp(address) } });
+    } else {
+      await merkleTrees.updateOne(
+        { _id: `${address}_0` },
+        { active: false },
+        { upsert: true, new: true }
+      );
+    };
+
+    return true;
+  }
+
+  async verify(address: string, value: string, siblings: any[]): Promise<boolean> {
+    const root = siblings[siblings.length - 1].hash;
+    const updatedRoot = await updateTree(address);
+    let currentHash = value;
+
+    for (let index = 0; index < siblings.length - 1; index++) {
+      if (siblings[index].nodeIndex % 2 === 0) {
+        // even nodeIndex
+        currentHash = concatenateThenHash(currentHash, siblings[index].hash);
+      } else {
+        // odd nodeIndex
+        currentHash = concatenateThenHash(siblings[index].hash, currentHash);
       }
-      res.send(result || {});
-    });
-  });
+    }
+    return (root === currentHash) && (root === updatedRoot);
+  }
+  
+  async verifyAndPush(sender: string, address: string, proof: number[], publicInputs: string[], value: string): Promise<any> {
+    const record = await merkleTrees.findOne({ _id: `${address}_0` }).select('shieldContract').lean();
+    if (!record) {
+      logger.error(`[baseline_verifyAndPush] Merkle Tree not found in db: ${address}`);
+      return null;
+    }
+    logger.info(`[baseline_verifyAndPush] Found Shield/MerkleTree for contract address: ${address}`);
 
-  app.listen(port, () => {
-    logger.info(`REST server listening on port ${port}.`);
-  });
-};
+    const txManager = await txManagerServiceFactory(process.env.ETH_CLIENT_TYPE);
 
-main();
+    let result;
+    try {
+      result = await txManager.insertLeaf(address, sender, proof, publicInputs, value);
+    } catch (err) {
+      logger.error(`[baseline_verifyAndPush] ${err}`);
+      return null;
+    }
+    logger.info(`[baseline_verifyAndPush] txHash: ${result.txHash}`);
+    return { txHash: result.txHash };
+  }
+
+  async init() {
+    dotenv.config();
+    const port = process.env.SERVER_PORT;
+
+    logger.info("Starting commmitment manager server...");
+
+    const dbUrl = 'mongodb://' +
+      `${process.env.DATABASE_USER}` + ':' +
+      `${process.env.DATABASE_PASSWORD}` + '@' +
+      `${process.env.DATABASE_HOST}` + '/' +
+      `${process.env.DATABASE_NAME}`;
+
+    logger.debug(`Attempting to connect to db: ${process.env.DATABASE_HOST}/${process.env.DATABASE_NAME}`)
+
+    await dbConnect(dbUrl);
+    await get_ws_provider(); // Establish websocket connection
+    await restartSubscriptions(); // Enable event listeners for active MerkleTrees
+  }
+}

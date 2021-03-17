@@ -12,7 +12,6 @@
     "build:watch": "tsc --watch"
   },
   "dependencies": {
-    "@baseline-protocol/api": "^0.2.0",
     "axios": "^0.20.0",
     "body-parser": "^1.19.0",
     "chalk": "^4.1.0",

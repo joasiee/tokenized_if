@@ -6,7 +6,6 @@
   "compilerOptions": {
     "allowJs": true,
     "baseUrl": ".",
-    "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "outDir": "dist",
