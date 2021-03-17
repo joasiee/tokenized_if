@@ -50,9 +50,7 @@
   "ast": {
     "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/lib/ERC165Compatible.sol",
     "exportedSymbols": {
-      "ERC165Compatible": [
-        1496
-      ]
+      "ERC165Compatible": [1496]
     },
     "id": 1497,
     "license": "CC0",
@@ -60,21 +58,13 @@
     "nodes": [
       {
         "id": 1470,
-        "literals": [
-          "solidity",
-          "^",
-          "0.6",
-          ".9"
-        ],
+        "literals": ["solidity", "^", "0.6", ".9"],
         "nodeType": "PragmaDirective",
         "src": "32:23:8"
       },
       {
         "id": 1471,
-        "literals": [
-          "experimental",
-          "ABIEncoderV2"
-        ],
+        "literals": ["experimental", "ABIEncoderV2"],
         "nodeType": "PragmaDirective",
         "src": "56:33:8"
       },
@@ -111,19 +101,12 @@
             "src": "180:6:8"
           }
         ],
-        "contractDependencies": [
-          2124,
-          2136
-        ],
+        "contractDependencies": [2124, 2136],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 1496,
-        "linearizedBaseContracts": [
-          1496,
-          2124,
-          2136
-        ],
+        "linearizedBaseContracts": [1496, 2124, 2136],
         "name": "ERC165Compatible",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -383,21 +366,14 @@
     "attributes": {
       "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/lib/ERC165Compatible.sol",
       "exportedSymbols": {
-        "ERC165Compatible": [
-          1496
-        ]
+        "ERC165Compatible": [1496]
       },
       "license": "CC0"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.6",
-            ".9"
-          ]
+          "literals": ["solidity", "^", "0.6", ".9"]
         },
         "id": 1470,
         "name": "PragmaDirective",
@@ -405,10 +381,7 @@
       },
       {
         "attributes": {
-          "literals": [
-            "experimental",
-            "ABIEncoderV2"
-          ]
+          "literals": ["experimental", "ABIEncoderV2"]
         },
         "id": 1471,
         "name": "PragmaDirective",
@@ -420,9 +393,7 @@
           "absolutePath": "@openzeppelin/contracts/introspection/ERC165.sol",
           "file": "@openzeppelin/contracts/introspection/ERC165.sol",
           "scope": 1497,
-          "symbolAliases": [
-            null
-          ],
+          "symbolAliases": [null],
           "unitAlias": ""
         },
         "id": 1472,
@@ -432,18 +403,11 @@
       {
         "attributes": {
           "abstract": false,
-          "contractDependencies": [
-            2124,
-            2136
-          ],
+          "contractDependencies": [2124, 2136],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            1496,
-            2124,
-            2136
-          ],
+          "linearizedBaseContracts": [1496, 2124, 2136],
           "name": "ERC165Compatible",
           "scope": 1497
         },
@@ -475,9 +439,7 @@
               "implemented": true,
               "isConstructor": true,
               "kind": "constructor",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "",
               "overrides": null,
               "scope": 1496,
@@ -488,9 +450,7 @@
             "children": [
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 1475,
@@ -499,9 +459,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 1476,
@@ -515,17 +473,13 @@
                       {
                         "attributes": {
                           "argumentTypes": null,
-                          "arguments": [
-                            null
-                          ],
+                          "arguments": [null],
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "bool",
                           "type_conversion": false
@@ -533,12 +487,8 @@
                         "children": [
                           {
                             "attributes": {
-                              "argumentTypes": [
-                                null
-                              ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "argumentTypes": [null],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1495,
                               "type": "function () returns (bool)",
                               "value": "setInterfaces"
@@ -574,9 +524,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "setInterfaces",
               "overrides": null,
               "scope": 1496,
@@ -587,9 +535,7 @@
             "children": [
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 1482,
@@ -643,9 +589,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -659,9 +603,7 @@
                                   "typeString": "bytes4"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 2123,
                               "type": "function (bytes4)",
                               "value": "_registerInterface"
@@ -697,9 +639,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": -28,
                                       "type": "contract ERC165Compatible",
                                       "value": "this"

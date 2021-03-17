@@ -32,9 +32,7 @@
   "ast": {
     "absolutePath": "@openzeppelin/contracts/introspection/ERC165.sol",
     "exportedSymbols": {
-      "ERC165": [
-        2124
-      ]
+      "ERC165": [2124]
     },
     "id": 2125,
     "license": "MIT",
@@ -42,15 +40,7 @@
     "nodes": [
       {
         "id": 2069,
-        "literals": [
-          "solidity",
-          ">=",
-          "0.6",
-          ".0",
-          "<",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", ">=", "0.6", ".0", "<", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "33:31:11"
       },
@@ -87,9 +77,7 @@
             "src": "291:7:11"
           }
         ],
-        "contractDependencies": [
-          2136
-        ],
+        "contractDependencies": [2136],
         "contractKind": "contract",
         "documentation": {
           "id": 2071,
@@ -99,10 +87,7 @@
         },
         "fullyImplemented": true,
         "id": 2124,
-        "linearizedBaseContracts": [
-          2124,
-          2136
-        ],
+        "linearizedBaseContracts": [2124, 2136],
         "name": "ERC165",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -294,9 +279,7 @@
             "visibility": "internal"
           },
           {
-            "baseFunctions": [
-              2135
-            ],
+            "baseFunctions": [2135],
             "body": {
               "id": 2102,
               "nodeType": "Block",
@@ -538,10 +521,7 @@
                       "id": 2109,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "1582:7:11",
                       "typeDescriptions": {
@@ -719,24 +699,14 @@
     "attributes": {
       "absolutePath": "@openzeppelin/contracts/introspection/ERC165.sol",
       "exportedSymbols": {
-        "ERC165": [
-          2124
-        ]
+        "ERC165": [2124]
       },
       "license": "MIT"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            ">=",
-            "0.6",
-            ".0",
-            "<",
-            "0.8",
-            ".0"
-          ]
+          "literals": ["solidity", ">=", "0.6", ".0", "<", "0.8", ".0"]
         },
         "id": 2069,
         "name": "PragmaDirective",
@@ -748,9 +718,7 @@
           "absolutePath": "@openzeppelin/contracts/introspection/IERC165.sol",
           "file": "./IERC165.sol",
           "scope": 2125,
-          "symbolAliases": [
-            null
-          ],
+          "symbolAliases": [null],
           "unitAlias": ""
         },
         "id": 2070,
@@ -760,15 +728,10 @@
       {
         "attributes": {
           "abstract": true,
-          "contractDependencies": [
-            2136
-          ],
+          "contractDependencies": [2136],
           "contractKind": "contract",
           "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            2124,
-            2136
-          ],
+          "linearizedBaseContracts": [2124, 2136],
           "name": "ERC165",
           "scope": 2125
         },
@@ -907,9 +870,7 @@
               "implemented": true,
               "isConstructor": true,
               "kind": "constructor",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "",
               "overrides": null,
               "scope": 2124,
@@ -920,9 +881,7 @@
             "children": [
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 2082,
@@ -931,9 +890,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 2083,
@@ -952,9 +909,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -968,9 +923,7 @@
                                   "typeString": "bytes4"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 2123,
                               "type": "function (bytes4)",
                               "value": "_registerInterface"
@@ -982,9 +935,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 2076,
                               "type": "bytes4",
                               "value": "_INTERFACE_ID_ERC165"
@@ -1015,16 +966,12 @@
           },
           {
             "attributes": {
-              "baseFunctions": [
-                2135
-              ],
+              "baseFunctions": [2135],
               "functionSelector": "01ffc9a7",
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "supportsInterface",
               "scope": 2124,
               "stateMutability": "view",
@@ -1042,9 +989,7 @@
               },
               {
                 "attributes": {
-                  "overrides": [
-                    null
-                  ]
+                  "overrides": [null]
                 },
                 "id": 2094,
                 "name": "OverrideSpecifier",
@@ -1140,9 +1085,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 2081,
                               "type": "mapping(bytes4 => bool)",
                               "value": "_supportedInterfaces"
@@ -1154,9 +1097,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 2092,
                               "type": "bytes4",
                               "value": "interfaceId"
@@ -1190,9 +1131,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "_registerInterface",
               "overrides": null,
               "scope": 2124,
@@ -1246,9 +1185,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 2108,
@@ -1267,9 +1204,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -1287,10 +1222,7 @@
                                   "typeString": "literal_string \"ERC165: invalid interface id\""
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                -18,
-                                -18
-                              ],
+                              "overloadedDeclarations": [-18, -18],
                               "referencedDeclaration": -18,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
@@ -1317,9 +1249,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 2106,
                                   "type": "bytes4",
                                   "value": "interfaceId"
@@ -1403,9 +1333,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 2081,
                                   "type": "mapping(bytes4 => bool)",
                                   "value": "_supportedInterfaces"
@@ -1417,9 +1345,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 2106,
                                   "type": "bytes4",
                                   "value": "interfaceId"

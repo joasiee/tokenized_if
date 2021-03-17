@@ -10,20 +10,24 @@ import { leafIndexToNodeIndex, calculateBucket } from "./utils";
 async function insertLeaf(contractAddress, leaf) {
   logger.info(`Inserting new leaf for merkle id ${contractAddress}: %o`, leaf);
   // Find tree height
-  const merkleTree_0 = await merkleTrees.findOne({ _id: `${contractAddress}_0` });
+  const merkleTree_0 = await merkleTrees.findOne({
+    _id: `${contractAddress}_0`,
+  });
   const treeHeight = merkleTree_0.treeHeight;
 
   // Calculate bucket for leaf location
   const nodeIndex = leafIndexToNodeIndex(treeHeight, leaf.leafIndex);
   const bucketIndex = await calculateBucket(nodeIndex);
   logger.debug(`Calculated bucket index: ${bucketIndex}`);
-  const merkleSegment = await merkleTrees.findOne({ _id: `${contractAddress}_${bucketIndex}` });
+  const merkleSegment = await merkleTrees.findOne({
+    _id: `${contractAddress}_${bucketIndex}`,
+  });
 
   const nodes = merkleSegment.nodes;
   nodes[nodeIndex] = leaf;
   const latestLeaf = {
     blockNumber: leaf.blockNumber,
-    leafIndex: leaf.leafIndex
+    leafIndex: leaf.leafIndex,
   };
 
   await merkleTrees.updateOne(
@@ -47,15 +51,19 @@ async function insertLeaf(contractAddress, leaf) {
 async function getLeafByLeafIndex(contractAddress, leafIndex) {
   logger.info(`Get leaf index ${leafIndex} for merkle id ${contractAddress}`);
   // Find tree height
-  const merkleTree_0 = await merkleTrees.findOne({ _id: `${contractAddress}_0` });
+  const merkleTree_0 = await merkleTrees.findOne({
+    _id: `${contractAddress}_0`,
+  });
   const treeHeight = merkleTree_0.treeHeight;
 
   // Calculate bucket for leaf location
   const nodeIndex = leafIndexToNodeIndex(treeHeight, leafIndex);
   const bucketIndex = await calculateBucket(nodeIndex);
-  const merkleSegment = await merkleTrees.findOne({ _id: `${contractAddress}_${bucketIndex}` });
+  const merkleSegment = await merkleTrees.findOne({
+    _id: `${contractAddress}_${bucketIndex}`,
+  });
 
-  const result = merkleSegment.nodes.filter(node => {
+  const result = merkleSegment.nodes.filter((node) => {
     return node && node.leafIndex === leafIndex;
   });
 
@@ -71,7 +79,9 @@ async function getLeafByLeafIndex(contractAddress, leafIndex) {
  * @returns {array} an array of leaf objects
  */
 async function getLeavesByLeafIndexRange(contractAddress, minIndex, maxIndex) {
-  logger.info(`Getting leaves for merkle id ${contractAddress} in index range: ${minIndex} - ${maxIndex}`);
+  logger.info(
+    `Getting leaves for merkle id ${contractAddress} in index range: ${minIndex} - ${maxIndex}`
+  );
   // Find tree height
   const merkle_0 = await merkleTrees.findOne({ _id: `${contractAddress}_0` });
   const treeHeight = merkle_0.treeHeight;
@@ -81,9 +91,11 @@ async function getLeavesByLeafIndexRange(contractAddress, minIndex, maxIndex) {
     // Calculate bucket for leaf location
     const nodeIndex = leafIndexToNodeIndex(treeHeight, leafIndex);
     const bucketIndex = await calculateBucket(nodeIndex);
-    const merkleSegment = await merkleTrees.findOne({ _id: `${contractAddress}_${bucketIndex}` });
-    const result = merkleSegment.nodes.filter(node => {
-      return node && (node.leafIndex >= leafIndex) && (node.leafIndex <= maxIndex);
+    const merkleSegment = await merkleTrees.findOne({
+      _id: `${contractAddress}_${bucketIndex}`,
+    });
+    const result = merkleSegment.nodes.filter((node) => {
+      return node && node.leafIndex >= leafIndex && node.leafIndex <= maxIndex;
     });
     leaves = leaves.concat(result);
     const incr = result.length ? result.length - 1 : 0;
@@ -93,8 +105,4 @@ async function getLeavesByLeafIndexRange(contractAddress, minIndex, maxIndex) {
   return leaves;
 }
 
-export {
-  insertLeaf,
-  getLeafByLeafIndex,
-  getLeavesByLeafIndexRange,
-};
+export { insertLeaf, getLeafByLeafIndex, getLeavesByLeafIndexRange };

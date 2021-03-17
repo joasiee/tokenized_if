@@ -55,9 +55,7 @@
   "ast": {
     "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/IShield.sol",
     "exportedSymbols": {
-      "IShield": [
-        20
-      ]
+      "IShield": [20]
     },
     "id": 21,
     "license": "CC0",
@@ -65,12 +63,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "^",
-          "0.6",
-          ".9"
-        ],
+        "literals": ["solidity", "^", "0.6", ".9"],
         "nodeType": "PragmaDirective",
         "src": "32:23:0"
       },
@@ -82,9 +75,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 20,
-        "linearizedBaseContracts": [
-          20
-        ],
+        "linearizedBaseContracts": [20],
         "name": "IShield",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -321,21 +312,14 @@
     "attributes": {
       "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/IShield.sol",
       "exportedSymbols": {
-        "IShield": [
-          20
-        ]
+        "IShield": [20]
       },
       "license": "CC0"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.6",
-            ".9"
-          ]
+          "literals": ["solidity", "^", "0.6", ".9"]
         },
         "id": 1,
         "name": "PragmaDirective",
@@ -344,18 +328,12 @@
       {
         "attributes": {
           "abstract": false,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
+          "baseContracts": [null],
+          "contractDependencies": [null],
           "contractKind": "interface",
           "documentation": null,
           "fullyImplemented": false,
-          "linearizedBaseContracts": [
-            20
-          ],
+          "linearizedBaseContracts": [20],
           "name": "IShield",
           "scope": 21
         },
@@ -368,9 +346,7 @@
               "implemented": false,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getVerifier",
               "overrides": null,
               "scope": 20,
@@ -381,9 +357,7 @@
             "children": [
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 2,
@@ -439,9 +413,7 @@
               "implemented": false,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "verifyAndPush",
               "overrides": null,
               "scope": 20,

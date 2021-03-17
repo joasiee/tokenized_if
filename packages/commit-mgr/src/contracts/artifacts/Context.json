@@ -12,9 +12,7 @@
   "ast": {
     "absolutePath": "@openzeppelin/contracts/utils/Context.sol",
     "exportedSymbols": {
-      "Context": [
-        2159
-      ]
+      "Context": [2159]
     },
     "id": 2160,
     "license": "MIT",
@@ -22,15 +20,7 @@
     "nodes": [
       {
         "id": 2138,
-        "literals": [
-          "solidity",
-          ">=",
-          "0.6",
-          ".0",
-          "<",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", ">=", "0.6", ".0", "<", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "33:31:13"
       },
@@ -42,9 +32,7 @@
         "documentation": null,
         "fullyImplemented": true,
         "id": 2159,
-        "linearizedBaseContracts": [
-          2159
-        ],
+        "linearizedBaseContracts": [2159],
         "name": "Context",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -274,24 +262,14 @@
     "attributes": {
       "absolutePath": "@openzeppelin/contracts/utils/Context.sol",
       "exportedSymbols": {
-        "Context": [
-          2159
-        ]
+        "Context": [2159]
       },
       "license": "MIT"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            ">=",
-            "0.6",
-            ".0",
-            "<",
-            "0.8",
-            ".0"
-          ]
+          "literals": ["solidity", ">=", "0.6", ".0", "<", "0.8", ".0"]
         },
         "id": 2138,
         "name": "PragmaDirective",
@@ -300,18 +278,12 @@
       {
         "attributes": {
           "abstract": true,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
+          "baseContracts": [null],
+          "contractDependencies": [null],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            2159
-          ],
+          "linearizedBaseContracts": [2159],
           "name": "Context",
           "scope": 2160
         },
@@ -322,9 +294,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "_msgSender",
               "overrides": null,
               "scope": 2159,
@@ -335,9 +305,7 @@
             "children": [
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 2139,
@@ -402,9 +370,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": -15,
                               "type": "msg",
                               "value": "msg"
@@ -439,9 +405,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "_msgData",
               "overrides": null,
               "scope": 2159,
@@ -452,9 +416,7 @@
             "children": [
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 2148,
@@ -503,9 +465,7 @@
                       {
                         "attributes": {
                           "argumentTypes": null,
-                          "overloadedDeclarations": [
-                            null
-                          ],
+                          "overloadedDeclarations": [null],
                           "referencedDeclaration": -28,
                           "type": "contract Context",
                           "value": "this"
@@ -539,9 +499,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": -15,
                               "type": "msg",
                               "value": "msg"

@@ -32,9 +32,7 @@
   "ast": {
     "absolutePath": "@openzeppelin/contracts/introspection/IERC165.sol",
     "exportedSymbols": {
-      "IERC165": [
-        2136
-      ]
+      "IERC165": [2136]
     },
     "id": 2137,
     "license": "MIT",
@@ -42,15 +40,7 @@
     "nodes": [
       {
         "id": 2126,
-        "literals": [
-          "solidity",
-          ">=",
-          "0.6",
-          ".0",
-          "<",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", ">=", "0.6", ".0", "<", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "33:31:12"
       },
@@ -67,9 +57,7 @@
         },
         "fullyImplemented": false,
         "id": 2136,
-        "linearizedBaseContracts": [
-          2136
-        ],
+        "linearizedBaseContracts": [2136],
         "name": "IERC165",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -176,24 +164,14 @@
     "attributes": {
       "absolutePath": "@openzeppelin/contracts/introspection/IERC165.sol",
       "exportedSymbols": {
-        "IERC165": [
-          2136
-        ]
+        "IERC165": [2136]
       },
       "license": "MIT"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            ">=",
-            "0.6",
-            ".0",
-            "<",
-            "0.8",
-            ".0"
-          ]
+          "literals": ["solidity", ">=", "0.6", ".0", "<", "0.8", ".0"]
         },
         "id": 2126,
         "name": "PragmaDirective",
@@ -202,17 +180,11 @@
       {
         "attributes": {
           "abstract": false,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
+          "baseContracts": [null],
+          "contractDependencies": [null],
           "contractKind": "interface",
           "fullyImplemented": false,
-          "linearizedBaseContracts": [
-            2136
-          ],
+          "linearizedBaseContracts": [2136],
           "name": "IERC165",
           "scope": 2137
         },
@@ -232,9 +204,7 @@
               "implemented": false,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "supportsInterface",
               "overrides": null,
               "scope": 2136,

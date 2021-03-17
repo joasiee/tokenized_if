@@ -15,7 +15,7 @@ export const levels = {
 // Colors for logging levels
 export const error = chalk.bold.red;
 export const warning = chalk.bold.blackBright;
-export const deprecated = chalk.bold.keyword('orange');
+export const deprecated = chalk.bold.keyword("orange");
 export const http = chalk.bold.blue;
 export const info = chalk.bold.whiteBright;
 export const verbose = chalk.bold.yellow;
@@ -29,4 +29,4 @@ export const client = chalk.yellow;
 export const server = chalk.red;
 
 // Root path
-export const rootPath = path.join(__dirname, '../../');
+export const rootPath = path.join(__dirname, "../../");

@@ -43,7 +43,9 @@ function siblingNodeIndex(node_index) {
 
 function parentNodeIndex(node_index) {
   const nodeIndex = Number(node_index);
-  return nodeIndex % 2 === 1 ? rightShift(nodeIndex, 1) : rightShift(nodeIndex - 1, 1);
+  return nodeIndex % 2 === 1
+    ? rightShift(nodeIndex, 1)
+    : rightShift(nodeIndex - 1, 1);
 }
 
 // COMPLEX TREE FUNCTIONS
@@ -74,7 +76,7 @@ function getSiblingPathIndices(node_index) {
     const siblingIndex = siblingNodeIndex(indices[index]);
     siblingIndices.push(siblingIndex);
   }
-  logger.info(`Found sibling indices: %o`, siblingIndices)
+  logger.info(`Found sibling indices: %o`, siblingIndices);
   return siblingIndices;
 }
 
@@ -101,7 +103,7 @@ function getFrontierSlot(leafIndex) {
 // Javascript implementation of the corresponding Solidity function in MerkleTree.sol
 async function updateNodes(merkleId, frontier, leafValues, currentLeafCount) {
   logger.info(`Updating nodes`);
-  const merkleTree_0 = await merkleTrees.findOne({ _id: `${merkleId}_0` })
+  const merkleTree_0 = await merkleTrees.findOne({ _id: `${merkleId}_0` });
   const latestLeaf = merkleTree_0.latestLeaf;
   const treeHeight = merkleTree_0.treeHeight;
 
@@ -130,7 +132,6 @@ async function updateNodes(merkleId, frontier, leafValues, currentLeafCount) {
     leafIndex < currentLeafCount + numberOfLeaves;
     leafIndex++
   ) {
-
     nodeValueFull = leafValues[leafIndex - currentLeafCount];
     nodeValue = `0x${nodeValueFull.slice(-config.NODE_HASHLENGTH * 2)}`; // truncate hashed value, so it 'fits' into the next hash.
     nodeIndex = leafIndexToNodeIndex(treeHeight, leafIndex);
@@ -156,7 +157,9 @@ async function updateNodes(merkleId, frontier, leafValues, currentLeafCount) {
       nodeIndex = parentNodeIndex(nodeIndex); // move one row up the tree
       // Calculate bucket for leaf location
       const bucketIndex = await calculateBucket(nodeIndex);
-      const merkleSegment = await merkleTrees.findOne({ _id: `${merkleId}_${bucketIndex}` });
+      const merkleSegment = await merkleTrees.findOne({
+        _id: `${merkleId}_${bucketIndex}`,
+      });
       const newNodes = merkleSegment.nodes;
 
       // update the newNodes array
@@ -188,7 +191,9 @@ async function updateNodes(merkleId, frontier, leafValues, currentLeafCount) {
     nodeIndex = parentNodeIndex(nodeIndex); // move one row up the tree
     // Calculate bucket for leaf location
     const bucketIndex = await calculateBucket(nodeIndex);
-    const merkleSegment = await merkleTrees.findOne({ _id: `${merkleId}_${bucketIndex}` });
+    const merkleSegment = await merkleTrees.findOne({
+      _id: `${merkleId}_${bucketIndex}`,
+    });
     const newNodes = merkleSegment.nodes;
 
     // update the newNodes array
@@ -219,7 +224,7 @@ async function updateNodes(merkleId, frontier, leafValues, currentLeafCount) {
   logger.info(`Off-chain tree updated with new root: ${root}`);
 
   return root;
-};
+}
 
 /**
  * Calculates the exact number of hashes required to add a consecutive batch of leaves to a tree

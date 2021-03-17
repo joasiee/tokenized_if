@@ -1,16 +1,18 @@
-import { ethers, Wallet } from 'ethers';
-import { ITxManager } from '.';
-import { logger } from '../logger';
+import { ethers, Wallet } from "ethers";
+import { ITxManager } from ".";
+import { logger } from "../logger";
 import { http_provider, jsonrpc, shieldContract } from "../blockchain";
 
 export class EthClient implements ITxManager {
-
   constructor(private readonly config: any) {
     this.config = config;
   }
 
   async signTx(toAddress: string, fromAddress: string, txData: any) {
-    const wallet = new Wallet(process.env.CMGR_WALLET_PRIVATE_KEY, http_provider);
+    const wallet = new Wallet(
+      process.env.CMGR_WALLET_PRIVATE_KEY,
+      http_provider
+    );
     const nonce = await wallet.getTransactionCount();
     logger.debug(`nonce: ${nonce}`);
     const gasPrice = await wallet.getGasPrice();
@@ -25,7 +27,7 @@ export class EthClient implements ITxManager {
       nonce,
       chainId: parseInt(process.env.CMGR_CHAIN_ID, 10),
       gasLimit: 0,
-      gasPrice: gasPriceSet
+      gasPrice: gasPriceSet,
     };
 
     const gasEstimate = await wallet.estimateGas(unsignedTx);
@@ -55,12 +57,12 @@ export class EthClient implements ITxManager {
       const signedTx = await this.signTx(toAddress, fromAddress, txData);
       logger.debug(`signedTx: ${signedTx}`);
       const res = await jsonrpc("eth_sendRawTransaction", [signedTx]);
-      logger.debug('eth_sendRawTransaction result:', res);
-      txHash = res.result
+      logger.debug("eth_sendRawTransaction result:", res);
+      txHash = res.result;
     } catch (err) {
-      logger.error('[baseline_verifyAndPush]:', err);
+      logger.error("[baseline_verifyAndPush]:", err);
       if (err.error) {
-        error = { data: err.error.message }
+        error = { data: err.error.message };
       } else {
         error = { data: err };
       }

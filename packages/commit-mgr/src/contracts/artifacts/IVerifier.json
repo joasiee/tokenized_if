@@ -37,9 +37,7 @@
   "ast": {
     "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/IVerifier.sol",
     "exportedSymbols": {
-      "IVerifier": [
-        35
-      ]
+      "IVerifier": [35]
     },
     "id": 36,
     "license": "CC0",
@@ -47,12 +45,7 @@
     "nodes": [
       {
         "id": 22,
-        "literals": [
-          "solidity",
-          "^",
-          "0.6",
-          ".9"
-        ],
+        "literals": ["solidity", "^", "0.6", ".9"],
         "nodeType": "PragmaDirective",
         "src": "32:23:1"
       },
@@ -69,9 +62,7 @@
         },
         "fullyImplemented": false,
         "id": 35,
-        "linearizedBaseContracts": [
-          35
-        ],
+        "linearizedBaseContracts": [35],
         "name": "IVerifier",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -221,21 +212,14 @@
     "attributes": {
       "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/IVerifier.sol",
       "exportedSymbols": {
-        "IVerifier": [
-          35
-        ]
+        "IVerifier": [35]
       },
       "license": "CC0"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.6",
-            ".9"
-          ]
+          "literals": ["solidity", "^", "0.6", ".9"]
         },
         "id": 22,
         "name": "PragmaDirective",
@@ -244,17 +228,11 @@
       {
         "attributes": {
           "abstract": false,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
+          "baseContracts": [null],
+          "contractDependencies": [null],
           "contractKind": "interface",
           "fullyImplemented": false,
-          "linearizedBaseContracts": [
-            35
-          ],
+          "linearizedBaseContracts": [35],
           "name": "IVerifier",
           "scope": 36
         },
@@ -275,9 +253,7 @@
               "implemented": false,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "verify",
               "overrides": null,
               "scope": 35,

@@ -27,21 +27,25 @@ const merkleTreeSchema = new Schema(
     // Limit 25,000 nodes for each document. If tree has more nodes than that, store in other "buckets"
     // Mongo document size limit = 16MB
     // node size ~ 200b. 200b * 25,000 ~ 5MB
-    nodes: [{
-      _id: false,
-      leafIndex: Number, // Only used for leaves
-      blockNumber: Number, // Only used for leaves
-      txHash: String, // Only used for leaves
-      hash: String // commitment value
-    }],
+    nodes: [
+      {
+        _id: false,
+        leafIndex: Number, // Only used for leaves
+        blockNumber: Number, // Only used for leaves
+        txHash: String, // Only used for leaves
+        hash: String, // commitment value
+      },
+    ],
   },
   { versionKey: false }
 );
 
 // add typing
-export interface MerkleTree extends Document {active: boolean}
+export interface MerkleTree extends Document {
+  active: boolean;
+}
 
 // Automatically generate createdAt and updatedAt fields
-merkleTreeSchema.set('timestamps', true);
+merkleTreeSchema.set("timestamps", true);
 
-export const merkleTrees = model<MerkleTree>('merkle-trees', merkleTreeSchema);
+export const merkleTrees = model<MerkleTree>("merkle-trees", merkleTreeSchema);

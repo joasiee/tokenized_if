@@ -1,4 +1,4 @@
-import {CommitManager} from "@baseline/commit-mgr";
+import { CommitManager } from "@baseline/commit-mgr";
 
 let mgr: CommitManager;
 mgr = new CommitManager();

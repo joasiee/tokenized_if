@@ -532,9 +532,7 @@
   "ast": {
     "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/OrgRegistry.sol",
     "exportedSymbols": {
-      "OrgRegistry": [
-        1339
-      ]
+      "OrgRegistry": [1339]
     },
     "id": 1340,
     "license": "CC0",
@@ -542,21 +540,13 @@
     "nodes": [
       {
         "id": 819,
-        "literals": [
-          "solidity",
-          "^",
-          "0.6",
-          ".9"
-        ],
+        "literals": ["solidity", "^", "0.6", ".9"],
         "nodeType": "PragmaDirective",
         "src": "32:23:6"
       },
       {
         "id": 820,
-        "literals": [
-          "experimental",
-          "ABIEncoderV2"
-        ],
+        "literals": ["experimental", "ABIEncoderV2"],
         "nodeType": "PragmaDirective",
         "src": "56:33:6"
       },
@@ -680,15 +670,7 @@
             "src": "541:12:6"
           }
         ],
-        "contractDependencies": [
-          817,
-          1468,
-          1496,
-          2067,
-          2124,
-          2136,
-          2159
-        ],
+        "contractDependencies": [817, 1468, 1496, 2067, 2124, 2136, 2159],
         "contractKind": "contract",
         "documentation": {
           "id": 825,
@@ -1627,9 +1609,7 @@
                       "id": 911,
                       "name": "setInterfaces",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        953
-                      ],
+                      "overloadedDeclarations": [953],
                       "referencedDeclaration": 953,
                       "src": "1881:13:6",
                       "typeDescriptions": {
@@ -1898,9 +1878,7 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [
-              1495
-            ],
+            "baseFunctions": [1495],
             "body": {
               "id": 952,
               "nodeType": "Block",
@@ -2901,18 +2879,14 @@
             "visibility": "external"
           },
           {
-            "baseFunctions": [
-              777
-            ],
+            "baseFunctions": [777],
             "body": {
               "id": 1057,
               "nodeType": "Block",
               "src": "4814:376:6",
               "statements": [
                 {
-                  "assignments": [
-                    1024
-                  ],
+                  "assignments": [1024],
                   "declarations": [
                     {
                       "constant": false,
@@ -3651,9 +3625,7 @@
             "visibility": "external"
           },
           {
-            "baseFunctions": [
-              794
-            ],
+            "baseFunctions": [794],
             "body": {
               "id": 1134,
               "nodeType": "Block",
@@ -3800,10 +3772,7 @@
                       "id": 1077,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "6027:7:6",
                       "typeDescriptions": {
@@ -5102,9 +5071,7 @@
             "visibility": "external"
           },
           {
-            "baseFunctions": [
-              799
-            ],
+            "baseFunctions": [799],
             "body": {
               "id": 1178,
               "nodeType": "Block",
@@ -5214,9 +5181,7 @@
             "visibility": "external"
           },
           {
-            "baseFunctions": [
-              816
-            ],
+            "baseFunctions": [816],
             "body": {
               "id": 1224,
               "nodeType": "Block",
@@ -5827,9 +5792,7 @@
               "src": "8640:752:6",
               "statements": [
                 {
-                  "assignments": [
-                    1245
-                  ],
+                  "assignments": [1245],
                   "declarations": [
                     {
                       "constant": false,
@@ -5946,9 +5909,7 @@
                   "src": "8650:57:6"
                 },
                 {
-                  "assignments": [
-                    1256
-                  ],
+                  "assignments": [1256],
                   "declarations": [
                     {
                       "constant": false,
@@ -6066,9 +6027,7 @@
                   "src": "8717:61:6"
                 },
                 {
-                  "assignments": [
-                    1267
-                  ],
+                  "assignments": [1267],
                   "declarations": [
                     {
                       "constant": false,
@@ -6186,9 +6145,7 @@
                   "src": "8788:60:6"
                 },
                 {
-                  "assignments": [
-                    1278
-                  ],
+                  "assignments": [1278],
                   "declarations": [
                     {
                       "constant": false,
@@ -6312,9 +6269,7 @@
                     "src": "8975:297:6",
                     "statements": [
                       {
-                        "assignments": [
-                          1296
-                        ],
+                        "assignments": [1296],
                         "declarations": [
                           {
                             "constant": false,
@@ -6796,9 +6751,7 @@
                   },
                   "id": 1330,
                   "initializationExpression": {
-                    "assignments": [
-                      1286
-                    ],
+                    "assignments": [1286],
                     "declarations": [
                       {
                         "constant": false,
@@ -7164,21 +7117,14 @@
     "attributes": {
       "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/OrgRegistry.sol",
       "exportedSymbols": {
-        "OrgRegistry": [
-          1339
-        ]
+        "OrgRegistry": [1339]
       },
       "license": "CC0"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.6",
-            ".9"
-          ]
+          "literals": ["solidity", "^", "0.6", ".9"]
         },
         "id": 819,
         "name": "PragmaDirective",
@@ -7186,10 +7132,7 @@
       },
       {
         "attributes": {
-          "literals": [
-            "experimental",
-            "ABIEncoderV2"
-          ]
+          "literals": ["experimental", "ABIEncoderV2"]
         },
         "id": 820,
         "name": "PragmaDirective",
@@ -7201,9 +7144,7 @@
           "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/IOrgRegistry.sol",
           "file": "./IOrgRegistry.sol",
           "scope": 1340,
-          "symbolAliases": [
-            null
-          ],
+          "symbolAliases": [null],
           "unitAlias": ""
         },
         "id": 821,
@@ -7216,9 +7157,7 @@
           "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/Registrar.sol",
           "file": "./Registrar.sol",
           "scope": 1340,
-          "symbolAliases": [
-            null
-          ],
+          "symbolAliases": [null],
           "unitAlias": ""
         },
         "id": 822,
@@ -7231,9 +7170,7 @@
           "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/lib/ERC165Compatible.sol",
           "file": "./lib/ERC165Compatible.sol",
           "scope": 1340,
-          "symbolAliases": [
-            null
-          ],
+          "symbolAliases": [null],
           "unitAlias": ""
         },
         "id": 823,
@@ -7246,9 +7183,7 @@
           "absolutePath": "@openzeppelin/contracts/access/Ownable.sol",
           "file": "@openzeppelin/contracts/access/Ownable.sol",
           "scope": 1340,
-          "symbolAliases": [
-            null
-          ],
+          "symbolAliases": [null],
           "unitAlias": ""
         },
         "id": 824,
@@ -7258,15 +7193,7 @@
       {
         "attributes": {
           "abstract": false,
-          "contractDependencies": [
-            817,
-            1468,
-            1496,
-            2067,
-            2124,
-            2136,
-            2159
-          ],
+          "contractDependencies": [817, 1468, 1496, 2067, 2124, 2136, 2159],
           "contractKind": "contract",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
@@ -8348,9 +8275,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 910,
@@ -8359,17 +8284,13 @@
               },
               {
                 "attributes": {
-                  "arguments": [
-                    null
-                  ]
+                  "arguments": [null]
                 },
                 "children": [
                   {
                     "attributes": {
                       "argumentTypes": null,
-                      "overloadedDeclarations": [
-                        null
-                      ],
+                      "overloadedDeclarations": [null],
                       "referencedDeclaration": 1496,
                       "type": "type(contract ERC165Compatible)",
                       "value": "ERC165Compatible"
@@ -8388,9 +8309,7 @@
                   {
                     "attributes": {
                       "argumentTypes": null,
-                      "overloadedDeclarations": [
-                        null
-                      ],
+                      "overloadedDeclarations": [null],
                       "referencedDeclaration": 1468,
                       "type": "type(contract Registrar)",
                       "value": "Registrar"
@@ -8402,9 +8321,7 @@
                   {
                     "attributes": {
                       "argumentTypes": null,
-                      "overloadedDeclarations": [
-                        null
-                      ],
+                      "overloadedDeclarations": [null],
                       "referencedDeclaration": 903,
                       "type": "address",
                       "value": "_erc1820"
@@ -8425,17 +8342,13 @@
                       {
                         "attributes": {
                           "argumentTypes": null,
-                          "arguments": [
-                            null
-                          ],
+                          "arguments": [null],
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "bool",
                           "type_conversion": false
@@ -8443,12 +8356,8 @@
                         "children": [
                           {
                             "attributes": {
-                              "argumentTypes": [
-                                null
-                              ],
-                              "overloadedDeclarations": [
-                                953
-                              ],
+                              "argumentTypes": [null],
+                              "overloadedDeclarations": [953],
                               "referencedDeclaration": 953,
                               "type": "function () returns (bool)",
                               "value": "setInterfaces"
@@ -8477,9 +8386,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -8497,9 +8404,7 @@
                                   "typeString": "address"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1409,
                               "type": "function (string memory,address)",
                               "value": "setInterfaceImplementation"
@@ -8533,9 +8438,7 @@
                               "isPure": false,
                               "isStructConstructorCall": false,
                               "lValueRequested": false,
-                              "names": [
-                                null
-                              ],
+                              "names": [null],
                               "tryCall": false,
                               "type": "address",
                               "type_conversion": true
@@ -8573,9 +8476,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": -28,
                                   "type": "contract OrgRegistry",
                                   "value": "this"
@@ -8611,9 +8512,7 @@
           },
           {
             "attributes": {
-              "baseFunctions": [
-                1495
-              ],
+              "baseFunctions": [1495],
               "functionSelector": "fca85eb3",
               "implemented": true,
               "isConstructor": false,
@@ -8635,9 +8534,7 @@
               },
               {
                 "attributes": {
-                  "overrides": [
-                    null
-                  ]
+                  "overrides": [null]
                 },
                 "id": 926,
                 "name": "OverrideSpecifier",
@@ -8645,9 +8542,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 925,
@@ -8697,9 +8592,7 @@
                   {
                     "attributes": {
                       "argumentTypes": null,
-                      "overloadedDeclarations": [
-                        null
-                      ],
+                      "overloadedDeclarations": [null],
                       "referencedDeclaration": 2016,
                       "type": "modifier ()",
                       "value": "onlyOwner"
@@ -8725,9 +8618,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -8741,9 +8632,7 @@
                                   "typeString": "bytes4"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 2123,
                               "type": "function (bytes4)",
                               "value": "_registerInterface"
@@ -8925,9 +8814,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": -28,
                                               "type": "contract OrgRegistry",
                                               "value": "this"
@@ -8978,9 +8865,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": -28,
                                           "type": "contract OrgRegistry",
                                           "value": "this"
@@ -9057,9 +8942,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getInterfaces",
               "overrides": null,
               "scope": 1339,
@@ -9078,9 +8961,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 955,
@@ -9201,9 +9082,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": -28,
                                               "type": "contract OrgRegistry",
                                               "value": "this"
@@ -9249,9 +9128,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": -28,
                                               "type": "contract OrgRegistry",
                                               "value": "this"
@@ -9302,9 +9179,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": -28,
                                           "type": "contract OrgRegistry",
                                           "value": "this"
@@ -9355,9 +9230,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": -28,
                                       "type": "contract OrgRegistry",
                                       "value": "this"
@@ -9402,9 +9275,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "canImplementInterfaceForAddress",
               "overrides": null,
               "scope": 1339,
@@ -9530,9 +9401,7 @@
                       {
                         "attributes": {
                           "argumentTypes": null,
-                          "overloadedDeclarations": [
-                            null
-                          ],
+                          "overloadedDeclarations": [null],
                           "referencedDeclaration": 1353,
                           "type": "bytes32",
                           "value": "ERC1820_ACCEPT_MAGIC"
@@ -9616,9 +9485,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 996,
@@ -9633,9 +9500,7 @@
                   {
                     "attributes": {
                       "argumentTypes": null,
-                      "overloadedDeclarations": [
-                        null
-                      ],
+                      "overloadedDeclarations": [null],
                       "referencedDeclaration": 2016,
                       "type": "modifier ()",
                       "value": "onlyOwner"
@@ -9661,9 +9526,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -9677,9 +9540,7 @@
                                   "typeString": "address"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1452,
                               "type": "function (address)",
                               "value": "assignManagement"
@@ -9691,9 +9552,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 992,
                               "type": "address",
                               "value": "_newManager"
@@ -9724,9 +9583,7 @@
           },
           {
             "attributes": {
-              "baseFunctions": [
-                777
-              ],
+              "baseFunctions": [777],
               "functionSelector": "5a1c2eb3",
               "implemented": true,
               "isConstructor": false,
@@ -9748,9 +9605,7 @@
               },
               {
                 "attributes": {
-                  "overrides": [
-                    null
-                  ]
+                  "overrides": [null]
                 },
                 "id": 1019,
                 "name": "OverrideSpecifier",
@@ -9975,9 +9830,7 @@
                   {
                     "attributes": {
                       "argumentTypes": null,
-                      "overloadedDeclarations": [
-                        null
-                      ],
+                      "overloadedDeclarations": [null],
                       "referencedDeclaration": 2016,
                       "type": "modifier ()",
                       "value": "onlyOwner"
@@ -9995,9 +9848,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "assignments": [
-                        1024
-                      ]
+                      "assignments": [1024]
                     },
                     "children": [
                       {
@@ -10038,9 +9889,7 @@
                           "isPure": false,
                           "isStructConstructorCall": true,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "struct OrgRegistry.Org memory",
                           "type_conversion": false
@@ -10074,9 +9923,7 @@
                                   "typeString": "bytes calldata"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 846,
                               "type": "type(struct OrgRegistry.Org storage pointer)",
                               "value": "Org"
@@ -10088,9 +9935,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1005,
                               "type": "address",
                               "value": "_address"
@@ -10102,9 +9947,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1007,
                               "type": "bytes32",
                               "value": "_name"
@@ -10116,9 +9959,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1009,
                               "type": "bytes calldata",
                               "value": "_messagingEndpoint"
@@ -10130,9 +9971,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1011,
                               "type": "bytes calldata",
                               "value": "_whisperKey"
@@ -10144,9 +9983,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1013,
                               "type": "bytes calldata",
                               "value": "_zkpPublicKey"
@@ -10158,9 +9995,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1015,
                               "type": "bytes calldata",
                               "value": "_metadata"
@@ -10205,9 +10040,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 859,
                                   "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                   "value": "orgMap"
@@ -10219,9 +10052,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1005,
                                   "type": "address",
                                   "value": "_address"
@@ -10238,9 +10069,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1024,
                               "type": "struct OrgRegistry.Org memory",
                               "value": "org"
@@ -10269,9 +10098,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -10297,9 +10124,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 868,
                                   "type": "struct OrgRegistry.Org storage ref[] storage ref",
                                   "value": "orgs"
@@ -10316,9 +10141,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1024,
                               "type": "struct OrgRegistry.Org memory",
                               "value": "org"
@@ -10347,9 +10170,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -10383,9 +10204,7 @@
                                   "typeString": "bytes calldata"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 886,
                               "type": "function (bytes32,address,bytes memory,bytes memory,bytes memory,bytes memory)",
                               "value": "RegisterOrg"
@@ -10397,9 +10216,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1007,
                               "type": "bytes32",
                               "value": "_name"
@@ -10411,9 +10228,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1005,
                               "type": "address",
                               "value": "_address"
@@ -10425,9 +10240,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1009,
                               "type": "bytes calldata",
                               "value": "_messagingEndpoint"
@@ -10439,9 +10252,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1011,
                               "type": "bytes calldata",
                               "value": "_whisperKey"
@@ -10453,9 +10264,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1013,
                               "type": "bytes calldata",
                               "value": "_zkpPublicKey"
@@ -10467,9 +10276,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1015,
                               "type": "bytes calldata",
                               "value": "_metadata"
@@ -10527,16 +10334,12 @@
           },
           {
             "attributes": {
-              "baseFunctions": [
-                794
-              ],
+              "baseFunctions": [794],
               "functionSelector": "5cfb8bfd",
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "updateOrg",
               "scope": 1339,
               "stateMutability": "nonpayable",
@@ -10554,9 +10357,7 @@
               },
               {
                 "attributes": {
-                  "overrides": [
-                    null
-                  ]
+                  "overrides": [null]
                 },
                 "id": 1073,
                 "name": "OverrideSpecifier",
@@ -10785,9 +10586,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -10805,10 +10604,7 @@
                                   "typeString": "literal_string \"Must update Org from registered org address\""
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                -18,
-                                -18
-                              ],
+                              "overloadedDeclarations": [-18, -18],
                               "referencedDeclaration": -18,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
@@ -10847,9 +10643,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": -15,
                                       "type": "msg",
                                       "value": "msg"
@@ -10888,9 +10682,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 859,
                                           "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                           "value": "orgMap"
@@ -10902,9 +10694,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1061,
                                           "type": "address",
                                           "value": "_address"
@@ -10993,9 +10783,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 859,
                                       "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                       "value": "orgMap"
@@ -11007,9 +10795,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1061,
                                       "type": "address",
                                       "value": "_address"
@@ -11031,9 +10817,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1063,
                               "type": "bytes32",
                               "value": "_name"
@@ -11090,9 +10874,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 859,
                                       "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                       "value": "orgMap"
@@ -11104,9 +10886,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1061,
                                       "type": "address",
                                       "value": "_address"
@@ -11128,9 +10908,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1065,
                               "type": "bytes calldata",
                               "value": "_messagingEndpoint"
@@ -11187,9 +10965,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 859,
                                       "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                       "value": "orgMap"
@@ -11201,9 +10977,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1061,
                                       "type": "address",
                                       "value": "_address"
@@ -11225,9 +10999,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1067,
                               "type": "bytes calldata",
                               "value": "_whisperKey"
@@ -11284,9 +11056,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 859,
                                       "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                       "value": "orgMap"
@@ -11298,9 +11068,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1061,
                                       "type": "address",
                                       "value": "_address"
@@ -11322,9 +11090,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1069,
                               "type": "bytes calldata",
                               "value": "_zkpPublicKey"
@@ -11381,9 +11147,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 859,
                                       "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                       "value": "orgMap"
@@ -11395,9 +11159,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1061,
                                       "type": "address",
                                       "value": "_address"
@@ -11419,9 +11181,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1071,
                               "type": "bytes calldata",
                               "value": "_metadata"
@@ -11450,9 +11210,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -11486,9 +11244,7 @@
                                   "typeString": "bytes calldata"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 900,
                               "type": "function (bytes32,address,bytes memory,bytes memory,bytes memory,bytes memory)",
                               "value": "UpdateOrg"
@@ -11500,9 +11256,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1063,
                               "type": "bytes32",
                               "value": "_name"
@@ -11514,9 +11268,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1061,
                               "type": "address",
                               "value": "_address"
@@ -11528,9 +11280,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1065,
                               "type": "bytes calldata",
                               "value": "_messagingEndpoint"
@@ -11542,9 +11292,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1067,
                               "type": "bytes calldata",
                               "value": "_whisperKey"
@@ -11556,9 +11304,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1069,
                               "type": "bytes calldata",
                               "value": "_zkpPublicKey"
@@ -11570,9 +11316,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1071,
                               "type": "bytes calldata",
                               "value": "_metadata"
@@ -11815,9 +11559,7 @@
                   {
                     "attributes": {
                       "argumentTypes": null,
-                      "overloadedDeclarations": [
-                        null
-                      ],
+                      "overloadedDeclarations": [null],
                       "referencedDeclaration": 2016,
                       "type": "modifier ()",
                       "value": "onlyOwner"
@@ -11859,9 +11601,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 863,
                                   "type": "mapping(uint256 => struct OrgRegistry.OrgInterfaces storage ref)",
                                   "value": "orgInterfaceMap"
@@ -11873,9 +11613,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 865,
                                   "type": "uint256",
                                   "value": "orgInterfaceCount"
@@ -11897,9 +11635,7 @@
                               "isPure": false,
                               "isStructConstructorCall": true,
                               "lValueRequested": false,
-                              "names": [
-                                null
-                              ],
+                              "names": [null],
                               "tryCall": false,
                               "type": "struct OrgRegistry.OrgInterfaces memory",
                               "type_conversion": false
@@ -11925,9 +11661,7 @@
                                       "typeString": "address"
                                     }
                                   ],
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 855,
                                   "type": "type(struct OrgRegistry.OrgInterfaces storage pointer)",
                                   "value": "OrgInterfaces"
@@ -11939,9 +11673,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1138,
                                   "type": "bytes32",
                                   "value": "_groupName"
@@ -11953,9 +11685,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1140,
                                   "type": "address",
                                   "value": "_tokenAddress"
@@ -11967,9 +11697,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1142,
                                   "type": "address",
                                   "value": "_shieldAddress"
@@ -11981,9 +11709,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1144,
                                   "type": "address",
                                   "value": "_verifierAddress"
@@ -12024,9 +11750,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 865,
                               "type": "uint256",
                               "value": "orgInterfaceCount"
@@ -12084,16 +11808,12 @@
           },
           {
             "attributes": {
-              "baseFunctions": [
-                799
-              ],
+              "baseFunctions": [799],
               "functionSelector": "23d26253",
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getOrgCount",
               "scope": 1339,
               "stateMutability": "view",
@@ -12111,9 +11831,7 @@
               },
               {
                 "attributes": {
-                  "overrides": [
-                    null
-                  ]
+                  "overrides": [null]
                 },
                 "id": 1171,
                 "name": "OverrideSpecifier",
@@ -12121,9 +11839,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 1170,
@@ -12187,9 +11903,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 868,
                               "type": "struct OrgRegistry.Org storage ref[] storage ref",
                               "value": "orgs"
@@ -12220,16 +11934,12 @@
           },
           {
             "attributes": {
-              "baseFunctions": [
-                816
-              ],
+              "baseFunctions": [816],
               "functionSelector": "1f1f8652",
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getOrg",
               "scope": 1339,
               "stateMutability": "view",
@@ -12247,9 +11957,7 @@
               },
               {
                 "attributes": {
-                  "overrides": [
-                    null
-                  ]
+                  "overrides": [null]
                 },
                 "id": 1184,
                 "name": "OverrideSpecifier",
@@ -12510,9 +12218,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 859,
                                       "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                       "value": "orgMap"
@@ -12524,9 +12230,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1182,
                                       "type": "address",
                                       "value": "_address"
@@ -12570,9 +12274,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 859,
                                       "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                       "value": "orgMap"
@@ -12584,9 +12286,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1182,
                                       "type": "address",
                                       "value": "_address"
@@ -12630,9 +12330,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 859,
                                       "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                       "value": "orgMap"
@@ -12644,9 +12342,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1182,
                                       "type": "address",
                                       "value": "_address"
@@ -12690,9 +12386,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 859,
                                       "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                       "value": "orgMap"
@@ -12704,9 +12398,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1182,
                                       "type": "address",
                                       "value": "_address"
@@ -12750,9 +12442,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 859,
                                       "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                       "value": "orgMap"
@@ -12764,9 +12454,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1182,
                                       "type": "address",
                                       "value": "_address"
@@ -12810,9 +12498,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 859,
                                       "type": "mapping(address => struct OrgRegistry.Org storage ref)",
                                       "value": "orgMap"
@@ -12824,9 +12510,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1182,
                                       "type": "address",
                                       "value": "_address"
@@ -12871,9 +12555,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getInterfaceAddresses",
               "overrides": null,
               "scope": 1339,
@@ -12892,9 +12574,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 1227,
@@ -13071,9 +12751,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "assignments": [
-                        1245
-                      ]
+                      "assignments": [1245]
                     },
                     "children": [
                       {
@@ -13123,9 +12801,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "bytes32[] memory",
                           "type_conversion": false
@@ -13174,9 +12850,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 865,
                               "type": "uint256",
                               "value": "orgInterfaceCount"
@@ -13197,9 +12871,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        1256
-                      ]
+                      "assignments": [1256]
                     },
                     "children": [
                       {
@@ -13249,9 +12921,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "address[] memory",
                           "type_conversion": false
@@ -13301,9 +12971,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 865,
                               "type": "uint256",
                               "value": "orgInterfaceCount"
@@ -13324,9 +12992,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        1267
-                      ]
+                      "assignments": [1267]
                     },
                     "children": [
                       {
@@ -13376,9 +13042,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "address[] memory",
                           "type_conversion": false
@@ -13428,9 +13092,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 865,
                               "type": "uint256",
                               "value": "orgInterfaceCount"
@@ -13451,9 +13113,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        1278
-                      ]
+                      "assignments": [1278]
                     },
                     "children": [
                       {
@@ -13503,9 +13163,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "address[] memory",
                           "type_conversion": false
@@ -13555,9 +13213,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 865,
                               "type": "uint256",
                               "value": "orgInterfaceCount"
@@ -13580,9 +13236,7 @@
                     "children": [
                       {
                         "attributes": {
-                          "assignments": [
-                            1286
-                          ]
+                          "assignments": [1286]
                         },
                         "children": [
                           {
@@ -13653,9 +13307,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1286,
                               "type": "uint256",
                               "value": "i"
@@ -13667,9 +13319,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 865,
                               "type": "uint256",
                               "value": "orgInterfaceCount"
@@ -13700,9 +13350,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1286,
                                   "type": "uint256",
                                   "value": "i"
@@ -13725,9 +13373,7 @@
                         "children": [
                           {
                             "attributes": {
-                              "assignments": [
-                                1296
-                              ]
+                              "assignments": [1296]
                             },
                             "children": [
                               {
@@ -13773,9 +13419,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 863,
                                       "type": "mapping(uint256 => struct OrgRegistry.OrgInterfaces storage ref)",
                                       "value": "orgInterfaceMap"
@@ -13787,9 +13431,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1286,
                                       "type": "uint256",
                                       "value": "i"
@@ -13834,9 +13476,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1245,
                                           "type": "bytes32[] memory",
                                           "value": "gName"
@@ -13848,9 +13488,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1286,
                                           "type": "uint256",
                                           "value": "i"
@@ -13879,9 +13517,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1296,
                                           "type": "struct OrgRegistry.OrgInterfaces storage pointer",
                                           "value": "orgInterfaces"
@@ -13931,9 +13567,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1256,
                                           "type": "address[] memory",
                                           "value": "tfAddress"
@@ -13945,9 +13579,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1286,
                                           "type": "uint256",
                                           "value": "i"
@@ -13976,9 +13608,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1296,
                                           "type": "struct OrgRegistry.OrgInterfaces storage pointer",
                                           "value": "orgInterfaces"
@@ -14028,9 +13658,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1267,
                                           "type": "address[] memory",
                                           "value": "sAddress"
@@ -14042,9 +13670,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1286,
                                           "type": "uint256",
                                           "value": "i"
@@ -14073,9 +13699,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1296,
                                           "type": "struct OrgRegistry.OrgInterfaces storage pointer",
                                           "value": "orgInterfaces"
@@ -14125,9 +13749,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1278,
                                           "type": "address[] memory",
                                           "value": "vrAddress"
@@ -14139,9 +13761,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1286,
                                           "type": "uint256",
                                           "value": "i"
@@ -14170,9 +13790,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 1296,
                                           "type": "struct OrgRegistry.OrgInterfaces storage pointer",
                                           "value": "orgInterfaces"
@@ -14225,9 +13843,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1245,
                               "type": "bytes32[] memory",
                               "value": "gName"
@@ -14239,9 +13855,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1256,
                               "type": "address[] memory",
                               "value": "tfAddress"
@@ -14253,9 +13867,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1267,
                               "type": "address[] memory",
                               "value": "sAddress"
@@ -14267,9 +13879,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1278,
                               "type": "address[] memory",
                               "value": "vrAddress"

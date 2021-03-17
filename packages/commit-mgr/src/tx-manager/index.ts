@@ -1,5 +1,5 @@
-import { InfuraGas } from './infura-gas';
-import { EthClient } from './eth-client';
+import { InfuraGas } from "./infura-gas";
+import { EthClient } from "./eth-client";
 
 export interface ITxManager {
   insertLeaf(
@@ -13,7 +13,7 @@ export interface ITxManager {
 
 export async function txManagerServiceFactory(
   provider: string,
-  config?: any,
+  config?: any
 ): Promise<ITxManager> {
   let service;
 
@@ -31,7 +31,7 @@ export async function txManagerServiceFactory(
       service = new EthClient(config);
       break;
     default:
-      throw new Error('TxManager provider not found.');
+      throw new Error("TxManager provider not found.");
   }
 
   return service;

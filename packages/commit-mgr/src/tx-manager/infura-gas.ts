@@ -1,19 +1,21 @@
 import dotenv from "dotenv";
 import { Wallet, ethers } from "ethers";
-import { ITxManager } from '.';
-import { logger } from '../logger';
+import { ITxManager } from ".";
+import { logger } from "../logger";
 import { http_provider, jsonrpc, shieldContract } from "../blockchain";
 
 dotenv.config();
 
 export class InfuraGas implements ITxManager {
-
   constructor(private readonly config: any) {
     this.config = config;
   }
 
   async signTx(toAddress: string, fromAddress: string, txData: string) {
-    const wallet = new Wallet(process.env.CMGR_WALLET_PRIVATE_KEY, http_provider);
+    const wallet = new Wallet(
+      process.env.CMGR_WALLET_PRIVATE_KEY,
+      http_provider
+    );
     const nonce = await wallet.getTransactionCount();
     logger.debug(`nonce: ${nonce}`);
 
@@ -23,7 +25,7 @@ export class InfuraGas implements ITxManager {
       data: txData,
       chainId: parseInt(process.env.CMGR_CHAIN_ID, 10),
       gasLimit: 0,
-      nonce
+      nonce,
     };
 
     const gasEstimate = await wallet.estimateGas(unsignedTx);
@@ -33,12 +35,14 @@ export class InfuraGas implements ITxManager {
 
     const relayTransactionHash = ethers.utils.keccak256(
       ethers.utils.defaultAbiCoder.encode(
-        ['address', 'bytes', 'uint', 'uint'],
+        ["address", "bytes", "uint", "uint"],
         [toAddress, txData, gasLimit, process.env.CMGR_CHAIN_ID] // Rinkeby chainId is 4
       )
     );
 
-    const signature = await wallet.signMessage(ethers.utils.arrayify(relayTransactionHash))
+    const signature = await wallet.signMessage(
+      ethers.utils.arrayify(relayTransactionHash)
+    );
     return { signature, gasLimit };
   }
 
@@ -57,30 +61,32 @@ export class InfuraGas implements ITxManager {
         "verifyAndPush(uint256[],uint256[],bytes32)",
         [proof, publicInputs, newCommitment]
       );
-      const { signature, gasLimit } = await this.signTx(toAddress, fromAddress, txData);
+      const { signature, gasLimit } = await this.signTx(
+        toAddress,
+        fromAddress,
+        txData
+      );
       logger.debug(`Signature for relay: ${signature}`);
       logger.debug(`txData: ${txData}`);
       const transaction = {
         to: toAddress,
         data: txData,
-        gas: `${gasLimit}`
-      }
-      const res = await jsonrpc('relay_sendTransaction', [transaction, signature]);
+        gas: `${gasLimit}`,
+      };
+      const res = await jsonrpc("relay_sendTransaction", [
+        transaction,
+        signature,
+      ]);
       logger.debug(`relay_sendTransaction response: %o`, res);
-      txHash = res.result
+      txHash = res.result;
     } catch (err) {
-      logger.error('[baseline_verifyAndPush]:', err);
+      logger.error("[baseline_verifyAndPush]:", err);
       if (err.error) {
-        error = { data: err.error.message }
+        error = { data: err.error.message };
       } else {
         error = { data: err };
       }
     }
     return { error, txHash };
-
-
   }
-
 }
-
-

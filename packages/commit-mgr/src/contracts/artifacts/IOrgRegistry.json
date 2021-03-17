@@ -158,9 +158,7 @@
   "ast": {
     "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/IOrgRegistry.sol",
     "exportedSymbols": {
-      "IOrgRegistry": [
-        817
-      ]
+      "IOrgRegistry": [817]
     },
     "id": 818,
     "license": "CC0",
@@ -168,21 +166,13 @@
     "nodes": [
       {
         "id": 759,
-        "literals": [
-          "solidity",
-          "^",
-          "0.6",
-          ".9"
-        ],
+        "literals": ["solidity", "^", "0.6", ".9"],
         "nodeType": "PragmaDirective",
         "src": "32:23:5"
       },
       {
         "id": 760,
-        "literals": [
-          "experimental",
-          "ABIEncoderV2"
-        ],
+        "literals": ["experimental", "ABIEncoderV2"],
         "nodeType": "PragmaDirective",
         "src": "56:33:5"
       },
@@ -194,9 +184,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 817,
-        "linearizedBaseContracts": [
-          817
-        ],
+        "linearizedBaseContracts": [817],
         "name": "IOrgRegistry",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -954,21 +942,14 @@
     "attributes": {
       "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/IOrgRegistry.sol",
       "exportedSymbols": {
-        "IOrgRegistry": [
-          817
-        ]
+        "IOrgRegistry": [817]
       },
       "license": "CC0"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.6",
-            ".9"
-          ]
+          "literals": ["solidity", "^", "0.6", ".9"]
         },
         "id": 759,
         "name": "PragmaDirective",
@@ -976,10 +957,7 @@
       },
       {
         "attributes": {
-          "literals": [
-            "experimental",
-            "ABIEncoderV2"
-          ]
+          "literals": ["experimental", "ABIEncoderV2"]
         },
         "id": 760,
         "name": "PragmaDirective",
@@ -988,18 +966,12 @@
       {
         "attributes": {
           "abstract": false,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
+          "baseContracts": [null],
+          "contractDependencies": [null],
           "contractKind": "interface",
           "documentation": null,
           "fullyImplemented": false,
-          "linearizedBaseContracts": [
-            817
-          ],
+          "linearizedBaseContracts": [817],
           "name": "IOrgRegistry",
           "scope": 818
         },
@@ -1012,9 +984,7 @@
               "implemented": false,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "registerOrg",
               "overrides": null,
               "scope": 817,
@@ -1247,9 +1217,7 @@
               "implemented": false,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "updateOrg",
               "overrides": null,
               "scope": 817,
@@ -1482,9 +1450,7 @@
               "implemented": false,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getOrgCount",
               "overrides": null,
               "scope": 817,
@@ -1495,9 +1461,7 @@
             "children": [
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 795,
@@ -1552,9 +1516,7 @@
               "implemented": false,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getOrg",
               "overrides": null,
               "scope": 817,

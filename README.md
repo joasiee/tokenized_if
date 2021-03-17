@@ -1,11 +1,16 @@
 # Tokenized Inventory Finance
+
 ## Requirements
+
 - node
 - yarn v1
 - docker
 - docker-compose
+
 ## Running locally
+
 In root folder:
+
 ```
 yarn
 yarn run build

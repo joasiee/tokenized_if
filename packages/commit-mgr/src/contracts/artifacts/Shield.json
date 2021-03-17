@@ -236,9 +236,7 @@
   "ast": {
     "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/Shield.sol",
     "exportedSymbols": {
-      "Shield": [
-        110
-      ]
+      "Shield": [110]
     },
     "id": 111,
     "license": "CC0",
@@ -246,12 +244,7 @@
     "nodes": [
       {
         "id": 37,
-        "literals": [
-          "solidity",
-          "^",
-          "0.6",
-          ".9"
-        ],
+        "literals": ["solidity", "^", "0.6", ".9"],
         "nodeType": "PragmaDirective",
         "src": "32:23:2"
       },
@@ -328,19 +321,12 @@
             "src": "173:16:2"
           }
         ],
-        "contractDependencies": [
-          20,
-          722
-        ],
+        "contractDependencies": [20, 722],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 110,
-        "linearizedBaseContracts": [
-          110,
-          722,
-          20
-        ],
+        "linearizedBaseContracts": [110, 722, 20],
         "name": "Shield",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -584,9 +570,7 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [
-              6
-            ],
+            "baseFunctions": [6],
             "body": {
               "id": 74,
               "nodeType": "Block",
@@ -724,18 +708,14 @@
             "visibility": "external"
           },
           {
-            "baseFunctions": [
-              19
-            ],
+            "baseFunctions": [19],
             "body": {
               "id": 108,
               "nodeType": "Block",
               "src": "830:337:2",
               "statements": [
                 {
-                  "assignments": [
-                    90
-                  ],
+                  "assignments": [90],
                   "declarations": [
                     {
                       "constant": false,
@@ -903,10 +883,7 @@
                       "id": 97,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "931:7:2",
                       "typeDescriptions": {
@@ -1191,21 +1168,14 @@
     "attributes": {
       "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/Shield.sol",
       "exportedSymbols": {
-        "Shield": [
-          110
-        ]
+        "Shield": [110]
       },
       "license": "CC0"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.6",
-            ".9"
-          ]
+          "literals": ["solidity", "^", "0.6", ".9"]
         },
         "id": 37,
         "name": "PragmaDirective",
@@ -1217,9 +1187,7 @@
           "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/lib/MerkleTreeSHA256.sol",
           "file": "./lib/MerkleTreeSHA256.sol",
           "scope": 111,
-          "symbolAliases": [
-            null
-          ],
+          "symbolAliases": [null],
           "unitAlias": ""
         },
         "id": 38,
@@ -1232,9 +1200,7 @@
           "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/IShield.sol",
           "file": "./IShield.sol",
           "scope": 111,
-          "symbolAliases": [
-            null
-          ],
+          "symbolAliases": [null],
           "unitAlias": ""
         },
         "id": 39,
@@ -1247,9 +1213,7 @@
           "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/IVerifier.sol",
           "file": "./IVerifier.sol",
           "scope": 111,
-          "symbolAliases": [
-            null
-          ],
+          "symbolAliases": [null],
           "unitAlias": ""
         },
         "id": 40,
@@ -1259,18 +1223,11 @@
       {
         "attributes": {
           "abstract": false,
-          "contractDependencies": [
-            20,
-            722
-          ],
+          "contractDependencies": [20, 722],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            110,
-            722,
-            20
-          ],
+          "linearizedBaseContracts": [110, 722, 20],
           "name": "Shield",
           "scope": 111
         },
@@ -1427,9 +1384,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 55,
@@ -1441,9 +1396,7 @@
                   {
                     "attributes": {
                       "argumentTypes": null,
-                      "overloadedDeclarations": [
-                        null
-                      ],
+                      "overloadedDeclarations": [null],
                       "referencedDeclaration": 722,
                       "type": "type(contract MerkleTreeSHA256)",
                       "value": "MerkleTreeSHA256"
@@ -1455,9 +1408,7 @@
                   {
                     "attributes": {
                       "argumentTypes": null,
-                      "overloadedDeclarations": [
-                        null
-                      ],
+                      "overloadedDeclarations": [null],
                       "referencedDeclaration": 50,
                       "type": "uint256",
                       "value": "_treeHeight"
@@ -1489,9 +1440,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 46,
                               "type": "contract IVerifier",
                               "value": "verifier"
@@ -1508,9 +1457,7 @@
                               "isPure": false,
                               "isStructConstructorCall": false,
                               "lValueRequested": false,
-                              "names": [
-                                null
-                              ],
+                              "names": [null],
                               "tryCall": false,
                               "type": "contract IVerifier",
                               "type_conversion": true
@@ -1524,9 +1471,7 @@
                                       "typeString": "address"
                                     }
                                   ],
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 35,
                                   "type": "type(contract IVerifier)",
                                   "value": "IVerifier"
@@ -1538,9 +1483,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 48,
                                   "type": "address",
                                   "value": "_verifier"
@@ -1576,17 +1519,13 @@
           },
           {
             "attributes": {
-              "baseFunctions": [
-                6
-              ],
+              "baseFunctions": [6],
               "documentation": null,
               "functionSelector": "46657fe9",
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getVerifier",
               "scope": 110,
               "stateMutability": "view",
@@ -1596,9 +1535,7 @@
             "children": [
               {
                 "attributes": {
-                  "overrides": [
-                    null
-                  ]
+                  "overrides": [null]
                 },
                 "id": 65,
                 "name": "OverrideSpecifier",
@@ -1606,9 +1543,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 64,
@@ -1666,9 +1601,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "address",
                           "type_conversion": true
@@ -1706,9 +1639,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 46,
                               "type": "contract IVerifier",
                               "value": "verifier"
@@ -1739,17 +1670,13 @@
           },
           {
             "attributes": {
-              "baseFunctions": [
-                19
-              ],
+              "baseFunctions": [19],
               "documentation": null,
               "functionSelector": "6620e73b",
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "verifyAndPush",
               "scope": 110,
               "stateMutability": "nonpayable",
@@ -1759,9 +1686,7 @@
             "children": [
               {
                 "attributes": {
-                  "overrides": [
-                    null
-                  ]
+                  "overrides": [null]
                 },
                 "id": 85,
                 "name": "OverrideSpecifier",
@@ -1919,9 +1844,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "assignments": [
-                        90
-                      ]
+                      "assignments": [90]
                     },
                     "children": [
                       {
@@ -1960,9 +1883,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "bool",
                           "type_conversion": false
@@ -1992,9 +1913,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 46,
                                   "type": "contract IVerifier",
                                   "value": "verifier"
@@ -2011,9 +1930,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 78,
                               "type": "uint256[] calldata",
                               "value": "_proof"
@@ -2025,9 +1942,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 81,
                               "type": "uint256[] calldata",
                               "value": "_publicInputs"
@@ -2056,9 +1971,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -2076,10 +1989,7 @@
                                   "typeString": "literal_string \"The proof failed verification in the verifier contract\""
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                -18,
-                                -18
-                              ],
+                              "overloadedDeclarations": [-18, -18],
                               "referencedDeclaration": -18,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
@@ -2091,9 +2001,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 90,
                               "type": "bool",
                               "value": "result"
@@ -2139,9 +2047,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "bytes32",
                           "type_conversion": false
@@ -2155,9 +2061,7 @@
                                   "typeString": "bytes32"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 400,
                               "type": "function (bytes32) returns (bytes32)",
                               "value": "insertLeaf"
@@ -2169,9 +2073,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 83,
                               "type": "bytes32",
                               "value": "_newCommitment"

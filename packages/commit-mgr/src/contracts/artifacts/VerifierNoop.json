@@ -37,9 +37,7 @@
   "ast": {
     "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/lib/VerifierNoop.sol",
     "exportedSymbols": {
-      "VerifierNoop": [
-        757
-      ]
+      "VerifierNoop": [757]
     },
     "id": 758,
     "license": "CC0",
@@ -47,12 +45,7 @@
     "nodes": [
       {
         "id": 724,
-        "literals": [
-          "solidity",
-          "^",
-          "0.6",
-          ".9"
-        ],
+        "literals": ["solidity", "^", "0.6", ".9"],
         "nodeType": "PragmaDirective",
         "src": "32:23:4"
       },
@@ -64,9 +57,7 @@
         "documentation": null,
         "fullyImplemented": true,
         "id": 757,
-        "linearizedBaseContracts": [
-          757
-        ],
+        "linearizedBaseContracts": [757],
         "name": "VerifierNoop",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -195,10 +186,7 @@
                       "id": 735,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "333:7:4",
                       "typeDescriptions": {
@@ -344,10 +332,7 @@
                       "id": 744,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "388:7:4",
                       "typeDescriptions": {
@@ -544,21 +529,14 @@
     "attributes": {
       "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/lib/VerifierNoop.sol",
       "exportedSymbols": {
-        "VerifierNoop": [
-          757
-        ]
+        "VerifierNoop": [757]
       },
       "license": "CC0"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.6",
-            ".9"
-          ]
+          "literals": ["solidity", "^", "0.6", ".9"]
         },
         "id": 724,
         "name": "PragmaDirective",
@@ -567,18 +545,12 @@
       {
         "attributes": {
           "abstract": false,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
+          "baseContracts": [null],
+          "contractDependencies": [null],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            757
-          ],
+          "linearizedBaseContracts": [757],
           "name": "VerifierNoop",
           "scope": 758
         },
@@ -590,9 +562,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "verify",
               "overrides": null,
               "scope": 757,
@@ -733,9 +703,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -753,10 +721,7 @@
                                   "typeString": "literal_string \"Proof is undefined\""
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                -18,
-                                -18
-                              ],
+                              "overloadedDeclarations": [-18, -18],
                               "referencedDeclaration": -18,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
@@ -793,9 +758,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 727,
                                       "type": "uint256[] calldata",
                                       "value": "_proof"
@@ -885,9 +848,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -905,10 +866,7 @@
                                   "typeString": "literal_string \"Input is undefined\""
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                -18,
-                                -18
-                              ],
+                              "overloadedDeclarations": [-18, -18],
                               "referencedDeclaration": -18,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
@@ -945,9 +903,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 730,
                                       "type": "uint256[] calldata",
                                       "value": "_publicInputs"

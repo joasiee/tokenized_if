@@ -3,11 +3,19 @@ import jayson from "jayson";
 import url from "url";
 import * as promiseJayson from "jayson/promise";
 
-import { checkChainLogs, subscribeMerkleEvents, jsonrpc, unsubscribeMerkleEvents } from "./blockchain";
+import {
+  checkChainLogs,
+  subscribeMerkleEvents,
+  jsonrpc,
+  unsubscribeMerkleEvents,
+} from "./blockchain";
 import { merkleTrees } from "./db/models/MerkleTree";
 import { logger } from "./logger";
 import { updateTree, getSiblingPathByLeafIndex } from "./merkle-tree";
-import { getLeafByLeafIndex, getLeavesByLeafIndexRange } from "./merkle-tree/leaves.js";
+import {
+  getLeafByLeafIndex,
+  getLeavesByLeafIndexRange,
+} from "./merkle-tree/leaves.js";
 import { concatenateThenHash } from "./merkle-tree/hash.js";
 import { txManagerServiceFactory } from "./tx-manager";
 
@@ -34,7 +42,7 @@ const relayRequest = (methodName: any) => {
     },
     {
       useContext: true,
-    },
+    }
   );
 };
 
@@ -44,7 +52,7 @@ const baseline_getCommit = new jayson.Method(
     if (error) {
       done(error, null);
       return;
-    };
+    }
 
     const contractAddress = args[0];
     const leafIndex = args[1];
@@ -53,7 +61,7 @@ const baseline_getCommit = new jayson.Method(
   },
   {
     useContext: true,
-  },
+  }
 );
 
 const baseline_getCommits = new jayson.Method(
@@ -62,7 +70,7 @@ const baseline_getCommits = new jayson.Method(
     if (error) {
       done(error, null);
       return;
-    };
+    }
 
     const contractAddress = args[0];
     const startLeafIndex = args[1];
@@ -72,19 +80,23 @@ const baseline_getCommits = new jayson.Method(
       error = {
         code: -32602,
         message: `Invalid params`,
-        data: `Param "count" must be greater than 0`
+        data: `Param "count" must be greater than 0`,
       };
       done(error, null);
       return;
-    };
+    }
 
     const endLeafIndex = startLeafIndex + count - 1;
-    const result = await getLeavesByLeafIndexRange(contractAddress, startLeafIndex, endLeafIndex);
+    const result = await getLeavesByLeafIndexRange(
+      contractAddress,
+      startLeafIndex,
+      endLeafIndex
+    );
     done(null, result);
   },
   {
     useContext: true,
-  },
+  }
 );
 
 // Retrieve root from db and on-chain. Verify they are equal
@@ -94,7 +106,7 @@ const baseline_getRoot = new jayson.Method(
     if (error) {
       done(error, null);
       return;
-    };
+    }
 
     const contractAddress = args[0];
     let root;
@@ -104,7 +116,7 @@ const baseline_getRoot = new jayson.Method(
       logger.error(`[baseline_getRoot] ${err}`);
       error = {
         code: -32603,
-        message: `Internal server error`
+        message: `Internal server error`,
       };
       done(error, null);
       return;
@@ -113,7 +125,7 @@ const baseline_getRoot = new jayson.Method(
   },
   {
     useContext: true,
-  },
+  }
 );
 
 const baseline_getProof = new jayson.Method(
@@ -122,7 +134,7 @@ const baseline_getProof = new jayson.Method(
     if (error) {
       done(error, null);
       return;
-    };
+    }
 
     const contractAddress = args[0];
     const leafIndex = args[1];
@@ -133,7 +145,7 @@ const baseline_getProof = new jayson.Method(
       logger.error(`[baseline_getProof] ${err}`);
       error = {
         code: -32603,
-        message: `Internal server error`
+        message: `Internal server error`,
       };
       done(error, null);
       return;
@@ -142,7 +154,7 @@ const baseline_getProof = new jayson.Method(
   },
   {
     useContext: true,
-  },
+  }
 );
 
 // Returns array containing addresses of all 'active' Shield contracts
@@ -152,13 +164,16 @@ const baseline_getTracked = new jayson.Method(
     if (error) {
       done(error, null);
       return;
-    };
+    }
 
     // Use regex so that we don't count same address multiple times if it spans more than one doc/bucket
-    const trackedContracts = await merkleTrees.find({
-      _id: { $regex: /_0$/ },
-      active: true
-    }).select('_id').lean();
+    const trackedContracts = await merkleTrees
+      .find({
+        _id: { $regex: /_0$/ },
+        active: true,
+      })
+      .select("_id")
+      .lean();
     const contractAddresses = [];
     for (const contract of trackedContracts) {
       const address = contract._id.slice(0, -2); // Cut off trailing "_0"
@@ -169,7 +184,7 @@ const baseline_getTracked = new jayson.Method(
   },
   {
     useContext: true,
-  },
+  }
 );
 
 const baseline_verifyAndPush = new jayson.Method(
@@ -178,16 +193,21 @@ const baseline_verifyAndPush = new jayson.Method(
     if (error) {
       done(error, null);
       return;
-    };
+    }
 
     const senderAddress = args[0];
     const contractAddress = args[1];
     const proof = args[2];
     const publicInputs = args[3];
     const newCommitment = args[4];
-    const record = await merkleTrees.findOne({ _id: `${contractAddress}_0` }).select('shieldContract').lean();
+    const record = await merkleTrees
+      .findOne({ _id: `${contractAddress}_0` })
+      .select("shieldContract")
+      .lean();
     if (!record) {
-      logger.error(`[baseline_verifyAndPush] Merkle Tree not found in db: ${contractAddress}`);
+      logger.error(
+        `[baseline_verifyAndPush] Merkle Tree not found in db: ${contractAddress}`
+      );
       error = {
         code: -32603,
         message: `Internal server error`,
@@ -196,18 +216,28 @@ const baseline_verifyAndPush = new jayson.Method(
       done(error, null);
       return;
     }
-    logger.info(`[baseline_verifyAndPush] Found Shield/MerkleTree for contract address: ${contractAddress}`);
+    logger.info(
+      `[baseline_verifyAndPush] Found Shield/MerkleTree for contract address: ${contractAddress}`
+    );
 
-    const txManager = await txManagerServiceFactory(process.env.ETH_CLIENT_TYPE);
+    const txManager = await txManagerServiceFactory(
+      process.env.ETH_CLIENT_TYPE
+    );
 
     let result;
     try {
-      result = await txManager.insertLeaf(contractAddress, senderAddress, proof, publicInputs, newCommitment);
+      result = await txManager.insertLeaf(
+        contractAddress,
+        senderAddress,
+        proof,
+        publicInputs,
+        newCommitment
+      );
     } catch (err) {
       logger.error(`[baseline_verifyAndPush] ${err}`);
       error = {
         code: -32603,
-        message: `Internal server error`
+        message: `Internal server error`,
       };
       done(error, null);
       return;
@@ -217,7 +247,7 @@ const baseline_verifyAndPush = new jayson.Method(
   },
   {
     useContext: true,
-  },
+  }
 );
 
 const baseline_track = new jayson.Method(
@@ -226,30 +256,32 @@ const baseline_track = new jayson.Method(
     if (error) {
       done(error, null);
       return;
-    };
+    }
 
     const contractAddress = args[0];
-    const merkleTree = await merkleTrees.findOne({ _id: `${contractAddress}_0` });
+    const merkleTree = await merkleTrees.findOne({
+      _id: `${contractAddress}_0`,
+    });
     if (merkleTree && merkleTree.active === true) {
       error = {
         code: -32603,
         message: `Internal server error`,
-        data: `Already tracking MerkleTree at address ${contractAddress}`
+        data: `Already tracking MerkleTree at address ${contractAddress}`,
       };
-      done(error, null)
+      done(error, null);
       return;
     }
 
     const methodSignature = "0x01e3e915"; // function selector for "treeHeight()"
     const res = await jsonrpc("eth_call", [
       {
-        "to": contractAddress,
-        "data": methodSignature
+        to: contractAddress,
+        data: methodSignature,
       },
-      "latest"
+      "latest",
     ]);
     if (res.error) {
-      done(res.error, res.result)
+      done(res.error, res.result);
       return;
     }
     const treeHeight = Number(res.result);
@@ -257,31 +289,33 @@ const baseline_track = new jayson.Method(
       error = {
         code: -32603,
         message: `Internal server error`,
-        data: `Could not retreive treeHeight from blockchain`
+        data: `Could not retreive treeHeight from blockchain`,
       };
-      done(error, null)
+      done(error, null);
       return;
     }
-    logger.info(`[baseline_track] found treeHeight of ${treeHeight} for contract ${contractAddress}`)
+    logger.info(
+      `[baseline_track] found treeHeight of ${treeHeight} for contract ${contractAddress}`
+    );
 
     await merkleTrees.findOneAndUpdate(
       { _id: `${contractAddress}_0` },
       {
         _id: `${contractAddress}_0`,
         treeHeight,
-        active: true
+        active: true,
       },
-      { upsert: true, new: true, setDefaultsOnInsert: true },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
-    await checkChainLogs(contractAddress, 0)
+    await checkChainLogs(contractAddress, 0);
     error = subscribeMerkleEvents(contractAddress);
 
     done(error, true);
   },
   {
     useContext: true,
-  },
+  }
 );
 
 const baseline_untrack = new jayson.Method(
@@ -291,17 +325,22 @@ const baseline_untrack = new jayson.Method(
     if (error) {
       done(error, null);
       return;
-    };
+    }
 
     const contractAddress = args[0];
     const prune = args[1];
 
-    const foundTree = await merkleTrees.find({
-      _id: { $regex: new RegExp(contractAddress) }
-    }).select('_id').lean();
+    const foundTree = await merkleTrees
+      .find({
+        _id: { $regex: new RegExp(contractAddress) },
+      })
+      .select("_id")
+      .lean();
 
     if (foundTree.length === 0) {
-      logger.error(`[baseline_untrack] Merkle Tree not found in db: ${contractAddress}`);
+      logger.error(
+        `[baseline_untrack] Merkle Tree not found in db: ${contractAddress}`
+      );
       error = {
         code: -32603,
         message: `Internal server error`,
@@ -309,25 +348,27 @@ const baseline_untrack = new jayson.Method(
       };
       done(error, null);
       return;
-    };
+    }
 
     unsubscribeMerkleEvents(contractAddress);
 
     // If prune === true, wipe tree from storage
     if (prune === true) {
-      await merkleTrees.deleteMany({ _id: { $regex: new RegExp(contractAddress) } });
+      await merkleTrees.deleteMany({
+        _id: { $regex: new RegExp(contractAddress) },
+      });
     } else {
       await merkleTrees.updateOne(
         { _id: `${contractAddress}_0` },
         { active: false },
         { upsert: true, new: true }
       );
-    };
+    }
     done(null, true);
   },
   {
     useContext: true,
-  },
+  }
 );
 
 // Verify a given leaf is part of the merkle tree by using the sibling path
@@ -337,7 +378,7 @@ const baseline_verify = new jayson.Method(
     if (error) {
       done(error, null);
       return;
-    };
+    }
 
     const contractAddress = args[0];
     const leafValue = args[1];
@@ -349,18 +390,24 @@ const baseline_verify = new jayson.Method(
     for (let index = 0; index < siblingNodes.length - 1; index++) {
       if (siblingNodes[index].nodeIndex % 2 === 0) {
         // even nodeIndex
-        currentHash = concatenateThenHash(currentHash, siblingNodes[index].hash);
+        currentHash = concatenateThenHash(
+          currentHash,
+          siblingNodes[index].hash
+        );
       } else {
         // odd nodeIndex
-        currentHash = concatenateThenHash(siblingNodes[index].hash, currentHash);
+        currentHash = concatenateThenHash(
+          siblingNodes[index].hash,
+          currentHash
+        );
       }
     }
-    const result = (root === currentHash) && (root === updatedRoot);
+    const result = root === currentHash && root === updatedRoot;
     done(null, result);
   },
   {
     useContext: true,
-  },
+  }
 );
 
 function validateParams(inputs: any[], numInputs: number) {
@@ -369,7 +416,7 @@ function validateParams(inputs: any[], numInputs: number) {
     error = {
       code: -32602,
       message: `Invalid params`,
-      data: `Expected number of inputs to be ${numInputs} but received ${inputs.length}`
+      data: `Expected number of inputs to be ${numInputs} but received ${inputs.length}`,
     };
     return error;
   }
@@ -378,7 +425,7 @@ function validateParams(inputs: any[], numInputs: number) {
       error = {
         code: -32602,
         message: `Invalid params`,
-        data: `Param index ${index} not defined`
+        data: `Param index ${index} not defined`,
       };
     }
   }
@@ -395,7 +442,7 @@ const methods = {
   baseline_verifyAndPush,
   baseline_track,
   baseline_untrack,
-  baseline_verify
+  baseline_verify,
 };
 
 // Requests to methods not defined here will produce a response with error code -32601 "Method not found"

@@ -178,9 +178,7 @@
   "ast": {
     "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/lib/MerkleTreeSHA256.sol",
     "exportedSymbols": {
-      "MerkleTreeSHA256": [
-        722
-      ]
+      "MerkleTreeSHA256": [722]
     },
     "id": 723,
     "license": "CC0",
@@ -188,12 +186,7 @@
     "nodes": [
       {
         "id": 112,
-        "literals": [
-          "solidity",
-          "^",
-          "0.6",
-          ".9"
-        ],
+        "literals": ["solidity", "^", "0.6", ".9"],
         "nodeType": "PragmaDirective",
         "src": "425:23:3"
       },
@@ -205,9 +198,7 @@
         "documentation": null,
         "fullyImplemented": true,
         "id": 722,
-        "linearizedBaseContracts": [
-          722
-        ],
+        "linearizedBaseContracts": [722],
         "name": "MerkleTreeSHA256",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -1132,9 +1123,7 @@
                     "src": "3713:379:3",
                     "statements": [
                       {
-                        "assignments": [
-                          190
-                        ],
+                        "assignments": [190],
                         "declarations": [
                           {
                             "constant": false,
@@ -1188,9 +1177,7 @@
                         "src": "3727:13:3"
                       },
                       {
-                        "assignments": [
-                          194
-                        ],
+                        "assignments": [194],
                         "declarations": [
                           {
                             "constant": false,
@@ -1244,9 +1231,7 @@
                         "src": "3754:13:3"
                       },
                       {
-                        "assignments": [
-                          198
-                        ],
+                        "assignments": [198],
                         "declarations": [
                           {
                             "constant": false,
@@ -1971,10 +1956,7 @@
                       "id": 249,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "4505:7:3",
                       "typeDescriptions": {
@@ -2002,9 +1984,7 @@
                   "src": "4505:69:3"
                 },
                 {
-                  "assignments": [
-                    257
-                  ],
+                  "assignments": [257],
                   "declarations": [
                     {
                       "constant": false,
@@ -2090,9 +2070,7 @@
                   "src": "4585:38:3"
                 },
                 {
-                  "assignments": [
-                    263
-                  ],
+                  "assignments": [263],
                   "declarations": [
                     {
                       "constant": false,
@@ -2210,9 +2188,7 @@
                   "src": "4633:42:3"
                 },
                 {
-                  "assignments": [
-                    271
-                  ],
+                  "assignments": [271],
                   "declarations": [
                     {
                       "constant": false,
@@ -2346,9 +2322,7 @@
                   "src": "4804:44:3"
                 },
                 {
-                  "assignments": [
-                    280
-                  ],
+                  "assignments": [280],
                   "declarations": [
                     {
                       "constant": false,
@@ -2385,9 +2359,7 @@
                   "src": "4860:17:3"
                 },
                 {
-                  "assignments": [
-                    283
-                  ],
+                  "assignments": [283],
                   "declarations": [
                     {
                       "constant": false,
@@ -2424,9 +2396,7 @@
                   "src": "4887:18:3"
                 },
                 {
-                  "assignments": [
-                    290
-                  ],
+                  "assignments": [290],
                   "declarations": [
                     {
                       "constant": false,
@@ -2490,9 +2460,7 @@
                   "src": "4915:24:3"
                 },
                 {
-                  "assignments": [
-                    293
-                  ],
+                  "assignments": [293],
                   "declarations": [
                     {
                       "constant": false,
@@ -4090,9 +4058,7 @@
                   },
                   "id": 381,
                   "initializationExpression": {
-                    "assignments": [
-                      296
-                    ],
+                    "assignments": [296],
                     "declarations": [
                       {
                         "constant": false,
@@ -4500,9 +4466,7 @@
               "src": "9127:7192:3",
               "statements": [
                 {
-                  "assignments": [
-                    410
-                  ],
+                  "assignments": [410],
                   "declarations": [
                     {
                       "constant": false,
@@ -4680,10 +4644,7 @@
                       "id": 414,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "9235:7:3",
                       "typeDescriptions": {
@@ -4798,9 +4759,7 @@
                     "src": "9384:686:3",
                     "statements": [
                       {
-                        "assignments": [
-                          429
-                        ],
+                        "assignments": [429],
                         "declarations": [
                           {
                             "constant": false,
@@ -5066,9 +5025,7 @@
                         },
                         "id": 449,
                         "initializationExpression": {
-                          "assignments": [
-                            438
-                          ],
+                          "assignments": [438],
                           "declarations": [
                             {
                               "constant": false,
@@ -5240,9 +5197,7 @@
                   }
                 },
                 {
-                  "assignments": [
-                    459
-                  ],
+                  "assignments": [459],
                   "declarations": [
                     {
                       "constant": false,
@@ -5279,9 +5234,7 @@
                   "src": "10080:9:3"
                 },
                 {
-                  "assignments": [
-                    462
-                  ],
+                  "assignments": [462],
                   "declarations": [
                     {
                       "constant": false,
@@ -5318,9 +5271,7 @@
                   "src": "10099:14:3"
                 },
                 {
-                  "assignments": [
-                    465
-                  ],
+                  "assignments": [465],
                   "declarations": [
                     {
                       "constant": false,
@@ -5357,9 +5308,7 @@
                   "src": "10123:17:3"
                 },
                 {
-                  "assignments": [
-                    468
-                  ],
+                  "assignments": [468],
                   "declarations": [
                     {
                       "constant": false,
@@ -5396,9 +5345,7 @@
                   "src": "10151:17:3"
                 },
                 {
-                  "assignments": [
-                    471
-                  ],
+                  "assignments": [471],
                   "declarations": [
                     {
                       "constant": false,
@@ -5435,9 +5382,7 @@
                   "src": "10178:18:3"
                 },
                 {
-                  "assignments": [
-                    478
-                  ],
+                  "assignments": [478],
                   "declarations": [
                     {
                       "constant": false,
@@ -5501,9 +5446,7 @@
                   "src": "10206:24:3"
                 },
                 {
-                  "assignments": [
-                    481
-                  ],
+                  "assignments": [481],
                   "declarations": [
                     {
                       "constant": false,
@@ -7549,9 +7492,7 @@
                         },
                         "id": 612,
                         "initializationExpression": {
-                          "assignments": [
-                            535
-                          ],
+                          "assignments": [535],
                           "declarations": [
                             {
                               "constant": false,
@@ -7795,9 +7736,7 @@
                   },
                   "id": 620,
                   "initializationExpression": {
-                    "assignments": [
-                      484
-                    ],
+                    "assignments": [484],
                     "declarations": [
                       {
                         "constant": false,
@@ -9357,9 +9296,7 @@
                   },
                   "id": 701,
                   "initializationExpression": {
-                    "assignments": [
-                      622
-                    ],
+                    "assignments": [622],
                     "declarations": [
                       {
                         "constant": false,
@@ -9825,21 +9762,14 @@
     "attributes": {
       "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/privacy/lib/MerkleTreeSHA256.sol",
       "exportedSymbols": {
-        "MerkleTreeSHA256": [
-          722
-        ]
+        "MerkleTreeSHA256": [722]
       },
       "license": "CC0"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.6",
-            ".9"
-          ]
+          "literals": ["solidity", "^", "0.6", ".9"]
         },
         "id": 112,
         "name": "PragmaDirective",
@@ -9848,18 +9778,12 @@
       {
         "attributes": {
           "abstract": false,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
+          "baseContracts": [null],
+          "contractDependencies": [null],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            722
-          ],
+          "linearizedBaseContracts": [722],
           "name": "MerkleTreeSHA256",
           "scope": 723
         },
@@ -10460,9 +10384,7 @@
               "implemented": true,
               "isConstructor": true,
               "kind": "constructor",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "",
               "overrides": null,
               "scope": 722,
@@ -10508,9 +10430,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 160,
@@ -10535,9 +10455,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 142,
                               "type": "uint256",
                               "value": "treeHeight"
@@ -10549,9 +10467,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 158,
                               "type": "uint256",
                               "value": "_treeHeight"
@@ -10586,9 +10502,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 144,
                               "type": "uint256",
                               "value": "treeWidth"
@@ -10632,9 +10546,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 142,
                                   "type": "uint256",
                                   "value": "treeHeight"
@@ -10673,9 +10585,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getFrontierSlot",
               "overrides": null,
               "scope": 722,
@@ -10780,9 +10690,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 178,
                               "type": "uint256",
                               "value": "slot"
@@ -10856,9 +10764,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 175,
                                   "type": "uint256",
                                   "value": "leafIndex"
@@ -10915,9 +10821,7 @@
                         "children": [
                           {
                             "attributes": {
-                              "assignments": [
-                                190
-                              ]
+                              "assignments": [190]
                             },
                             "children": [
                               {
@@ -10972,9 +10876,7 @@
                           },
                           {
                             "attributes": {
-                              "assignments": [
-                                194
-                              ]
+                              "assignments": [194]
                             },
                             "children": [
                               {
@@ -11029,9 +10931,7 @@
                           },
                           {
                             "attributes": {
-                              "assignments": [
-                                198
-                              ]
+                              "assignments": [198]
                             },
                             "children": [
                               {
@@ -11080,9 +10980,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 194,
                                       "type": "uint256",
                                       "value": "pow1"
@@ -11138,9 +11036,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 178,
                                       "type": "uint256",
                                       "value": "slot"
@@ -11629,9 +11525,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "insertLeaf",
               "overrides": null,
               "scope": 722,
@@ -11730,9 +11624,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -11750,10 +11642,7 @@
                                   "typeString": "literal_string \"There is no space left in the tree.\""
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                -18,
-                                -18
-                              ],
+                              "overloadedDeclarations": [-18, -18],
                               "referencedDeclaration": -18,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
@@ -11780,9 +11669,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 144,
                                   "type": "uint256",
                                   "value": "treeWidth"
@@ -11794,9 +11681,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 148,
                                   "type": "uint256",
                                   "value": "leafCount"
@@ -11839,9 +11724,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        257
-                      ]
+                      "assignments": [257]
                     },
                     "children": [
                       {
@@ -11880,9 +11763,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "uint256",
                           "type_conversion": false
@@ -11896,9 +11777,7 @@
                                   "typeString": "uint256"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 241,
                               "type": "function (uint256) pure returns (uint256)",
                               "value": "getFrontierSlot"
@@ -11910,9 +11789,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 148,
                               "type": "uint256",
                               "value": "leafCount"
@@ -11933,9 +11810,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        263
-                      ]
+                      "assignments": [263]
                     },
                     "children": [
                       {
@@ -11999,9 +11874,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 148,
                                   "type": "uint256",
                                   "value": "leafCount"
@@ -12013,9 +11886,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 144,
                                   "type": "uint256",
                                   "value": "treeWidth"
@@ -12058,9 +11929,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        271
-                      ]
+                      "assignments": [271]
                     },
                     "children": [
                       {
@@ -12099,9 +11968,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "bytes27",
                           "type_conversion": true
@@ -12154,9 +12021,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 244,
                                   "type": "bytes32",
                                   "value": "leafValue"
@@ -12199,9 +12064,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        280
-                      ],
+                      "assignments": [280],
                       "initialValue": null
                     },
                     "children": [
@@ -12240,9 +12103,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        283
-                      ],
+                      "assignments": [283],
                       "initialValue": null
                     },
                     "children": [
@@ -12281,9 +12142,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        290
-                      ],
+                      "assignments": [290],
                       "initialValue": null
                     },
                     "children": [
@@ -12349,9 +12208,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        293
-                      ],
+                      "assignments": [293],
                       "initialValue": null
                     },
                     "children": [
@@ -12392,9 +12249,7 @@
                     "children": [
                       {
                         "attributes": {
-                          "assignments": [
-                            296
-                          ]
+                          "assignments": [296]
                         },
                         "children": [
                           {
@@ -12465,9 +12320,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 296,
                               "type": "uint256",
                               "value": "level"
@@ -12479,9 +12332,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 142,
                               "type": "uint256",
                               "value": "treeHeight"
@@ -12512,9 +12363,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 296,
                                   "type": "uint256",
                                   "value": "level"
@@ -12558,9 +12407,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 296,
                                       "type": "uint256",
                                       "value": "level"
@@ -12572,9 +12419,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 257,
                                       "type": "uint256",
                                       "value": "slot"
@@ -12614,9 +12459,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 156,
                                               "type": "bytes27[33] storage ref",
                                               "value": "frontier"
@@ -12628,9 +12471,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 257,
                                               "type": "uint256",
                                               "value": "slot"
@@ -12647,9 +12488,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 271,
                                           "type": "bytes27",
                                           "value": "nodeValue"
@@ -12708,9 +12547,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 263,
                                           "type": "uint256",
                                           "value": "nodeIndex"
@@ -12781,9 +12618,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 280,
                                               "type": "bytes27",
                                               "value": "leftInput"
@@ -12861,9 +12696,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 283,
                                               "type": "bytes27",
                                               "value": "rightInput"
@@ -12875,9 +12708,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 271,
                                               "type": "bytes27",
                                               "value": "nodeValue"
@@ -12959,9 +12790,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 271,
                                               "type": "bytes27",
                                               "value": "nodeValue"
@@ -12978,9 +12807,7 @@
                                               "isPure": false,
                                               "isStructConstructorCall": false,
                                               "lValueRequested": false,
-                                              "names": [
-                                                null
-                                              ],
+                                              "names": [null],
                                               "tryCall": false,
                                               "type": "bytes27",
                                               "type_conversion": true
@@ -13129,9 +12956,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 263,
                                               "type": "uint256",
                                               "value": "nodeIndex"
@@ -13277,9 +13102,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 280,
                                               "type": "bytes27",
                                               "value": "leftInput"
@@ -13291,9 +13114,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 271,
                                               "type": "bytes27",
                                               "value": "nodeValue"
@@ -13328,9 +13149,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 283,
                                               "type": "bytes27",
                                               "value": "rightInput"
@@ -13342,9 +13161,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 152,
                                               "type": "bytes27",
                                               "value": "zero"
@@ -13426,9 +13243,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 271,
                                               "type": "bytes27",
                                               "value": "nodeValue"
@@ -13445,9 +13260,7 @@
                                               "isPure": false,
                                               "isStructConstructorCall": false,
                                               "lValueRequested": false,
-                                              "names": [
-                                                null
-                                              ],
+                                              "names": [null],
                                               "tryCall": false,
                                               "type": "bytes27",
                                               "type_conversion": true
@@ -13596,9 +13409,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 263,
                                               "type": "uint256",
                                               "value": "nodeIndex"
@@ -13704,9 +13515,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 146,
                               "type": "bytes32",
                               "value": "latestRoot"
@@ -13728,9 +13537,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 290,
                                   "type": "bytes32[1] memory",
                                   "value": "output"
@@ -13781,9 +13588,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -13805,9 +13610,7 @@
                                   "typeString": "bytes32"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 121,
                               "type": "function (uint256,bytes32,bytes32)",
                               "value": "NewLeaf"
@@ -13819,9 +13622,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 148,
                               "type": "uint256",
                               "value": "leafCount"
@@ -13833,9 +13634,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 244,
                               "type": "bytes32",
                               "value": "leafValue"
@@ -13847,9 +13646,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 146,
                               "type": "bytes32",
                               "value": "latestRoot"
@@ -13885,9 +13682,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 148,
                               "type": "uint256",
                               "value": "leafCount"
@@ -13914,9 +13709,7 @@
                       {
                         "attributes": {
                           "argumentTypes": null,
-                          "overloadedDeclarations": [
-                            null
-                          ],
+                          "overloadedDeclarations": [null],
                           "referencedDeclaration": 146,
                           "type": "bytes32",
                           "value": "latestRoot"
@@ -13945,9 +13738,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "insertLeaves",
               "overrides": null,
               "scope": 722,
@@ -14049,9 +13840,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "assignments": [
-                        410
-                      ]
+                      "assignments": [410]
                     },
                     "children": [
                       {
@@ -14097,9 +13886,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 404,
                               "type": "bytes32[] memory",
                               "value": "leafValues"
@@ -14128,9 +13915,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -14148,10 +13933,7 @@
                                   "typeString": "literal_string \"There is not enough space left in the tree.\""
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                -18,
-                                -18
-                              ],
+                              "overloadedDeclarations": [-18, -18],
                               "referencedDeclaration": -18,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
@@ -14178,9 +13960,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 144,
                                   "type": "uint256",
                                   "value": "treeWidth"
@@ -14207,9 +13987,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 148,
                                       "type": "uint256",
                                       "value": "leafCount"
@@ -14221,9 +13999,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 410,
                                       "type": "uint256",
                                       "value": "numberOfLeaves"
@@ -14292,9 +14068,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 410,
                               "type": "uint256",
                               "value": "numberOfLeaves"
@@ -14321,9 +14095,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 144,
                                   "type": "uint256",
                                   "value": "treeWidth"
@@ -14335,9 +14107,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 148,
                                   "type": "uint256",
                                   "value": "leafCount"
@@ -14360,9 +14130,7 @@
                         "children": [
                           {
                             "attributes": {
-                              "assignments": [
-                                429
-                              ]
+                              "assignments": [429]
                             },
                             "children": [
                               {
@@ -14411,9 +14179,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 410,
                                       "type": "uint256",
                                       "value": "numberOfLeaves"
@@ -14451,9 +14217,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 144,
                                               "type": "uint256",
                                               "value": "treeWidth"
@@ -14465,9 +14229,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 148,
                                               "type": "uint256",
                                               "value": "leafCount"
@@ -14500,9 +14262,7 @@
                             "children": [
                               {
                                 "attributes": {
-                                  "assignments": [
-                                    438
-                                  ]
+                                  "assignments": [438]
                                 },
                                 "children": [
                                   {
@@ -14573,9 +14333,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 438,
                                       "type": "uint256",
                                       "value": "xs"
@@ -14587,9 +14345,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 429,
                                       "type": "uint256",
                                       "value": "numberOfExcessLeaves"
@@ -14620,9 +14376,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 438,
                                           "type": "uint256",
                                           "value": "xs"
@@ -14695,9 +14449,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 410,
                                       "type": "uint256",
                                       "value": "numberOfLeaves"
@@ -14724,9 +14476,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 144,
                                           "type": "uint256",
                                           "value": "treeWidth"
@@ -14738,9 +14488,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 148,
                                           "type": "uint256",
                                           "value": "leafCount"
@@ -14776,9 +14524,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        459
-                      ],
+                      "assignments": [459],
                       "initialValue": null
                     },
                     "children": [
@@ -14817,9 +14563,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        462
-                      ],
+                      "assignments": [462],
                       "initialValue": null
                     },
                     "children": [
@@ -14858,9 +14602,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        465
-                      ],
+                      "assignments": [465],
                       "initialValue": null
                     },
                     "children": [
@@ -14899,9 +14641,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        468
-                      ],
+                      "assignments": [468],
                       "initialValue": null
                     },
                     "children": [
@@ -14940,9 +14680,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        471
-                      ],
+                      "assignments": [471],
                       "initialValue": null
                     },
                     "children": [
@@ -14981,9 +14719,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        478
-                      ],
+                      "assignments": [478],
                       "initialValue": null
                     },
                     "children": [
@@ -15049,9 +14785,7 @@
                   },
                   {
                     "attributes": {
-                      "assignments": [
-                        481
-                      ],
+                      "assignments": [481],
                       "initialValue": null
                     },
                     "children": [
@@ -15092,9 +14826,7 @@
                     "children": [
                       {
                         "attributes": {
-                          "assignments": [
-                            484
-                          ]
+                          "assignments": [484]
                         },
                         "children": [
                           {
@@ -15128,9 +14860,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 148,
                               "type": "uint256",
                               "value": "leafCount"
@@ -15162,9 +14892,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 484,
                               "type": "uint256",
                               "value": "leafIndex"
@@ -15191,9 +14919,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 148,
                                   "type": "uint256",
                                   "value": "leafCount"
@@ -15205,9 +14931,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 410,
                                   "type": "uint256",
                                   "value": "numberOfLeaves"
@@ -15243,9 +14967,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 484,
                                   "type": "uint256",
                                   "value": "leafIndex"
@@ -15282,9 +15004,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 465,
                                       "type": "bytes27",
                                       "value": "nodeValue"
@@ -15301,9 +15021,7 @@
                                       "isPure": false,
                                       "isStructConstructorCall": false,
                                       "lValueRequested": false,
-                                      "names": [
-                                        null
-                                      ],
+                                      "names": [null],
                                       "tryCall": false,
                                       "type": "bytes27",
                                       "type_conversion": true
@@ -15483,9 +15201,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 462,
                                       "type": "uint256",
                                       "value": "nodeIndex"
@@ -15527,9 +15243,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 484,
                                               "type": "uint256",
                                               "value": "leafIndex"
@@ -15541,9 +15255,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 144,
                                               "type": "uint256",
                                               "value": "treeWidth"
@@ -15605,9 +15317,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 459,
                                       "type": "uint256",
                                       "value": "slot"
@@ -15624,9 +15334,7 @@
                                       "isPure": false,
                                       "isStructConstructorCall": false,
                                       "lValueRequested": false,
-                                      "names": [
-                                        null
-                                      ],
+                                      "names": [null],
                                       "tryCall": false,
                                       "type": "uint256",
                                       "type_conversion": false
@@ -15640,9 +15348,7 @@
                                               "typeString": "uint256"
                                             }
                                           ],
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 241,
                                           "type": "function (uint256) pure returns (uint256)",
                                           "value": "getFrontierSlot"
@@ -15654,9 +15360,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 484,
                                           "type": "uint256",
                                           "value": "leafIndex"
@@ -15703,9 +15407,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 459,
                                       "type": "uint256",
                                       "value": "slot"
@@ -15797,9 +15499,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 465,
                                               "type": "bytes27",
                                               "value": "nodeValue"
@@ -15837,9 +15537,7 @@
                             "children": [
                               {
                                 "attributes": {
-                                  "assignments": [
-                                    535
-                                  ]
+                                  "assignments": [535]
                                 },
                                 "children": [
                                   {
@@ -15910,9 +15608,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 535,
                                       "type": "uint256",
                                       "value": "level"
@@ -15924,9 +15620,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 459,
                                       "type": "uint256",
                                       "value": "slot"
@@ -15957,9 +15651,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 535,
                                           "type": "uint256",
                                           "value": "level"
@@ -16322,9 +16014,7 @@
                                                       "isPure": false,
                                                       "isStructConstructorCall": false,
                                                       "lValueRequested": false,
-                                                      "names": [
-                                                        null
-                                                      ],
+                                                      "names": [null],
                                                       "tryCall": false,
                                                       "type": "bytes27",
                                                       "type_conversion": true
@@ -16789,9 +16479,7 @@
                                                       "isPure": false,
                                                       "isStructConstructorCall": false,
                                                       "lValueRequested": false,
-                                                      "names": [
-                                                        null
-                                                      ],
+                                                      "names": [null],
                                                       "tryCall": false,
                                                       "type": "bytes27",
                                                       "type_conversion": true
@@ -17058,9 +16746,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 156,
                                           "type": "bytes27[33] storage ref",
                                           "value": "frontier"
@@ -17072,9 +16758,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 459,
                                           "type": "uint256",
                                           "value": "slot"
@@ -17091,9 +16775,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 465,
                                       "type": "bytes27",
                                       "value": "nodeValue"
@@ -17126,9 +16808,7 @@
                     "children": [
                       {
                         "attributes": {
-                          "assignments": [
-                            622
-                          ]
+                          "assignments": [622]
                         },
                         "children": [
                           {
@@ -17177,9 +16857,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 459,
                                   "type": "uint256",
                                   "value": "slot"
@@ -17233,9 +16911,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 622,
                               "type": "uint256",
                               "value": "level"
@@ -17247,9 +16923,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 142,
                               "type": "uint256",
                               "value": "treeHeight"
@@ -17280,9 +16954,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 622,
                                   "type": "uint256",
                                   "value": "level"
@@ -17338,9 +17010,7 @@
                                       {
                                         "attributes": {
                                           "argumentTypes": null,
-                                          "overloadedDeclarations": [
-                                            null
-                                          ],
+                                          "overloadedDeclarations": [null],
                                           "referencedDeclaration": 462,
                                           "type": "uint256",
                                           "value": "nodeIndex"
@@ -17411,9 +17081,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 468,
                                               "type": "bytes27",
                                               "value": "leftInput"
@@ -17528,9 +17196,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 471,
                                               "type": "bytes27",
                                               "value": "rightInput"
@@ -17542,9 +17208,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 465,
                                               "type": "bytes27",
                                               "value": "nodeValue"
@@ -17626,9 +17290,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 465,
                                               "type": "bytes27",
                                               "value": "nodeValue"
@@ -17645,9 +17307,7 @@
                                               "isPure": false,
                                               "isStructConstructorCall": false,
                                               "lValueRequested": false,
-                                              "names": [
-                                                null
-                                              ],
+                                              "names": [null],
                                               "tryCall": false,
                                               "type": "bytes27",
                                               "type_conversion": true
@@ -17796,9 +17456,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 462,
                                               "type": "uint256",
                                               "value": "nodeIndex"
@@ -17944,9 +17602,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 468,
                                               "type": "bytes27",
                                               "value": "leftInput"
@@ -17958,9 +17614,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 465,
                                               "type": "bytes27",
                                               "value": "nodeValue"
@@ -17995,9 +17649,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 471,
                                               "type": "bytes27",
                                               "value": "rightInput"
@@ -18009,9 +17661,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 152,
                                               "type": "bytes27",
                                               "value": "zero"
@@ -18093,9 +17743,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 465,
                                               "type": "bytes27",
                                               "value": "nodeValue"
@@ -18112,9 +17760,7 @@
                                               "isPure": false,
                                               "isStructConstructorCall": false,
                                               "lValueRequested": false,
-                                              "names": [
-                                                null
-                                              ],
+                                              "names": [null],
                                               "tryCall": false,
                                               "type": "bytes27",
                                               "type_conversion": true
@@ -18263,9 +17909,7 @@
                                           {
                                             "attributes": {
                                               "argumentTypes": null,
-                                              "overloadedDeclarations": [
-                                                null
-                                              ],
+                                              "overloadedDeclarations": [null],
                                               "referencedDeclaration": 462,
                                               "type": "uint256",
                                               "value": "nodeIndex"
@@ -18371,9 +18015,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 146,
                               "type": "bytes32",
                               "value": "latestRoot"
@@ -18395,9 +18037,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 478,
                                   "type": "bytes32[1] memory",
                                   "value": "output"
@@ -18448,9 +18088,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -18472,9 +18110,7 @@
                                   "typeString": "bytes32"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 130,
                               "type": "function (uint256,bytes32[] memory,bytes32)",
                               "value": "NewLeaves"
@@ -18486,9 +18122,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 148,
                               "type": "uint256",
                               "value": "leafCount"
@@ -18500,9 +18134,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 404,
                               "type": "bytes32[] memory",
                               "value": "leafValues"
@@ -18514,9 +18146,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 146,
                               "type": "bytes32",
                               "value": "latestRoot"
@@ -18551,9 +18181,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 148,
                               "type": "uint256",
                               "value": "leafCount"
@@ -18565,9 +18193,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 410,
                               "type": "uint256",
                               "value": "numberOfLeaves"
@@ -18594,9 +18220,7 @@
                       {
                         "attributes": {
                           "argumentTypes": null,
-                          "overloadedDeclarations": [
-                            null
-                          ],
+                          "overloadedDeclarations": [null],
                           "referencedDeclaration": 146,
                           "type": "bytes32",
                           "value": "latestRoot"

@@ -61,9 +61,7 @@
   "ast": {
     "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/Registrar.sol",
     "exportedSymbols": {
-      "Registrar": [
-        1468
-      ]
+      "Registrar": [1468]
     },
     "id": 1469,
     "license": "CC0",
@@ -71,12 +69,7 @@
     "nodes": [
       {
         "id": 1341,
-        "literals": [
-          "solidity",
-          "^",
-          "0.6",
-          ".9"
-        ],
+        "literals": ["solidity", "^", "0.6", ".9"],
         "nodeType": "PragmaDirective",
         "src": "32:23:7"
       },
@@ -104,9 +97,7 @@
         },
         "fullyImplemented": true,
         "id": 1468,
-        "linearizedBaseContracts": [
-          1468
-        ],
+        "linearizedBaseContracts": [1468],
         "name": "Registrar",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -397,10 +388,7 @@
                       "id": 1356,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "459:7:7",
                       "typeDescriptions": {
@@ -613,9 +601,7 @@
               "src": "1667:181:7",
               "statements": [
                 {
-                  "assignments": [
-                    1389
-                  ],
+                  "assignments": [1389],
                   "declarations": [
                     {
                       "constant": false,
@@ -1004,9 +990,7 @@
               "src": "2180:162:7",
               "statements": [
                 {
-                  "assignments": [
-                    1420
-                  ],
+                  "assignments": [1420],
                   "declarations": [
                     {
                       "constant": false,
@@ -1761,21 +1745,14 @@
     "attributes": {
       "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/Registrar.sol",
       "exportedSymbols": {
-        "Registrar": [
-          1468
-        ]
+        "Registrar": [1468]
       },
       "license": "CC0"
     },
     "children": [
       {
         "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.6",
-            ".9"
-          ]
+          "literals": ["solidity", "^", "0.6", ".9"]
         },
         "id": 1341,
         "name": "PragmaDirective",
@@ -1787,9 +1764,7 @@
           "absolutePath": "/home/joasiee/projects/baseline/examples/bri-2/node_modules/@baseline-protocol/contracts/contracts/registry/lib/ERC1820Registry.sol",
           "file": "./lib/ERC1820Registry.sol",
           "scope": 1469,
-          "symbolAliases": [
-            null
-          ],
+          "symbolAliases": [null],
           "unitAlias": ""
         },
         "id": 1342,
@@ -1799,17 +1774,11 @@
       {
         "attributes": {
           "abstract": false,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
+          "baseContracts": [null],
+          "contractDependencies": [null],
           "contractKind": "contract",
           "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            1468
-          ],
+          "linearizedBaseContracts": [1468],
           "name": "Registrar",
           "scope": 1469
         },
@@ -1882,9 +1851,7 @@
                   "isPure": true,
                   "isStructConstructorCall": false,
                   "lValueRequested": false,
-                  "names": [
-                    null
-                  ],
+                  "names": [null],
                   "tryCall": false,
                   "type": "bytes32",
                   "type_conversion": false
@@ -1898,9 +1865,7 @@
                           "typeString": "bytes memory"
                         }
                       ],
-                      "overloadedDeclarations": [
-                        null
-                      ],
+                      "overloadedDeclarations": [null],
                       "referencedDeclaration": -8,
                       "type": "function (bytes memory) pure returns (bytes32)",
                       "value": "keccak256"
@@ -1917,9 +1882,7 @@
                       "isPure": true,
                       "isStructConstructorCall": false,
                       "lValueRequested": false,
-                      "names": [
-                        null
-                      ],
+                      "names": [null],
                       "tryCall": false,
                       "type": "bytes memory",
                       "type_conversion": false
@@ -1945,9 +1908,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": -1,
                               "type": "abi",
                               "value": "abi"
@@ -2011,9 +1972,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 1355,
@@ -2032,9 +1991,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -2052,10 +2009,7 @@
                                   "typeString": "literal_string \"You are not authorised to invoke this function\""
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                -18,
-                                -18
-                              ],
+                              "overloadedDeclarations": [-18, -18],
                               "referencedDeclaration": -18,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
@@ -2094,9 +2048,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": -15,
                                       "type": "msg",
                                       "value": "msg"
@@ -2113,17 +2065,13 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "arguments": [
-                                    null
-                                  ],
+                                  "arguments": [null],
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
                                   "isStructConstructorCall": false,
                                   "lValueRequested": false,
-                                  "names": [
-                                    null
-                                  ],
+                                  "names": [null],
                                   "tryCall": false,
                                   "type": "address",
                                   "type_conversion": false
@@ -2131,12 +2079,8 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "argumentTypes": [
-                                        null
-                                      ],
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "argumentTypes": [null],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": 1467,
                                       "type": "function () view returns (address)",
                                       "value": "getManager"
@@ -2202,9 +2146,7 @@
               "implemented": true,
               "isConstructor": true,
               "kind": "constructor",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "",
               "overrides": null,
               "scope": 1468,
@@ -2259,9 +2201,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 1372,
@@ -2286,9 +2226,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1345,
                               "type": "contract ERC1820Registry",
                               "value": "ERC1820REGISTRY"
@@ -2305,9 +2243,7 @@
                               "isPure": false,
                               "isStructConstructorCall": false,
                               "lValueRequested": false,
-                              "names": [
-                                null
-                              ],
+                              "names": [null],
                               "tryCall": false,
                               "type": "contract ERC1820Registry",
                               "type_conversion": true
@@ -2321,9 +2257,7 @@
                                       "typeString": "address"
                                     }
                                   ],
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1957,
                                   "type": "type(contract ERC1820Registry)",
                                   "value": "ERC1820Registry"
@@ -2335,9 +2269,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1370,
                                   "type": "address",
                                   "value": "ERC1820RegistryAddress"
@@ -2376,9 +2308,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "setInterfaceImplementation",
               "overrides": null,
               "scope": 1468,
@@ -2461,9 +2391,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 1387,
@@ -2474,9 +2402,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "assignments": [
-                        1389
-                      ]
+                      "assignments": [1389]
                     },
                     "children": [
                       {
@@ -2515,9 +2441,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "bytes32",
                           "type_conversion": false
@@ -2531,9 +2455,7 @@
                                   "typeString": "bytes memory"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": -8,
                               "type": "function (bytes memory) pure returns (bytes32)",
                               "value": "keccak256"
@@ -2550,9 +2472,7 @@
                               "isPure": false,
                               "isStructConstructorCall": false,
                               "lValueRequested": false,
-                              "names": [
-                                null
-                              ],
+                              "names": [null],
                               "tryCall": false,
                               "type": "bytes memory",
                               "type_conversion": false
@@ -2578,9 +2498,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": -1,
                                       "type": "abi",
                                       "value": "abi"
@@ -2597,9 +2515,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1383,
                                   "type": "string memory",
                                   "value": "_interfaceLabel"
@@ -2633,9 +2549,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -2669,9 +2583,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1345,
                                   "type": "contract ERC1820Registry",
                                   "value": "ERC1820REGISTRY"
@@ -2693,9 +2605,7 @@
                               "isPure": false,
                               "isStructConstructorCall": false,
                               "lValueRequested": false,
-                              "names": [
-                                null
-                              ],
+                              "names": [null],
                               "tryCall": false,
                               "type": "address",
                               "type_conversion": true
@@ -2733,9 +2643,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": -28,
                                   "type": "contract Registrar",
                                   "value": "this"
@@ -2752,9 +2660,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1389,
                               "type": "bytes32",
                               "value": "interfaceHash"
@@ -2766,9 +2672,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1385,
                               "type": "address",
                               "value": "_implementation"
@@ -2803,9 +2707,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "interfaceAddr",
               "overrides": null,
               "scope": 1468,
@@ -2926,9 +2828,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "assignments": [
-                        1420
-                      ]
+                      "assignments": [1420]
                     },
                     "children": [
                       {
@@ -2967,9 +2867,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "bytes32",
                           "type_conversion": false
@@ -2983,9 +2881,7 @@
                                   "typeString": "bytes memory"
                                 }
                               ],
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": -8,
                               "type": "function (bytes memory) pure returns (bytes32)",
                               "value": "keccak256"
@@ -3002,9 +2898,7 @@
                               "isPure": false,
                               "isStructConstructorCall": false,
                               "lValueRequested": false,
-                              "names": [
-                                null
-                              ],
+                              "names": [null],
                               "tryCall": false,
                               "type": "bytes memory",
                               "type_conversion": false
@@ -3030,9 +2924,7 @@
                                   {
                                     "attributes": {
                                       "argumentTypes": null,
-                                      "overloadedDeclarations": [
-                                        null
-                                      ],
+                                      "overloadedDeclarations": [null],
                                       "referencedDeclaration": -1,
                                       "type": "abi",
                                       "value": "abi"
@@ -3049,9 +2941,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1414,
                                   "type": "string calldata",
                                   "value": "_interfaceLabel"
@@ -3088,9 +2978,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "address",
                           "type_conversion": false
@@ -3120,9 +3008,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1345,
                                   "type": "contract ERC1820Registry",
                                   "value": "ERC1820REGISTRY"
@@ -3139,9 +3025,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1412,
                               "type": "address",
                               "value": "addr"
@@ -3153,9 +3037,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1420,
                               "type": "bytes32",
                               "value": "interfaceHash"
@@ -3189,9 +3071,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "assignManagement",
               "overrides": null,
               "scope": 1468,
@@ -3246,9 +3126,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 1440,
@@ -3267,9 +3145,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "tuple()",
                           "type_conversion": false
@@ -3299,9 +3175,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1345,
                                   "type": "contract ERC1820Registry",
                                   "value": "ERC1820REGISTRY"
@@ -3323,9 +3197,7 @@
                               "isPure": false,
                               "isStructConstructorCall": false,
                               "lValueRequested": false,
-                              "names": [
-                                null
-                              ],
+                              "names": [null],
                               "tryCall": false,
                               "type": "address",
                               "type_conversion": true
@@ -3363,9 +3235,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": -28,
                                   "type": "contract Registrar",
                                   "value": "this"
@@ -3382,9 +3252,7 @@
                           {
                             "attributes": {
                               "argumentTypes": null,
-                              "overloadedDeclarations": [
-                                null
-                              ],
+                              "overloadedDeclarations": [null],
                               "referencedDeclaration": 1438,
                               "type": "address",
                               "value": "_newManager"
@@ -3419,9 +3287,7 @@
               "implemented": true,
               "isConstructor": false,
               "kind": "function",
-              "modifiers": [
-                null
-              ],
+              "modifiers": [null],
               "name": "getManager",
               "overrides": null,
               "scope": 1468,
@@ -3440,9 +3306,7 @@
               },
               {
                 "attributes": {
-                  "parameters": [
-                    null
-                  ]
+                  "parameters": [null]
                 },
                 "children": [],
                 "id": 1454,
@@ -3500,9 +3364,7 @@
                           "isPure": false,
                           "isStructConstructorCall": false,
                           "lValueRequested": false,
-                          "names": [
-                            null
-                          ],
+                          "names": [null],
                           "tryCall": false,
                           "type": "address",
                           "type_conversion": false
@@ -3528,9 +3390,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": 1345,
                                   "type": "contract ERC1820Registry",
                                   "value": "ERC1820REGISTRY"
@@ -3552,9 +3412,7 @@
                               "isPure": false,
                               "isStructConstructorCall": false,
                               "lValueRequested": false,
-                              "names": [
-                                null
-                              ],
+                              "names": [null],
                               "tryCall": false,
                               "type": "address",
                               "type_conversion": true
@@ -3592,9 +3450,7 @@
                               {
                                 "attributes": {
                                   "argumentTypes": null,
-                                  "overloadedDeclarations": [
-                                    null
-                                  ],
+                                  "overloadedDeclarations": [null],
                                   "referencedDeclaration": -28,
                                   "type": "contract Registrar",
                                   "value": "this"

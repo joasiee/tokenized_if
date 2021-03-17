@@ -8,8 +8,5 @@
       "path": "packages/tokenized_if"
     }
   ],
-  "exclude": [
-    "legacy/**/*",
-    "ops/**/*"
-  ]
+  "exclude": ["legacy/**/*", "ops/**/*"]
 }
