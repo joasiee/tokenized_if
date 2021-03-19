@@ -2,9 +2,6 @@
   "files": [],
   "references": [
     {
-      "path": "packages/baseline/commit-mgr"
-    },
-    {
       "path": "packages/baseline"
     },
     {
