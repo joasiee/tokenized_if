@@ -8,7 +8,7 @@ import { logger, reqLogger, reqErrorLogger } from "./logger";
 import { dbConnect } from "./db";
 import { get_ws_provider, restartSubscriptions } from "./blockchain";
 
-export const commit_mgr = async () => {
+export const commitMgrStart = async () => {
   dotenv.config();
   const port = process.env.CMGR_SERVER_PORT;
 

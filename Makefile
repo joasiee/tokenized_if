@@ -9,5 +9,5 @@ start:
 	docker-compose up -d --remove-orphans
 start-attached:	
 	docker-compose up --remove-orphans
-stop: 
+stop:
 	docker-compose down --remove-orphans

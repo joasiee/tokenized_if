@@ -12,9 +12,10 @@
 In root folder:
 
 ```
+cp packages/baseline/.env.example packages/baseline/.env
 yarn
-yarn run build
+yarn build
 make start
-cp packages/tokenized_if/.env.example packages/tokenized_if/.env
-yarn workspace tokenized_if run start
+yarn start:baseline
+yarn start:main
 ```
