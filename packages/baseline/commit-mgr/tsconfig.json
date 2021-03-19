@@ -1,0 +1,14 @@
+{
+  "include": ["src/**/*"],
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "outDir": "dist",
+    "rootDir": "src",
+    "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types"]
+  }
+}

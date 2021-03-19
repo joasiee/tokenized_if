@@ -2,11 +2,17 @@
   "files": [],
   "references": [
     {
-      "path": "packages/commit-mgr"
+      "path": "packages/baseline/commit-mgr"
+    },
+    {
+      "path": "packages/baseline"
     },
     {
       "path": "packages/tokenized_if"
     }
   ],
-  "exclude": ["legacy/**/*", "ops/**/*"]
+  "exclude": [
+    "legacy/**/*",
+    "ops/**/*"
+  ]
 }

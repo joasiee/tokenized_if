@@ -1,0 +1,13 @@
+{
+  "name": "@baseline/main",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@baseline/commit-mgr": "^1.0.0"
+  },
+  "devDependencies": {
+    "ts-node": "^9.1.1"
+  }
+}

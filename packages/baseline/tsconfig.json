@@ -4,7 +4,13 @@
     "outDir": "dist",
     "rootDir": "src"
   },
+  "references": [
+    {
+      "path": "commit-mgr"
+    }
+  ],
   "exclude": [
+    "commit-mgr",
     "dist"
   ]
 }
