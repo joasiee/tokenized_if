@@ -1,6 +1,6 @@
 {
   "include": ["src/**/*"],
-  "exclude": ["dist"],
+  "exclude": ["dist", "artifacts", "contracts", "node_modules"],
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,

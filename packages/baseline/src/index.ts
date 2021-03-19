@@ -1,3 +1,8 @@
 import { commitMgrStart } from "./commit-mgr";
+import { testKey } from "./key-mgr";
 
-commitMgrStart();
+const main = async () => {
+  await testKey();
+};
+
+main();
