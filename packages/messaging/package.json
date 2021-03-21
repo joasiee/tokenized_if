@@ -7,14 +7,13 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "node ./bin/indes.js",
-    "dev": "ts-node ./src/index.ts"
-  },
-  "dependencies": {
-    "@types/node": "^14.14.35",
-    "typescript": "^4.2.3"
+    "start": "ts-node src/index.ts"
   },
   "devDependencies": {
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "@baseline-protocol/api": "^0.2.0"
   }
 }
