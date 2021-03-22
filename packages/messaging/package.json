@@ -14,6 +14,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "@baseline-protocol/api": "^0.2.0"
+    "@baseline-protocol/messaging": "^0.1.0",
+    "nats": "^2.0.0"
   }
 }
