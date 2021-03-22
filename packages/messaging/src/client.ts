@@ -56,7 +56,7 @@ export class MessagingClient implements IMessagingService {
      * @returns The connections status 
      */
     isConnected(): boolean {
-        return this.nc !== null;
+        return !(this.nc?.isClosed() ?? true);
     }
 
     /**
