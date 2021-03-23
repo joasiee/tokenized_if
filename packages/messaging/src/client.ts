@@ -1,6 +1,8 @@
 import { IMessagingClientConfig } from "./config";
-import { connect, NatsConnection, Subscription } from "nats";
+import { connect, JSONCodec, NatsConnection, Subscription } from "nats";
 import { IMessagingService } from "@baseline-protocol/messaging";
+
+const jc = JSONCodec();
 
 /**
  * Implementations of {@link IMessagingService} using NATS
@@ -22,13 +24,8 @@ export class MessagingClient implements IMessagingService {
      * @returns Boolean value indicating whether client is succesfully connected
      */
     async connect(): Promise<boolean> {
-        if (this.nc) {
-            console.log(`NATS client already connected`);
-            return Promise.resolve(true);
-        }
-        
         try {
-            this.nc = await connect({servers: this.url});
+            this.nc = await connect({servers: this.url });
             console.log(`NATS client succesfully connected with ${this.url}`);
             return true;
         } catch (err) {
@@ -75,8 +72,8 @@ export class MessagingClient implements IMessagingService {
      * @param recipientId Optional recipient identifier
      * @param senderId  Option sender identifier
      */
-    publish(subject: string, payload: any, reply?: string, recipientId?: string, senderId?: string): Promise<void> {
-        this.nc!.publish(subject, payload);
+    publish(subject: string, payload: object, reply?: string, recipientId?: string, senderId?: string): Promise<void> {
+        this.nc!.publish(subject, jc.encode(payload));
         return Promise.resolve();
     }
 
@@ -98,7 +95,10 @@ export class MessagingClient implements IMessagingService {
      * @param myId Optional identifier
      */
     subscribe(subject: string, callback?: (msg: any, err?: any) => void, myId?: string): Promise<any> {
-        let sub = this.nc!.subscribe(subject, {callback: (e, m) => callback(m, e)});
+        if (this.subscriptions.has(subject)) {
+            this.subscriptions.get(subject).unsubscribe();
+        }
+        let sub = this.nc!.subscribe(subject, {callback: (e, m) => callback(jc.decode(m.data), e)});
         this.subscriptions.set(subject, sub);
         return Promise.resolve();
     }
