@@ -1,15 +1,16 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["dist", "artifacts", "contracts", "node_modules"],
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": true,
-    "baseUrl": ".",
-    "moduleResolution": "node",
-    "noImplicitAny": false,
     "outDir": "dist",
-    "rootDir": "src",
-    "resolveJsonModule": true,
-    "typeRoots": ["./node_modules/@types"]
-  }
+    "rootDir": "src"
+  },
+  "exclude": [
+    "dist",
+    "packages"
+  ],
+  "references": [
+    {
+      "path": "packages/commit-mgr"
+    }
+  ]
 }

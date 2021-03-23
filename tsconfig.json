@@ -5,6 +5,12 @@
       "path": "packages/baseline"
     },
     {
+      "path": "packages/baseline/packages/commit-mgr"
+    },
+    {
+      "path": "packages/baseline/packages/key-mgr"
+    },
+    {
       "path": "packages/tokenized_if"
     }
   ],

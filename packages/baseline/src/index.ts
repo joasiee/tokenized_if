@@ -1,8 +1,5 @@
-import { commitMgrStart } from "./commit-mgr";
-import { testKey } from "./key-mgr";
+import { commitMgrStart } from "@baseline/commit-mgr";
 
-const main = async () => {
-  await testKey();
-};
-
-main();
+import dotenv from "dotenv";
+dotenv.config();
+commitMgrStart();

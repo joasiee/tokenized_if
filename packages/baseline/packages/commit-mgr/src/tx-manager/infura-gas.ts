@@ -1,10 +1,8 @@
-import dotenv from "dotenv";
-import { Wallet, ethers } from "ethers";
+import { ethers } from "ethers";
 import { ITxManager } from ".";
 import { logger } from "../logger";
-import { http_provider, jsonrpc, shieldContract } from "../blockchain";
-
-dotenv.config();
+import { jsonrpc, shieldContract } from "../blockchain";
+import { HDWallet } from "@baseline/key-mgr";
 
 export class InfuraGas implements ITxManager {
   constructor(private readonly config: any) {
@@ -12,10 +10,7 @@ export class InfuraGas implements ITxManager {
   }
 
   async signTx(toAddress: string, fromAddress: string, txData: string) {
-    const wallet = new Wallet(
-      process.env.CMGR_WALLET_PRIVATE_KEY,
-      http_provider
-    );
+    const wallet = HDWallet.getInstance().getWallet();
     const nonce = await wallet.getTransactionCount();
     logger.debug(`nonce: ${nonce}`);
 

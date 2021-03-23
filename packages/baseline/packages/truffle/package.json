@@ -1,0 +1,12 @@
+{
+  "name": "@baseline/truffle",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "compile": "yarn truffle compile"
+  },
+  "dependencies": {
+    "truffle": "^5.2.5",
+    "@openzeppelin/contracts": "^3.1.0"
+  }
+}

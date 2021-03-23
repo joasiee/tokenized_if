@@ -1,7 +1,8 @@
-import { ethers, Wallet } from "ethers";
+import { ethers } from "ethers";
 import { ITxManager } from ".";
 import { logger } from "../logger";
-import { http_provider, jsonrpc, shieldContract } from "../blockchain";
+import { jsonrpc, shieldContract } from "../blockchain";
+import { HDWallet } from "@baseline/key-mgr";
 
 export class EthClient implements ITxManager {
   constructor(private readonly config: any) {
@@ -9,10 +10,7 @@ export class EthClient implements ITxManager {
   }
 
   async signTx(toAddress: string, fromAddress: string, txData: any) {
-    const wallet = new Wallet(
-      process.env.CMGR_WALLET_PRIVATE_KEY,
-      http_provider
-    );
+    const wallet = HDWallet.getInstance().getWallet();
     const nonce = await wallet.getTransactionCount();
     logger.debug(`nonce: ${nonce}`);
     const gasPrice = await wallet.getGasPrice();

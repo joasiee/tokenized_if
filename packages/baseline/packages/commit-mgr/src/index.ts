@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -9,7 +8,6 @@ import { dbConnect } from "./db";
 import { get_ws_provider, restartSubscriptions } from "./blockchain";
 
 export const commitMgrStart = async () => {
-  dotenv.config();
   const port = process.env.CMGR_SERVER_PORT;
 
   logger.info("Starting commmitment manager server...");
