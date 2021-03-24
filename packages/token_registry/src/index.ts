@@ -80,6 +80,10 @@ async function main() {
       var holder = await escrowInstance.holder();
       console.log("beneficiary is: " + beneficiary);
       console.log("holder is: " + holder);
+
+      await tokenRegistry["setGoodsHash(uint256,string)"](tokenId, "abc");
+      console.log(await tokenRegistry["getGoodsHash(uint256)"](tokenId));
+      //await tokenRegistry["setGoodsHash(uint256,string)"](tokenId, "abc");
     }
 
     var escrowInstance2 = await deployTitleEscrow(importerPublicAddress, importerPublicAddress);

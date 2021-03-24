@@ -442,6 +442,9 @@ contract ERC721 is Context, ERC165, IERC721 {
   // Mapping from token ID to owner
   mapping(uint256 => address) private _tokenOwner;
 
+  // Mapping from token ID to goodsHash
+  mapping(uint256 => string) private _goodshash;
+
   // Mapping from token ID to approved address
   mapping(uint256 => address) private _tokenApprovals;
 
@@ -471,6 +474,24 @@ contract ERC721 is Context, ERC165, IERC721 {
     // register the supported interfaces to conform to ERC721 via ERC165
     _registerInterface(_INTERFACE_ID_ERC721);
   }
+
+  function setGoodsHash(uint256 tokenId, string memory hash_) public {
+    require(_exists(tokenId), "ERC721: approved query for nonexistent token");
+    //require(ownerOf(tokenId), "ERC721: cannot set goods hash if you are not the owner of the token");
+    require(!existsGoodsHash(tokenId), "ERC721: cannot modify goods hash after initialization");
+    _goodshash[tokenId] = hash_;
+  }
+
+  function getGoodsHash(uint256 tokenId) public view returns (string memory) {
+    return _goodshash[tokenId];
+  }
+
+  function existsGoodsHash(uint256 tokenId) internal view returns (bool) {
+    string memory hash_ = _goodshash[tokenId];
+    return keccak256(abi.encodePacked(hash_)) != keccak256(abi.encodePacked(""));
+  }
+
+
 
   /**
      * @dev Gets the balance of the specified address.
