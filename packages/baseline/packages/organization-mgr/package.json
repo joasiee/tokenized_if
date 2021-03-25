@@ -1,0 +1,14 @@
+{
+  "name": "@baseline/organization-mgr",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@tokenized_if/shared": "^1.0.0",
+    "mongoose": "^5.12.2"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.10.4",
+    "ts-node": "^9.1.1"
+  }
+}

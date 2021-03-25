@@ -23,7 +23,7 @@ export class EthClient implements ITxManager {
       from: fromAddress,
       data: txData,
       nonce,
-      chainId: parseInt(process.env.CMGR_CHAIN_ID, 10),
+      chainId: parseInt(process.env.ETH_CHAIN_ID, 10),
       gasLimit: 0,
       gasPrice: gasPriceSet,
     };

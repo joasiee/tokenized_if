@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package organizations;
+
+import "google/protobuf/empty.proto";
+
+message OrgRegistry {
+    string address = 1;
+}
+
+message Organization {
+    string name = 1;
+    string address = 2;
+    string msgUrl = 3;
+    string msgKey = 4;
+    string zkpKey = 5;
+}
+
+message Workgroup {
+    string name = 1;
+    string tokenAddress = 2;
+    string shieldAddress = 3;
+    string verifierAddress = 4;
+    int32 workStep = 5;
+}
+
+service Organizations {
+    rpc deployOrgRegistry(google.protobuf.Empty) returns (OrgRegistry);
+}

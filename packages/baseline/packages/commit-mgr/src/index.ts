@@ -4,7 +4,7 @@ import cors from "cors";
 
 import { rpcServer } from "./rpc-server";
 import { logger, reqLogger, reqErrorLogger } from "./logger";
-import { dbConnect } from "./db";
+import { dbConnect } from "@tokenized_if/shared";
 import { get_ws_provider, restartSubscriptions } from "./blockchain";
 
 export const commitMgrStart = async () => {
@@ -12,21 +12,15 @@ export const commitMgrStart = async () => {
 
   logger.info("Starting commmitment manager server...");
 
-  const dbUrl =
-    "mongodb://" +
-    `${process.env.CMGR_DATABASE_USER}` +
-    ":" +
-    `${process.env.CMGR_DATABASE_PASSWORD}` +
-    "@" +
-    `${process.env.CMGR_DATABASE_HOST}` +
-    "/" +
-    `${process.env.CMGR_DATABASE_NAME}`;
-
   logger.debug(
-    `Attempting to connect to db: ${process.env.CMGR_DATABASE_HOST}/${process.env.CMGR_DATABASE_NAME}`
+    `Attempting to connect to db: ${process.env.MONGO_HOST}/${process.env.CMGR_DATABASE_NAME}`
   );
 
-  await dbConnect(dbUrl);
+  await dbConnect(
+    process.env.CMGR_DATABASE_USER,
+    process.env.CMGR_DATABASE_PASSWORD,
+    process.env.CMGR_DATABASE_NAME
+  );
   await get_ws_provider(); // Establish websocket connection
   await restartSubscriptions(); // Enable event listeners for active MerkleTrees
 

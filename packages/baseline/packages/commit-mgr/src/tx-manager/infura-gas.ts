@@ -18,7 +18,7 @@ export class InfuraGas implements ITxManager {
       to: toAddress,
       from: fromAddress,
       data: txData,
-      chainId: parseInt(process.env.CMGR_CHAIN_ID, 10),
+      chainId: parseInt(process.env.ETH_CHAIN_ID, 10),
       gasLimit: 0,
       nonce,
     };
@@ -31,7 +31,7 @@ export class InfuraGas implements ITxManager {
     const relayTransactionHash = ethers.utils.keccak256(
       ethers.utils.defaultAbiCoder.encode(
         ["address", "bytes", "uint", "uint"],
-        [toAddress, txData, gasLimit, process.env.CMGR_CHAIN_ID] // Rinkeby chainId is 4
+        [toAddress, txData, gasLimit, process.env.ETH_CHAIN_ID] // Rinkeby chainId is 4
       )
     );
 

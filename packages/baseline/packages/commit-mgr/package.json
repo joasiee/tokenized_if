@@ -22,7 +22,8 @@
     "rlp": "^2.2.6",
     "uuid": "^8.3.2",
     "winston": "^3.3.3",
-    "@baseline/key-mgr": "^1.0.0"
+    "@baseline/key-mgr": "^1.0.0",
+    "@tokenized_if/shared": "^1.0.0"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
