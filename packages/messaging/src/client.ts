@@ -1,5 +1,5 @@
 import { IMessagingClientConfig } from "./config";
-import { connect, JSONCodec, NatsConnection, Subscription } from "nats";
+import { connect, JSONCodec, NatsConnection, nkeyAuthenticator, Subscription } from "nats";
 import { IMessagingService } from "@baseline-protocol/messaging";
 
 const jc = JSONCodec();
@@ -10,12 +10,17 @@ const jc = JSONCodec();
 export class MessagingClient implements IMessagingService {
 
     private readonly url = process.env.NATS_URL;
+    private readonly seed? : Uint8Array;
+
     private nc: NatsConnection;
     private subscriptions = new Map<string, Subscription>();
 
     constructor(config? : IMessagingClientConfig) {
         if (config) {
-            this.url = config.serverUrl
+            this.url = config.serverUrl;
+            if (config.seed) {
+                this.seed = new TextEncoder().encode(config.seed);
+            } 
         }
     }
 
@@ -25,7 +30,10 @@ export class MessagingClient implements IMessagingService {
      */
     async connect(): Promise<boolean> {
         try {
-            this.nc = await connect({servers: this.url });
+            this.nc = await connect({
+                servers: this.url,
+                ...(this.seed) && {authenticator: nkeyAuthenticator(this.seed)}
+            });
             console.log(`NATS client succesfully connected with ${this.url}`);
             return true;
         } catch (err) {
