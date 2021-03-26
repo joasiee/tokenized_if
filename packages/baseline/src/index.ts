@@ -1,5 +1,5 @@
-import { commitMgrStart } from "@baseline/commit-mgr";
-
 import dotenv from "dotenv";
+import { commitMgrStart } from "./commit-mgr";
+
 dotenv.config();
 commitMgrStart();

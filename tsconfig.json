@@ -5,15 +5,6 @@
       "path": "packages/baseline"
     },
     {
-      "path": "packages/baseline/packages/commit-mgr"
-    },
-    {
-      "path": "packages/baseline/packages/key-mgr"
-    },
-    {
-      "path": "packages/baseline/packages/organization-mgr"
-    },
-    {
       "path": "packages/shared"
     },
     {

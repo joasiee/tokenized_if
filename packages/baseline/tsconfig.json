@@ -1,15 +1,23 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
   },
   "exclude": [
-    "packages"
+    "dist", "truffle"
   ],
   "references": [
     {
-      "path": "packages/commit-mgr"
+      "path": "../shared"
     }
   ]
 }

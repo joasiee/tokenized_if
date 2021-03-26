@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import { ITxManager } from ".";
 import { logger } from "../logger";
 import { jsonrpc, shieldContract } from "../blockchain";
-import { HDWallet } from "@baseline/key-mgr";
+import { HDWallet } from "../../key-mgr";
 
 export class EthClient implements ITxManager {
   constructor(private readonly config: any) {

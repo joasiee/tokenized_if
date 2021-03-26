@@ -17,5 +17,5 @@ yarn
 yarn build
 make start
 yarn start:baseline
-yarn start:main
+yarn start:api
 ```

@@ -1,12 +1,9 @@
-import dotenv from "dotenv";
 import { ethers } from "ethers";
 
 import { logger } from "../logger";
 import { insertLeaf } from "../merkle-tree/leaves";
 import { get_ws_provider } from "./utils";
 import { shieldContract } from "./shield-contract";
-
-dotenv.config();
 
 export const newLeafEvent = ethers.utils.id("NewLeaf(uint256,bytes32,bytes32)");
 
