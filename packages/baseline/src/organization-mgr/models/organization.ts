@@ -9,7 +9,16 @@ const schemaFields: Record<keyof Organization.AsObject, any> = {
   zkpkey: { type: String, required: true },
 };
 
-export interface IOrgDoc extends Organization.AsObject, Document {}
+export interface IOrganization extends Organization.AsObject, Document {}
 
 const schema = new Schema(schemaFields);
-export const OrgModel = model<IOrgDoc>("Organization", schema);
+export const OrganizationModel = model<IOrganization>("Organization", schema);
+
+export function fromModel(model: IOrganization): Organization {
+  return new Organization()
+    .setName(model.name)
+    .setAddress(model.address)
+    .setMsgurl(model.msgurl)
+    .setMsgkey(model.msgkey)
+    .setZkpkey(model.zkpkey);
+}

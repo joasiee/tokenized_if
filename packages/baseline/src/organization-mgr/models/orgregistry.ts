@@ -5,7 +5,11 @@ const schemaFields: Record<keyof OrgRegistry.AsObject, any> = {
   address: { type: String, required: true, unique: true },
 };
 
-export interface IOrgRegDoc extends OrgRegistry.AsObject, Document {}
+export interface IOrgRegistry extends OrgRegistry.AsObject, Document {}
 
 const schema = new Schema(schemaFields);
-export const OrgRegModel = model<IOrgRegDoc>("OrgRegistry", schema);
+export const OrgRegistryModel = model<IOrgRegistry>("OrgRegistry", schema);
+
+export function fromModel(model: IOrgRegistry): OrgRegistry {
+  return new OrgRegistry().setAddress(model.address);
+}

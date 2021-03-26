@@ -9,7 +9,16 @@ const schemaFields: Record<keyof Workgroup.AsObject, any> = {
   workstep: Number,
 };
 
-export interface IWorkgroupDoc extends Workgroup.AsObject, Document {}
+export interface IWorkgroup extends Workgroup.AsObject, Document {}
 
 const schema = new Schema(schemaFields);
-export const WorkgroupModel = model<IWorkgroupDoc>("Workgroup", schema);
+export const WorkgroupModel = model<IWorkgroup>("Workgroup", schema);
+
+export function fromModel(model: IWorkgroup): Workgroup {
+  return new Workgroup()
+    .setName(model.name)
+    .setShieldaddress(model.shieldaddress)
+    .setTokenaddress(model.tokenaddress)
+    .setVerifieraddress(model.verifieraddress)
+    .setWorkstep(model.workstep);
+}
