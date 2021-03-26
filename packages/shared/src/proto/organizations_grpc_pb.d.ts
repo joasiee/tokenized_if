@@ -10,11 +10,11 @@ import * as organizations_pb from "./organizations_pb";
 import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
 
 interface IOrganizationsService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-    deployOrgRegistry: IOrganizationsService_IdeployOrgRegistry;
+    deployOrgRegistry: IOrganizationsService_IDeployOrgRegistry;
 }
 
-interface IOrganizationsService_IdeployOrgRegistry extends grpc.MethodDefinition<google_protobuf_empty_pb.Empty, organizations_pb.OrgRegistry> {
-    path: "/organizations.Organizations/deployOrgRegistry";
+interface IOrganizationsService_IDeployOrgRegistry extends grpc.MethodDefinition<google_protobuf_empty_pb.Empty, organizations_pb.OrgRegistry> {
+    path: "/organizations.Organizations/DeployOrgRegistry";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<google_protobuf_empty_pb.Empty>;

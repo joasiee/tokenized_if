@@ -30,7 +30,7 @@ function deserialize_organizations_OrgRegistry(buffer_arg) {
 
 var OrganizationsService = exports.OrganizationsService = {
   deployOrgRegistry: {
-    path: '/organizations.Organizations/deployOrgRegistry',
+    path: '/organizations.Organizations/DeployOrgRegistry',
     requestStream: false,
     responseStream: false,
     requestType: google_protobuf_empty_pb.Empty,

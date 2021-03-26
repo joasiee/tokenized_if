@@ -1,7 +1,19 @@
 import dotenv from "dotenv";
 import { commitMgrStart } from "./commit-mgr";
-import { getLogger } from "@tokenized_if/shared";
+import { getLogger, dbConnect } from "@tokenized_if/shared";
+import { IOrgDoc, OrgModel } from "./organization-mgr/models/organization";
 
-dotenv.config();
-const logger = getLogger("main");
-commitMgrStart();
+const main = async () => {
+  dotenv.config();
+  await dbConnect(
+    process.env.OMGR_DATABASE_USER,
+    process.env.OMGR_DATABASE_PASSWORD,
+    process.env.OMGR_DATABASE_NAME
+  );
+  const org: IOrgDoc = await OrgModel.findOne({
+    address: "PAPIE",
+  });
+  console.log(org);
+};
+
+main();

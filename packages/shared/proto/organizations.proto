@@ -25,5 +25,5 @@ message Workgroup {
 }
 
 service Organizations {
-    rpc deployOrgRegistry(google.protobuf.Empty) returns (OrgRegistry);
+    rpc DeployOrgRegistry(google.protobuf.Empty) returns (OrgRegistry);
 }
