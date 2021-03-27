@@ -81,9 +81,6 @@ async function main() {
       console.log("beneficiary is: " + beneficiary);
       console.log("holder is: " + holder);
 
-      await tokenRegistry["setGoodsHash(uint256,string)"](tokenId, "abc");
-      console.log(await tokenRegistry["getGoodsHash(uint256)"](tokenId));
-      //await tokenRegistry["setGoodsHash(uint256,string)"](tokenId, "abc");
     }
 
     var escrowInstance2 = await deployTitleEscrow(importerPublicAddress, importerPublicAddress);
@@ -98,6 +95,8 @@ async function main() {
       console.log("Current owner of token is: " + await tokenRegistry["ownerOf(uint256)"](tokenId));
       console.log(await escrowInstance2.holder());
     }
+
+    
   }
   catch (e) {
     console.log(e);
