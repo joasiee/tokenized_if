@@ -47,7 +47,9 @@
   "peerDependencies": {
     "ethers": ">=4.0.45"
   },
-  "dependencies": {},
+  "dependencies": {
+    "web3": "^1.3.4"
+  },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",

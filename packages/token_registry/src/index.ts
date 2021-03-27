@@ -6,8 +6,9 @@ export { getTitleEscrowCreatorAddress } from "./config";
 import { TradeTrustErc721 } from "../types/TradeTrustErc721";
 import { TitleEscrowCreator } from "../types/TitleEscrowCreator";
 import { TitleEscrowFactory, TradeTrustErc721Factory, TitleEscrowCreatorFactory } from "./index";
-import { Wallet, providers, getDefaultProvider } from "ethers";
+import { Wallet, providers, getDefaultProvider, ethers } from "ethers";
 import { TitleEscrow } from "./contracts/TitleEscrow";
+import Web3 from "web3";
 
 var tokenRegistry: TradeTrustErc721;
 var titleEscrowFactory: TitleEscrowCreator;
@@ -15,10 +16,31 @@ var titleEscrowFactory: TitleEscrowCreator;
 const url = "http://172.29.64.1:7545";
 const provider = new providers.JsonRpcProvider(url);
 
+//const Web3 = require('web3');
+var web3 = new Web3(new Web3.providers.HttpProvider(url));
+
+
 // Getting the accounts
+web3.eth.getAccounts().then(console.log);
+
+
+
+async function blaa() {
+  try {
+    let accounts;
+    web3.eth.getAccounts().then(function(response) { accounts = response; console.log(accounts[0]); });
+  }
+  catch (e) {
+    console.log(e);
+  }
+}
+
+
+
 const LSPSigner = provider.getSigner(0);
 const importerSigner = provider.getSigner(1);
 const financerSigner = provider.getSigner(2);
+
 
 // Ropsten related stuff
 /*
@@ -30,6 +52,9 @@ const LSPpublicAddress = "0xE6235C71b5f8CD01406e806BFc0aDFBDA8aDc936";
 const importerPrivateKey = new Wallet("0x33f68e849850edc3ea1a85280196db68ea086c2cd8a42c8d6425f05b528479b9", ropstenProvider);
 const importerPublicAddress = "0x94289E3fB264f586c1Ef3eb9525340707f820fC5";
 */
+
+
+
 
 const tokenRegistryFactory = new TradeTrustErc721Factory(LSPSigner);
 const tokenId = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
@@ -73,6 +98,10 @@ async function main() {
     await setupTokenRegistry();
     let importerPublicAddress = await importerSigner.getAddress();
     let financerPublicAddress = await financerSigner.getAddress();
+
+   
+
+    
     var escrowInstance = await deployTitleEscrow(importerPublicAddress, importerPublicAddress);
     if (escrowInstance != null) {
       createToken(escrowInstance);
@@ -97,6 +126,32 @@ async function main() {
       console.log(await escrowInstance2.holder());
     }
 
+    const nonce = await web3.eth.getTransactionCount(importerPublicAddress, 'latest'); 
+
+    const transaction = {
+      'to': financerPublicAddress,
+      'value': 5000000000000000000, // 5 ETH
+      'gas': 30000, 
+      'nonce': nonce,
+      // optional data field to send message or execute smart contract
+     };
+     
+     
+     const signedTx = await web3.eth.accounts.signTransaction(transaction, "c203ef68ffd437a23f4f9b7302e198230b6c41da0f001c71f2b63f531712f170");
+      web3.eth.sendSignedTransaction(signedTx.rawTransaction!, function(error, hash) {
+        if (!error) {
+          console.log("The hash of your transaction is: ", hash);
+        } else {
+          console.log("Something went wrong while submitting your transaction:", error)
+        }
+       });
+     
+ 
+       
+
+
+  
+
     
   }
   catch (e) {
@@ -105,8 +160,9 @@ async function main() {
 }
 
 
+
 main();
 
-
+//blaa();
 
 
