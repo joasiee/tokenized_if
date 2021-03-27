@@ -1,13 +1,10 @@
-import { IMessagingClientConfig } from "./config";
+import { IMessagingClient, IMessagingClientConfig, ReceivedMessage, RequestResponseObject } from "./interfaces";
 import { connect, JSONCodec, NatsConnection, nkeyAuthenticator, Subscription } from "nats";
-import { IMessagingService } from "@baseline-protocol/messaging";
-
-const jc = JSONCodec();
 
 /**
- * Implementations of {@link IMessagingService} using NATS
+ * Implementations of {@link IMessagingClient} using NATS
  */
-export class MessagingClient implements IMessagingService {
+export class MessagingClient implements IMessagingClient {
 
     private readonly url = process.env.NATS_URL;
     private readonly seed? : Uint8Array;
@@ -42,90 +39,95 @@ export class MessagingClient implements IMessagingService {
         }
     }
 
-    /**
-     * Discconnects client from NATS server
-     */
-    async disconnect(): Promise<void> {
+    async disconnect(): Promise<boolean> {
         if (!this.nc) {
-            console.log(`No NatsConnection to disconnect`);
+            console.log(`No NatsConnection to disconnect from`);
+            return true;
         }
         try {
+            await this.nc.drain();
             await this.nc.close();
+            return true;
         } catch (err) {
             console.log(`An Error while closing the NATS connection: ${err.message}`);
+            return false;
         }
     }
-    
-    /**
-     * Returns if client is connected
-     * @returns The connections status 
-     */
+
     isConnected(): boolean {
         return !(this.nc?.isClosed() ?? true);
     }
 
-    /**
-     * Returns an array of all the subjects this client is subscribed to
-     * @returns Array of subject names
-     */
-    getSubscribedSubjects(): string[] {
-        return Array.from(this.subscriptions.keys())
-    }
-
-    /**
-     * Publish a payload on given subject
-     * @param subject The subject (channel) to publish on
-     * @param payload The data to be sent
-     * @param reply Optional 
-     * @param recipientId Optional recipient identifier
-     * @param senderId  Option sender identifier
-     */
-    publish(subject: string, payload: object, reply?: string, recipientId?: string, senderId?: string): Promise<void> {
-        this.nc!.publish(subject, jc.encode(payload));
-        return Promise.resolve();
-    }
-
-    /**
-     * Request data once from subject and return reply
-     * @param subject The subject to request data from
-     * @param timeout Time to wait
-     * @param data Optional data accompanying the request
-     */
-    async request(subject: string, timeout: number, data?: any): Promise<any> {
-        let reply =  await this.nc!.request(subject, data, {timeout: timeout});
-        return reply.data;
-    }
-
-    /**
-     * Subscribe to messages on a subject and assign a handler/callback for these messages
-     * @param subject The subject to subscribe to
-     * @param callback The callback handling incoming messages on thsi subject
-     * @param myId Optional identifier
-     */
-    subscribe(subject: string, callback?: (msg: any, err?: any) => void, myId?: string): Promise<any> {
+    async *subscribe<T>(subject: string): AsyncIterable<ReceivedMessage<T>> {
         if (this.subscriptions.has(subject)) {
             this.subscriptions.get(subject).unsubscribe();
         }
-        let sub = this.nc!.subscribe(subject, {callback: (e, m) => callback(jc.decode(m.data), e)});
+        const sub = this.nc?.subscribe(subject);
         this.subscriptions.set(subject, sub);
+        const jc = JSONCodec<T>();
+        for await (const m of sub) {
+            yield { subject: m.subject, payload: jc.decode(m.data) };
+        }
+    }
+
+    publish<T>(subject: string, payload?: T): Promise<void> {
+        const jc = JSONCodec<T>();
+        this.nc?.publish(subject, payload ? jc.encode(payload) : undefined);
         return Promise.resolve();
     }
 
-    /**
-     * Unsubscribe from messages of the given subject
-     * @param subject The subject to unsubscribe from
-     */
-    unsubscribe(subject: string) {
-        let sub = this.subscriptions.get(subject);
-        sub!.unsubscribe();
+    async request<I, O>(subject: string, payload?: I, timeout = 2000): Promise<O> {
+        const jci = JSONCodec<I>();
+        const jco = JSONCodec<O>();
+        let result: O;
+        try {
+            const reply = await this.nc?.request(
+                subject,
+                payload ? jci.encode(payload) : undefined,
+                { timeout: timeout });
+            result = jco.decode(reply.data);
+        } catch (err) {
+            console.log(`An error occurred requesting subject: ${subject} with payload: ${payload} \n\t ${err}`);
+        } finally {
+            return result;
+        }
+    }
+
+    async *reply<I, O>(subject: string): AsyncIterable<RequestResponseObject<I, O>> {
+        if (this.subscriptions.has(subject)) {
+            this.subscriptions.get(subject).unsubscribe();
+        }
+        const sub = this.nc?.subscribe(subject);
+        this.subscriptions.set(subject, sub);
+        const jci = JSONCodec<I>();
+        const jco = JSONCodec<O>();
+        for await (const m of sub) {
+            yield {
+                subject: m.subject,
+                payload: jci.decode(m.data),
+                // Return a closure instead of function directly
+                // to enforce respond being called once
+                respond: (() => {
+                    let executed = false;
+                    return async (response: O) => {
+                        if (!executed) {
+                            executed = true;
+                            m.respond(jco.encode(response));
+                        }
+                    };
+                })()
+            };
+        }
+    }   
+
+    unsubscribe(subject: string): Promise<void> {
+        const sub = this.subscriptions.get(subject);
+        sub?.unsubscribe();
         this.subscriptions.delete(subject);
+        return Promise.resolve();
     }
-
-    /**
-     * Push all buffered messages to the server
-     */
-    async flush(): Promise<void> {
-        await this.nc.flush()
+    
+    getSubscribedSubjects(): string[] {
+        return Array.from(this.subscriptions.keys())
     }
-
 }
