@@ -12,15 +12,13 @@ import { TitleEscrow } from "./contracts/TitleEscrow";
 var tokenRegistry: TradeTrustErc721;
 var titleEscrowFactory: TitleEscrowCreator;
 
-const url = "http://172.20.96.1:7545";
+const url = "http://172.29.64.1:7545";
 const provider = new providers.JsonRpcProvider(url);
 
 // Getting the accounts
-const LSPPrivateKey = provider.getSigner(0);
-const LSPpublicAddress = "0xBfed710BFE55f8Da0cAE9e764C0bD280b65F624f";
-const importerPrivateKey = provider.getSigner(1);
-const importerPublicAddress = "0xCB64d22249298d05664291aF45e7c63d749A1FbB";
-
+const LSPSigner = provider.getSigner(0);
+const importerSigner = provider.getSigner(1);
+const financerSigner = provider.getSigner(2);
 
 // Ropsten related stuff
 /*
@@ -33,7 +31,7 @@ const importerPrivateKey = new Wallet("0x33f68e849850edc3ea1a85280196db68ea086c2
 const importerPublicAddress = "0x94289E3fB264f586c1Ef3eb9525340707f820fC5";
 */
 
-const tokenRegistryFactory = new TradeTrustErc721Factory(LSPPrivateKey);
+const tokenRegistryFactory = new TradeTrustErc721Factory(LSPSigner);
 const tokenId = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
 
 async function setupTokenRegistry() {
@@ -58,7 +56,7 @@ async function createToken(escrowInstance: TitleEscrow) {
 async function deployTitleEscrow(beneficiary: string, holder: string) {
   var instance;
   try {
-    const factory = new TitleEscrowFactory(LSPPrivateKey);
+    const factory = new TitleEscrowFactory(LSPSigner);
     instance = await factory.deploy(tokenRegistry.address, beneficiary, holder, beneficiary);
     console.log("executing deploy title escrow");
   }
@@ -73,7 +71,9 @@ async function main() {
   console.log("Hello world");
   try {
     await setupTokenRegistry();
-    var escrowInstance = await deployTitleEscrow(LSPpublicAddress, LSPpublicAddress);
+    let importerPublicAddress = await importerSigner.getAddress();
+    let financerPublicAddress = await financerSigner.getAddress();
+    var escrowInstance = await deployTitleEscrow(importerPublicAddress, importerPublicAddress);
     if (escrowInstance != null) {
       createToken(escrowInstance);
       var beneficiary = await escrowInstance.beneficiary();
@@ -83,11 +83,12 @@ async function main() {
 
     }
 
-    var escrowInstance2 = await deployTitleEscrow(importerPublicAddress, importerPublicAddress);
+    var escrowInstance2 = await deployTitleEscrow(financerPublicAddress, financerPublicAddress);
     console.log("Deployed escrow instance 2");
     console.log("Current owner of token is: " + await tokenRegistry["ownerOf(uint256)"](tokenId));
 
     if (escrowInstance != null && escrowInstance2 != null) {
+      escrowInstance = TitleEscrowFactory.connect(escrowInstance.address, importerSigner);
       console.log("balance: " + await tokenRegistry["balanceOf(address)"](escrowInstance.address));
       console.log("transferring");
       await escrowInstance.transferTo(escrowInstance2.address);
@@ -105,5 +106,7 @@ async function main() {
 
 
 main();
+
+
 
 
