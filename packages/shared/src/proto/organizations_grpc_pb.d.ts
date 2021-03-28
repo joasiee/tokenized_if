@@ -13,12 +13,12 @@ interface IOrganizationsService extends grpc.ServiceDefinition<grpc.UntypedServi
     deployOrgRegistry: IOrganizationsService_IDeployOrgRegistry;
 }
 
-interface IOrganizationsService_IDeployOrgRegistry extends grpc.MethodDefinition<google_protobuf_empty_pb.Empty, organizations_pb.OrgRegistry> {
+interface IOrganizationsService_IDeployOrgRegistry extends grpc.MethodDefinition<organizations_pb.OrgRegistry, organizations_pb.OrgRegistry> {
     path: "/organizations.Organizations/DeployOrgRegistry";
     requestStream: false;
     responseStream: false;
-    requestSerialize: grpc.serialize<google_protobuf_empty_pb.Empty>;
-    requestDeserialize: grpc.deserialize<google_protobuf_empty_pb.Empty>;
+    requestSerialize: grpc.serialize<organizations_pb.OrgRegistry>;
+    requestDeserialize: grpc.deserialize<organizations_pb.OrgRegistry>;
     responseSerialize: grpc.serialize<organizations_pb.OrgRegistry>;
     responseDeserialize: grpc.deserialize<organizations_pb.OrgRegistry>;
 }
@@ -26,18 +26,18 @@ interface IOrganizationsService_IDeployOrgRegistry extends grpc.MethodDefinition
 export const OrganizationsService: IOrganizationsService;
 
 export interface IOrganizationsServer extends grpc.UntypedServiceImplementation {
-    deployOrgRegistry: grpc.handleUnaryCall<google_protobuf_empty_pb.Empty, organizations_pb.OrgRegistry>;
+    deployOrgRegistry: grpc.handleUnaryCall<organizations_pb.OrgRegistry, organizations_pb.OrgRegistry>;
 }
 
 export interface IOrganizationsClient {
-    deployOrgRegistry(request: google_protobuf_empty_pb.Empty, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
-    deployOrgRegistry(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
-    deployOrgRegistry(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
+    deployOrgRegistry(request: organizations_pb.OrgRegistry, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
+    deployOrgRegistry(request: organizations_pb.OrgRegistry, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
+    deployOrgRegistry(request: organizations_pb.OrgRegistry, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
 }
 
 export class OrganizationsClient extends grpc.Client implements IOrganizationsClient {
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: Partial<grpc.ClientOptions>);
-    public deployOrgRegistry(request: google_protobuf_empty_pb.Empty, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
-    public deployOrgRegistry(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
-    public deployOrgRegistry(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
+    public deployOrgRegistry(request: organizations_pb.OrgRegistry, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
+    public deployOrgRegistry(request: organizations_pb.OrgRegistry, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
+    public deployOrgRegistry(request: organizations_pb.OrgRegistry, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: organizations_pb.OrgRegistry) => void): grpc.ClientUnaryCall;
 }

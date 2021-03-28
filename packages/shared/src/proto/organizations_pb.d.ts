@@ -10,6 +10,8 @@ import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty
 export class OrgRegistry extends jspb.Message { 
     getAddress(): string;
     setAddress(value: string): OrgRegistry;
+    getName(): string;
+    setName(value: string): OrgRegistry;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): OrgRegistry.AsObject;
@@ -24,6 +26,7 @@ export class OrgRegistry extends jspb.Message {
 export namespace OrgRegistry {
     export type AsObject = {
         address: string,
+        name: string,
     }
 }
 

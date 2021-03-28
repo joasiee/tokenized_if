@@ -115,7 +115,8 @@ proto.organizations.OrgRegistry.prototype.toObject = function(opt_includeInstanc
  */
 proto.organizations.OrgRegistry.toObject = function(includeInstance, msg) {
   var f, obj = {
-    address: jspb.Message.getFieldWithDefault(msg, 1, "")
+    address: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    name: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -156,6 +157,10 @@ proto.organizations.OrgRegistry.deserializeBinaryFromReader = function(msg, read
       var value = /** @type {string} */ (reader.readString());
       msg.setAddress(value);
       break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -192,6 +197,13 @@ proto.organizations.OrgRegistry.serializeBinaryToWriter = function(message, writ
       f
     );
   }
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -210,6 +222,24 @@ proto.organizations.OrgRegistry.prototype.getAddress = function() {
  */
 proto.organizations.OrgRegistry.prototype.setAddress = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string name = 2;
+ * @return {string}
+ */
+proto.organizations.OrgRegistry.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.organizations.OrgRegistry} returns this
+ */
+proto.organizations.OrgRegistry.prototype.setName = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

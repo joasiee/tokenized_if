@@ -5,17 +5,6 @@ var grpc = require('@grpc/grpc-js');
 var organizations_pb = require('./organizations_pb.js');
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
 
-function serialize_google_protobuf_Empty(arg) {
-  if (!(arg instanceof google_protobuf_empty_pb.Empty)) {
-    throw new Error('Expected argument of type google.protobuf.Empty');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_google_protobuf_Empty(buffer_arg) {
-  return google_protobuf_empty_pb.Empty.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_organizations_OrgRegistry(arg) {
   if (!(arg instanceof organizations_pb.OrgRegistry)) {
     throw new Error('Expected argument of type organizations.OrgRegistry');
@@ -33,10 +22,10 @@ var OrganizationsService = exports.OrganizationsService = {
     path: '/organizations.Organizations/DeployOrgRegistry',
     requestStream: false,
     responseStream: false,
-    requestType: google_protobuf_empty_pb.Empty,
+    requestType: organizations_pb.OrgRegistry,
     responseType: organizations_pb.OrgRegistry,
-    requestSerialize: serialize_google_protobuf_Empty,
-    requestDeserialize: deserialize_google_protobuf_Empty,
+    requestSerialize: serialize_organizations_OrgRegistry,
+    requestDeserialize: deserialize_organizations_OrgRegistry,
     responseSerialize: serialize_organizations_OrgRegistry,
     responseDeserialize: deserialize_organizations_OrgRegistry,
   },

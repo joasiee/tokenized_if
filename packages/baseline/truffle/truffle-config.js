@@ -2,7 +2,7 @@ module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
   contracts_directory: "./contracts",
-  contracts_build_directory: "./artifacts",
+  contracts_build_directory: "../dist/artifacts",
   compilers: {
     solc: {
       version: "0.6.9",

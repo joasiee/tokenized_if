@@ -6,6 +6,7 @@ import "google/protobuf/empty.proto";
 
 message OrgRegistry {
     string address = 1;
+    string name = 2;
 }
 
 message Organization {
@@ -25,5 +26,5 @@ message Workgroup {
 }
 
 service Organizations {
-    rpc DeployOrgRegistry(google.protobuf.Empty) returns (OrgRegistry);
+    rpc DeployOrgRegistry(OrgRegistry) returns (OrgRegistry);
 }

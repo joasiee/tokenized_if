@@ -3,6 +3,7 @@ import { OrgRegistry } from "@tokenized_if/shared/src/proto/organizations_pb";
 
 const schemaFields: Record<keyof OrgRegistry.AsObject, any> = {
   address: { type: String, required: true, unique: true },
+  name: String,
 };
 
 export interface IOrgRegistry extends OrgRegistry.AsObject, Document {}
@@ -11,5 +12,5 @@ const schema = new Schema(schemaFields);
 export const OrgRegistryModel = model<IOrgRegistry>("OrgRegistry", schema);
 
 export function fromModel(model: IOrgRegistry): OrgRegistry {
-  return new OrgRegistry().setAddress(model.address);
+  return new OrgRegistry().setAddress(model.address).setName(model.name);
 }

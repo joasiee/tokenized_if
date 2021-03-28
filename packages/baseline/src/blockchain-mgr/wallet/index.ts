@@ -10,7 +10,7 @@ export class HDWallet {
   private provider: providers.Provider;
 
   private constructor() {
-    this.hdNode = utils.HDNode.fromMnemonic(process.env.KMGR_MNEMONIC);
+    this.hdNode = utils.HDNode.fromMnemonic(process.env.BMGR_MNEMONIC);
     this.addressN = 0;
     this.provider = new providers.JsonRpcProvider(process.env.ETH_CLIENT_HTTP);
   }
