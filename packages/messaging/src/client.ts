@@ -1,5 +1,5 @@
 import { IMessagingClient, IMessagingClientConfig, ReceivedMessage, RequestResponseObject } from "./interfaces";
-import { connect, createInbox, JSONCodec, NatsConnection, nkeyAuthenticator, Subscription } from "nats";
+import { connect, JSONCodec, NatsConnection, nkeyAuthenticator, Subscription } from "nats";
 
 /**
  * Implementations of {@link IMessagingClient} using NATS
@@ -7,17 +7,17 @@ import { connect, createInbox, JSONCodec, NatsConnection, nkeyAuthenticator, Sub
 export class MessagingClient implements IMessagingClient {
 
     private readonly url = process.env.NATS_URL;
-    private readonly seed? : Uint8Array;
+    private readonly seed?: Uint8Array;
 
     private nc: NatsConnection;
     private subscriptions = new Map<string, Subscription>();
 
-    constructor(config? : IMessagingClientConfig) {
+    constructor(config?: IMessagingClientConfig) {
         if (config) {
             this.url = config.serverUrl;
             if (config.seed) {
                 this.seed = new TextEncoder().encode(config.seed);
-            } 
+            }
         }
     }
 
@@ -29,12 +29,12 @@ export class MessagingClient implements IMessagingClient {
         try {
             this.nc = await connect({
                 servers: this.url,
-                ...(this.seed) && {authenticator: nkeyAuthenticator(this.seed)}
+                ...(this.seed) && { authenticator: nkeyAuthenticator(this.seed) }
             });
             console.log(`NATS client succesfully connected with ${this.url}`);
             return true;
-        } catch (err) {
-            console.log(`Could not connect to NATS server: ${err.message}`);
+        } catch {
+            console.log('Could not connect to NATS server');
             return false;
         }
     }
@@ -46,7 +46,7 @@ export class MessagingClient implements IMessagingClient {
         }
         const done = this.nc.closed();
         await this.nc.close();
-        const err = await done;;
+        const err = await done;
         if (err) {
             console.log(`An Error while closing the NATS connection: ${err.message}`);
             return false;
@@ -89,12 +89,11 @@ export class MessagingClient implements IMessagingClient {
                 subject,
                 payload !== undefined ? jci.encode(payload) : undefined,
                 { timeout: timeout });
-            result = jco.decode(reply.data);
+            return jco.decode(reply.data);
         } catch (err) {
             console.log(`An error occurred requesting subject: ${subject}, with payload: ${payload} \n\t ${err}`);
-        } finally {
-            return result;
         }
+        return result;
     }
 
     async *reply<I, O>(subject: string): AsyncIterable<RequestResponseObject<I, O>> {
@@ -113,16 +112,17 @@ export class MessagingClient implements IMessagingClient {
                 // to enforce respond being called once
                 respond: (() => {
                     let executed = false;
-                    return async (response: O) => {
+                    return ((response: O) => {
                         if (!executed) {
                             executed = true;
                             m.respond(jco.encode(response));
                         }
-                    };
+                        return Promise.resolve();
+                    });
                 })()
             };
         }
-    }   
+    }
 
     async unsubscribe(subject: string): Promise<void> {
         const sub = this.subscriptions.get(subject);
@@ -130,7 +130,7 @@ export class MessagingClient implements IMessagingClient {
         this.subscriptions.delete(subject);
         return Promise.resolve();
     }
-    
+
     getSubscribedSubjects(): string[] {
         return Array.from(this.subscriptions.keys())
     }

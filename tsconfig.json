@@ -5,6 +5,9 @@
       "path": "packages/baseline"
     },
     {
+      "path": "packages/messaging"
+    },
+    {
       "path": "packages/tokenized_if"
     }
   ],

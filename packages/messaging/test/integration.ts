@@ -4,10 +4,10 @@ import "mocha";
 import { createMessagingClient } from "../src";
 import { IMessagingClient, IMessagingClientConfig } from "../src/interfaces";
 
-const config : IMessagingClientConfig = { serverUrl: "nats://localhost:4222" };
+const config: IMessagingClientConfig = { serverUrl: "nats://localhost:4222" };
 
 describe('messaging service', function () {
-    describe('server connection', async () => {
+    describe('server connection', function () {
         const client = createMessagingClient(config);
         it('is disconnected after initialization', () => {
             expect(client.isConnected()).to.be.false;
@@ -24,12 +24,14 @@ describe('messaging service', function () {
             await client.connect();
             expect(client.isConnected()).to.be.true;
         });
-        // close connection
-        await client.disconnect();
+
+        after('ensure connection closes', async function () {
+            await client.disconnect();
+        });
     });
 
-    describe('authenticated requests', async () => {
-        const authConfig : IMessagingClientConfig = {
+    describe('authenticated requests', function () {
+        const authConfig: IMessagingClientConfig = {
             serverUrl: "nats://localhost:4222",
             // DO NOT USE THIS SPECIFIC SEED IN PRODUCTION!!!
             seed: "SUAKBQLSEALNTLABG6XCLLWHYHIAOFM3HXD6RUHRPQ53GZNZ3MVLTZCZOM"
@@ -39,11 +41,14 @@ describe('messaging service', function () {
             await client.connect();
             expect(client.isConnected()).to.be.true;
         });
-        await client.disconnect();
-    })
 
-    describe('publish and subscribe', function() {
-        let client : IMessagingClient;
+        after('ensure connection closes', async function () {
+            await client.disconnect();
+        });
+    });
+
+    describe('publish and subscribe', function () {
+        let client: IMessagingClient;
         const subject = 'time';
 
         const returnFirst = async <T>(sub: AsyncGenerator<T, unknown, unknown>) => {
@@ -68,7 +73,7 @@ describe('messaging service', function () {
             expect(message.subject).to.equal(subject);
             expect(message.payload).to.be.undefined;
         });
-        
+
         it('receives published messages with payload (number)', async function () {
             const payload = 42;
             const sub = client.subscribe<number>(subject);
@@ -78,7 +83,7 @@ describe('messaging service', function () {
             expect(message.subject).to.equal(subject);
             expect(message.payload).to.equal(payload);
         });
-        
+
         it('receives published messages with payload (string)', async function () {
             const payload = 'a simple string';
             const sub = client.subscribe<string>(subject);
@@ -91,7 +96,7 @@ describe('messaging service', function () {
 
         it('receives published messages with payload (object)', async function () {
             const payload = { name: 'a value', value: 42 };
-            const sub = client.subscribe<{name,value}>(subject);
+            const sub = client.subscribe<{ name, value }>(subject);
             const iter = returnFirst(sub);
             await client.publish(subject, payload);
             const message = await iter;
@@ -132,7 +137,7 @@ describe('messaging service', function () {
         });
     });
 
-    describe('request and reply', function() {
+    describe('request and reply', function () {
         let client: IMessagingClient;
         const subject = 'increment';
 
@@ -146,7 +151,7 @@ describe('messaging service', function () {
 
         it('replies to messages without payload', async function () {
             const rro = client.reply(subject);
-            (async () => {
+            void (async () => {
                 for await (const r of rro) {
                     await r.respond(1);
                 }
@@ -157,18 +162,18 @@ describe('messaging service', function () {
 
         it('replies to messages with payload (number)', async function () {
             const rro = client.reply<number, number>(subject);
-            (async () => {
+            void (async () => {
                 for await (const r of rro) {
                     await r.respond(r.payload + 1);
                 }
             })()
             const reply = await client.request(subject, 42);
-            expect(reply).to.equal(43);            
+            expect(reply).to.equal(43);
         });
 
         it('replies to messages with payload (string)', async function () {
             const rro = client.reply<string, string>(subject);
-            (async () => {
+            void (async () => {
                 for await (const r of rro) {
                     await r.respond(r.payload + ' world');
                 }
@@ -178,30 +183,29 @@ describe('messaging service', function () {
         });
 
         it('replies to messages with payload (object)', async function () {
-            const rro = client.reply<{str:string},{num:number}>(subject);
-            (async () => {
+            const rro = client.reply<{ str: string }, { num: number }>(subject);
+            void (async () => {
                 for await (const r of rro) {
-                    await r.respond({num: parseInt(r.payload.str)});
+                    await r.respond({ num: parseInt(r.payload.str) });
                 }
             })()
-            const reply = await client.request<{str:string},{num:number}>(subject, {str: '42'});
+            const reply = await client.request<{ str: string }, { num: number }>(subject, { str: '42' });
             expect(reply.num).to.equal(42);
         });
-        
+
         it('replies to multiple requests', async function () {
             const rro = client.reply(subject);
-            (async () => {
+            void (async () => {
                 let timesCalled = 0;
                 for await (const r of rro) {
                     await r.respond(timesCalled++);
                 }
             })()
-            for (let i = 0; i < 5; i++)
-            {
+            for (let i = 0; i < 5; i++) {
                 const reply = await client.request(subject);
                 expect(reply).to.equal(i);
             }
         });
-    })
+    });
 });
 
