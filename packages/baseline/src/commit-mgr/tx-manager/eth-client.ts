@@ -37,21 +37,16 @@ export class EthClient implements ITxManager {
     return signedTx;
   }
 
-  async insertLeaf(
-    toAddress: string,
-    fromAddress: string,
-    proof: any[],
-    publicInputs: any[],
-    newCommitment: string
-  ) {
+  async insertLeaf(toAddress: string, fromAddress: string, proof: any[], publicInputs: any[], newCommitment: string) {
     let error = null;
     let txHash: string;
     try {
       const shieldInterface = new ethers.utils.Interface(shieldContract.abi);
-      const txData = shieldInterface.encodeFunctionData(
-        "verifyAndPush(uint256[],uint256[],bytes32)",
-        [proof, publicInputs, newCommitment]
-      );
+      const txData = shieldInterface.encodeFunctionData("verifyAndPush(uint256[],uint256[],bytes32)", [
+        proof,
+        publicInputs,
+        newCommitment,
+      ]);
       const signedTx = await this.signTx(toAddress, fromAddress, txData);
       logger.debug(`signedTx: ${signedTx}`);
       const res = await jsonrpc("eth_sendRawTransaction", [signedTx]);

@@ -12,7 +12,7 @@ const schemaFields: Record<keyof Workgroup.AsObject, any> = {
 export interface IWorkgroup extends Workgroup.AsObject, Document {}
 
 const schema = new Schema(schemaFields);
-export const WorkgroupModel = model<IWorkgroup>("Workgroup", schema);
+export const db = model<IWorkgroup>("Workgroup", schema);
 
 export function fromModel(model: IWorkgroup): Workgroup {
   return new Workgroup()

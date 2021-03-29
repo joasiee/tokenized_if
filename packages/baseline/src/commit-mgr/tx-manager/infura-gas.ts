@@ -35,32 +35,21 @@ export class InfuraGas implements ITxManager {
       )
     );
 
-    const signature = await wallet.signMessage(
-      ethers.utils.arrayify(relayTransactionHash)
-    );
+    const signature = await wallet.signMessage(ethers.utils.arrayify(relayTransactionHash));
     return { signature, gasLimit };
   }
 
-  async insertLeaf(
-    toAddress: string,
-    fromAddress: string,
-    proof: any[],
-    publicInputs: any[],
-    newCommitment: string
-  ) {
+  async insertLeaf(toAddress: string, fromAddress: string, proof: any[], publicInputs: any[], newCommitment: string) {
     let error = null;
     let txHash: string;
     try {
       const shieldInterface = new ethers.utils.Interface(shieldContract.abi);
-      const txData = shieldInterface.encodeFunctionData(
-        "verifyAndPush(uint256[],uint256[],bytes32)",
-        [proof, publicInputs, newCommitment]
-      );
-      const { signature, gasLimit } = await this.signTx(
-        toAddress,
-        fromAddress,
-        txData
-      );
+      const txData = shieldInterface.encodeFunctionData("verifyAndPush(uint256[],uint256[],bytes32)", [
+        proof,
+        publicInputs,
+        newCommitment,
+      ]);
+      const { signature, gasLimit } = await this.signTx(toAddress, fromAddress, txData);
       logger.debug(`Signature for relay: ${signature}`);
       logger.debug(`txData: ${txData}`);
       const transaction = {
@@ -68,10 +57,7 @@ export class InfuraGas implements ITxManager {
         data: txData,
         gas: `${gasLimit}`,
       };
-      const res = await jsonrpc("relay_sendTransaction", [
-        transaction,
-        signature,
-      ]);
+      const res = await jsonrpc("relay_sendTransaction", [transaction, signature]);
       logger.debug(`relay_sendTransaction response: %o`, res);
       txHash = res.result;
     } catch (err) {

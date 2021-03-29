@@ -10,5 +10,5 @@ export {
   http_provider,
   checkChainLogs,
   jsonrpc,
-  shieldContract
+  shieldContract,
 };

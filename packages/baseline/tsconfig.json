@@ -8,13 +8,9 @@
     "outDir": "dist",
     "rootDir": "src",
     "resolveJsonModule": true,
-    "typeRoots": [
-      "./node_modules/@types"
-    ]
+    "typeRoots": ["./node_modules/@types"]
   },
-  "exclude": [
-    "dist", "truffle"
-  ],
+  "exclude": ["dist", "truffle"],
   "references": [
     {
       "path": "../shared"

@@ -3,19 +3,11 @@ import jayson from "jayson";
 import url from "url";
 import * as promiseJayson from "jayson/promise";
 
-import {
-  checkChainLogs,
-  subscribeMerkleEvents,
-  jsonrpc,
-  unsubscribeMerkleEvents,
-} from "./blockchain";
+import { checkChainLogs, subscribeMerkleEvents, jsonrpc, unsubscribeMerkleEvents } from "./blockchain";
 import { merkleTrees } from "./db/models/MerkleTree";
 import { logger } from "./logger";
 import { updateTree, getSiblingPathByLeafIndex } from "./merkle-tree";
-import {
-  getLeafByLeafIndex,
-  getLeavesByLeafIndexRange,
-} from "./merkle-tree/leaves.js";
+import { getLeafByLeafIndex, getLeavesByLeafIndexRange } from "./merkle-tree/leaves.js";
 import { concatenateThenHash } from "./merkle-tree/hash.js";
 import { txManagerServiceFactory } from "./tx-manager";
 
@@ -87,11 +79,7 @@ const baseline_getCommits = new jayson.Method(
     }
 
     const endLeafIndex = startLeafIndex + count - 1;
-    const result = await getLeavesByLeafIndexRange(
-      contractAddress,
-      startLeafIndex,
-      endLeafIndex
-    );
+    const result = await getLeavesByLeafIndexRange(contractAddress, startLeafIndex, endLeafIndex);
     done(null, result);
   },
   {
@@ -205,9 +193,7 @@ const baseline_verifyAndPush = new jayson.Method(
       .select("shieldContract")
       .lean();
     if (!record) {
-      logger.error(
-        `[baseline_verifyAndPush] Merkle Tree not found in db: ${contractAddress}`
-      );
+      logger.error(`[baseline_verifyAndPush] Merkle Tree not found in db: ${contractAddress}`);
       error = {
         code: -32603,
         message: `Internal server error`,
@@ -216,23 +202,13 @@ const baseline_verifyAndPush = new jayson.Method(
       done(error, null);
       return;
     }
-    logger.info(
-      `[baseline_verifyAndPush] Found Shield/MerkleTree for contract address: ${contractAddress}`
-    );
+    logger.info(`[baseline_verifyAndPush] Found Shield/MerkleTree for contract address: ${contractAddress}`);
 
-    const txManager = await txManagerServiceFactory(
-      process.env.ETH_CLIENT_TYPE
-    );
+    const txManager = await txManagerServiceFactory(process.env.ETH_CLIENT_TYPE);
 
     let result;
     try {
-      result = await txManager.insertLeaf(
-        contractAddress,
-        senderAddress,
-        proof,
-        publicInputs,
-        newCommitment
-      );
+      result = await txManager.insertLeaf(contractAddress, senderAddress, proof, publicInputs, newCommitment);
     } catch (err) {
       logger.error(`[baseline_verifyAndPush] ${err}`);
       error = {
@@ -294,9 +270,7 @@ const baseline_track = new jayson.Method(
       done(error, null);
       return;
     }
-    logger.info(
-      `[baseline_track] found treeHeight of ${treeHeight} for contract ${contractAddress}`
-    );
+    logger.info(`[baseline_track] found treeHeight of ${treeHeight} for contract ${contractAddress}`);
 
     await merkleTrees.findOneAndUpdate(
       { _id: `${contractAddress}_0` },
@@ -338,9 +312,7 @@ const baseline_untrack = new jayson.Method(
       .lean();
 
     if (foundTree.length === 0) {
-      logger.error(
-        `[baseline_untrack] Merkle Tree not found in db: ${contractAddress}`
-      );
+      logger.error(`[baseline_untrack] Merkle Tree not found in db: ${contractAddress}`);
       error = {
         code: -32603,
         message: `Internal server error`,
@@ -358,11 +330,7 @@ const baseline_untrack = new jayson.Method(
         _id: { $regex: new RegExp(contractAddress) },
       });
     } else {
-      await merkleTrees.updateOne(
-        { _id: `${contractAddress}_0` },
-        { active: false },
-        { upsert: true, new: true }
-      );
+      await merkleTrees.updateOne({ _id: `${contractAddress}_0` }, { active: false }, { upsert: true, new: true });
     }
     done(null, true);
   },
@@ -390,16 +358,10 @@ const baseline_verify = new jayson.Method(
     for (let index = 0; index < siblingNodes.length - 1; index++) {
       if (siblingNodes[index].nodeIndex % 2 === 0) {
         // even nodeIndex
-        currentHash = concatenateThenHash(
-          currentHash,
-          siblingNodes[index].hash
-        );
+        currentHash = concatenateThenHash(currentHash, siblingNodes[index].hash);
       } else {
         // odd nodeIndex
-        currentHash = concatenateThenHash(
-          siblingNodes[index].hash,
-          currentHash
-        );
+        currentHash = concatenateThenHash(siblingNodes[index].hash, currentHash);
       }
     }
     const result = root === currentHash && root === updatedRoot;

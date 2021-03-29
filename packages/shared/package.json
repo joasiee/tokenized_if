@@ -4,7 +4,8 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "sh ./proto/build_proto.sh"
+    "build": "sh ./proto/build_proto.sh",
+    "postinstall": "yarn build"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.2.12",

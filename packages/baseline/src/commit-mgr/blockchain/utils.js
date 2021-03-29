@@ -12,15 +12,11 @@ dotenv.config();
 
 let ws_provider;
 
-export const http_provider = new ethers.providers.JsonRpcProvider(
-  process.env.ETH_CLIENT_HTTP
-);
+export const http_provider = new ethers.providers.JsonRpcProvider(process.env.ETH_CLIENT_HTTP);
 export const get_ws_provider = () => {
   if (!ws_provider) {
     try {
-      ws_provider = new ethers.providers.WebSocketProvider(
-        process.env.ETH_CLIENT_WS
-      );
+      ws_provider = new ethers.providers.WebSocketProvider(process.env.ETH_CLIENT_WS);
       ws_provider._websocket.on("error", (error) => {
         logger.error(`[WEBSOCKET] "error" event: ${error.stack}`);
         ws_provider = undefined;
@@ -29,13 +25,9 @@ export const get_ws_provider = () => {
         logger.error(`[WEBSOCKET] "close" event: ${event}`);
         ws_provider = undefined;
       });
-      logger.info(
-        `Established websocket connection: ${process.env.ETH_CLIENT_WS}`
-      );
+      logger.info(`Established websocket connection: ${process.env.ETH_CLIENT_WS}`);
     } catch (err) {
-      logger.error(
-        `[WEBSOCKET] Cannot establish connection: ${process.env.ETH_CLIENT_WS}`
-      );
+      logger.error(`[WEBSOCKET] Cannot establish connection: ${process.env.ETH_CLIENT_WS}`);
     }
   }
   return ws_provider;
@@ -58,9 +50,7 @@ export const restartSubscriptions = async () => {
   // to the events.
   for (let i = 0; i < activeTrees.length; i++) {
     const contractAddress = activeTrees[i]._id.slice(0, -2);
-    const fromBlock = activeTrees[i].latestLeaf
-      ? activeTrees[i].latestLeaf.blockNumber
-      : 0;
+    const fromBlock = activeTrees[i].latestLeaf ? activeTrees[i].latestLeaf.blockNumber : 0;
     await checkChainLogs(contractAddress, fromBlock);
     subscribeMerkleEvents(contractAddress);
   }
@@ -101,9 +91,7 @@ export const checkChainLogs = async (contractAddress, fromBlock) => {
     const txLogs = contractInterface.parseLog(logs[i]);
     const leafIndex = txLogs.args[0].toNumber();
     const leafValue = txLogs.args[1];
-    logger.info(
-      `Found previously missed leaf index ${leafIndex} of value ${leafValue}`
-    );
+    logger.info(`Found previously missed leaf index ${leafIndex} of value ${leafValue}`);
 
     const leaf = {
       hash: leafValue,

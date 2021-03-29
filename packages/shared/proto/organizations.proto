@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package organizations;
 
-import "google/protobuf/empty.proto";
-
 message OrgRegistry {
     string address = 1;
     string name = 2;
+    repeated Organization orgs = 3;
+    repeated Workgroup groups = 4;
 }
 
 message Organization {

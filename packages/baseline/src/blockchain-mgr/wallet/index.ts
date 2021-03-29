@@ -23,10 +23,7 @@ export class HDWallet {
   }
 
   public getWallet(): Wallet {
-    return new Wallet(
-      this.hdNode.derivePath(defaultPathPrefix + this.addressN.toString()),
-      this.provider
-    );
+    return new Wallet(this.hdNode.derivePath(defaultPathPrefix + this.addressN.toString()), this.provider);
   }
 
   public updateWallet(): void {

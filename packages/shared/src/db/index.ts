@@ -48,9 +48,7 @@ conn.once("open", () => {
   // If the Node process ends, close the Mongoose connection
   process.on("SIGINT", () => {
     conn.close(() => {
-      logger.debug(
-        "Mongoose default connection disconnected through app termination."
-      );
+      logger.debug("Mongoose default connection disconnected through app termination.");
       process.exit(0);
     });
   });
@@ -62,16 +60,13 @@ function simpleSleep(ms) {
 
 export async function dbConnect(user: string, pwd: string, db: string) {
   mongoUrl = `mongodb://${user}:${pwd}@${process.env.MONGO_HOST}/${db}`;
+  logger.info(`Trying to connect to db at: ${mongoUrl}`);
   if (config.mongo.debug === true) {
     mongoose.set("debug", function (collection, method, query, doc, options) {
-      logger.debug(
-        `Mongoose ${method} on ${collection} with query:\n%o`,
-        query,
-        {
-          doc,
-          options,
-        }
-      );
+      logger.debug(`Mongoose ${method} on ${collection} with query:\n%o`, query, {
+        doc,
+        options,
+      });
     });
   }
 
@@ -83,9 +78,7 @@ export async function dbConnect(user: string, pwd: string, db: string) {
       connected = true;
     } catch (err) {
       logger.error("\n%o", err);
-      logger.info(
-        `Retrying mongodb connection in ${firstConnectRetryDelaySecs}s.`
-      );
+      logger.info(`Retrying mongodb connection in ${firstConnectRetryDelaySecs}s.`);
     }
 
     // eslint-disable-next-line no-await-in-loop

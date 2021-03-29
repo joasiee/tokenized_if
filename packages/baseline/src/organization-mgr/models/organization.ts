@@ -12,7 +12,7 @@ const schemaFields: Record<keyof Organization.AsObject, any> = {
 export interface IOrganization extends Organization.AsObject, Document {}
 
 const schema = new Schema(schemaFields);
-export const OrganizationModel = model<IOrganization>("Organization", schema);
+export const db = model<IOrganization>("Organization", schema);
 
 export function fromModel(model: IOrganization): Organization {
   return new Organization()
