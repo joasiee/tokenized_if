@@ -62,6 +62,7 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
   // Information on token held
   ERC721 public tokenRegistry;
   uint256 public _tokenId;
+  uint256 public tokenPrice;
 
   // Factory to clone this title escrow
   ITitleEscrowCreator public titleEscrowFactory;
@@ -82,6 +83,24 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
     tokenRegistry = ERC721(_tokenRegistry);
     titleEscrowFactory = ITitleEscrowCreator(_titleEscrowFactoryAddress);
     _registerInterface(_INTERFACE_ID_TITLEESCROW);
+  }
+
+   function () external payable {}
+  
+  function setTokenPrice(uint256 price) public payable {
+        tokenPrice = price;
+    }
+
+  function getTokenPrice() public view returns (uint256) {
+    return tokenPrice;
+  }
+
+  function getBalance() public view returns (uint256) {
+    return address(this).balance;
+  }
+
+  function buyToken(uint256 tokenID) public {
+    //msg.value
   }
 
   function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)

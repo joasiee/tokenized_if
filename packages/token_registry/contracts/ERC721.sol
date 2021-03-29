@@ -472,6 +472,7 @@ contract ERC721 is Context, ERC165, IERC721 {
     _registerInterface(_INTERFACE_ID_ERC721);
   }
 
+
   /**
      * @dev Gets the balance of the specified address.
      * @param owner address to query the balance of
