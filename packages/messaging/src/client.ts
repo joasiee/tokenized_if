@@ -87,11 +87,11 @@ export class MessagingClient implements IMessagingClient {
         try {
             const reply = await this.nc?.request(
                 subject,
-                payload ? jci.encode(payload) : undefined,
+                payload !== undefined ? jci.encode(payload) : undefined,
                 { timeout: timeout });
             result = jco.decode(reply.data);
         } catch (err) {
-            console.log(`An error occurred requesting subject: ${subject} with payload: ${payload} \n\t ${err}`);
+            console.log(`An error occurred requesting subject: ${subject}, with payload: ${payload} \n\t ${err}`);
         } finally {
             return result;
         }

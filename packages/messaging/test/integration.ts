@@ -43,8 +43,8 @@ describe('messaging service', function () {
     })
 
     describe('publish and subscribe', function() {
-        const subject = 'time';
         let client : IMessagingClient;
+        const subject = 'time';
 
         const returnFirst = async <T>(sub: AsyncGenerator<T, unknown, unknown>) => {
             for await (const m of sub) {
@@ -134,6 +134,7 @@ describe('messaging service', function () {
 
     describe('request and reply', function() {
         let client: IMessagingClient;
+        const subject = 'increment';
 
         beforeEach('create clean messaging client for each test', async function () {
             client = createMessagingClient(config);
@@ -141,6 +142,65 @@ describe('messaging service', function () {
         });
         afterEach('close connection of messaging client after each test', async function () {
             await client.disconnect();
+        });
+
+        it('replies to messages without payload', async function () {
+            const rro = client.reply(subject);
+            (async () => {
+                for await (const r of rro) {
+                    await r.respond(1);
+                }
+            })()
+            const reply = await client.request(subject);
+            expect(reply).to.equal(1);
+        });
+
+        it('replies to messages with payload (number)', async function () {
+            const rro = client.reply<number, number>(subject);
+            (async () => {
+                for await (const r of rro) {
+                    await r.respond(r.payload + 1);
+                }
+            })()
+            const reply = await client.request(subject, 42);
+            expect(reply).to.equal(43);            
+        });
+
+        it('replies to messages with payload (string)', async function () {
+            const rro = client.reply<string, string>(subject);
+            (async () => {
+                for await (const r of rro) {
+                    await r.respond(r.payload + ' world');
+                }
+            })()
+            const reply = await client.request(subject, 'hello');
+            expect(reply).to.equal('hello world');
+        });
+
+        it('replies to messages with payload (object)', async function () {
+            const rro = client.reply<{str:string},{num:number}>(subject);
+            (async () => {
+                for await (const r of rro) {
+                    await r.respond({num: parseInt(r.payload.str)});
+                }
+            })()
+            const reply = await client.request<{str:string},{num:number}>(subject, {str: '42'});
+            expect(reply.num).to.equal(42);
+        });
+        
+        it('replies to multiple requests', async function () {
+            const rro = client.reply(subject);
+            (async () => {
+                let timesCalled = 0;
+                for await (const r of rro) {
+                    await r.respond(timesCalled++);
+                }
+            })()
+            for (let i = 0; i < 5; i++)
+            {
+                const reply = await client.request(subject);
+                expect(reply).to.equal(i);
+            }
         });
     })
 });
