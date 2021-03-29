@@ -50,7 +50,7 @@ export interface IMessagingClient {
      * Returns an {@link AsyncIterable}
      * @param subject the name of the subject to subscribe to
      */
-    subscribe<T>(subject: string): AsyncIterable<ReceivedMessage<T>>;
+    subscribe<T>(subject: string): AsyncGenerator<ReceivedMessage<T>>;
 
     /**
      * Publishes on the given subject, additional information can be provided by the

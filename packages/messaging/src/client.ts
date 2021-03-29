@@ -1,5 +1,5 @@
 import { IMessagingClient, IMessagingClientConfig, ReceivedMessage, RequestResponseObject } from "./interfaces";
-import { connect, JSONCodec, NatsConnection, nkeyAuthenticator, Subscription } from "nats";
+import { connect, createInbox, JSONCodec, NatsConnection, nkeyAuthenticator, Subscription } from "nats";
 
 /**
  * Implementations of {@link IMessagingClient} using NATS
@@ -44,21 +44,21 @@ export class MessagingClient implements IMessagingClient {
             console.log(`No NatsConnection to disconnect from`);
             return true;
         }
-        try {
-            await this.nc.drain();
-            await this.nc.close();
-            return true;
-        } catch (err) {
+        const done = this.nc.closed();
+        await this.nc.close();
+        const err = await done;;
+        if (err) {
             console.log(`An Error while closing the NATS connection: ${err.message}`);
             return false;
         }
+        return true;
     }
 
     isConnected(): boolean {
         return !(this.nc?.isClosed() ?? true);
     }
 
-    async *subscribe<T>(subject: string): AsyncIterable<ReceivedMessage<T>> {
+    async *subscribe<T>(subject: string): AsyncGenerator<ReceivedMessage<T>> {
         if (this.subscriptions.has(subject)) {
             this.subscriptions.get(subject).unsubscribe();
         }
@@ -66,14 +66,18 @@ export class MessagingClient implements IMessagingClient {
         this.subscriptions.set(subject, sub);
         const jc = JSONCodec<T>();
         for await (const m of sub) {
-            yield { subject: m.subject, payload: jc.decode(m.data) };
+            yield {
+                subject: m.subject,
+                ...(m.data.length) && { payload: jc.decode(m.data) }
+            };
         }
+        console.log(`subscription closed: ${subject}`);
     }
 
-    publish<T>(subject: string, payload?: T): Promise<void> {
+    async publish<T>(subject: string, payload?: T): Promise<void> {
         const jc = JSONCodec<T>();
-        this.nc?.publish(subject, payload ? jc.encode(payload) : undefined);
-        return Promise.resolve();
+        this.nc?.publish(subject, payload !== undefined ? jc.encode(payload) : undefined);
+        await this.nc.flush();
     }
 
     async request<I, O>(subject: string, payload?: I, timeout = 2000): Promise<O> {
@@ -104,7 +108,7 @@ export class MessagingClient implements IMessagingClient {
         for await (const m of sub) {
             yield {
                 subject: m.subject,
-                payload: jci.decode(m.data),
+                ...(m.data.length) && { payload: jci.decode(m.data) },
                 // Return a closure instead of function directly
                 // to enforce respond being called once
                 respond: (() => {
@@ -120,7 +124,7 @@ export class MessagingClient implements IMessagingClient {
         }
     }   
 
-    unsubscribe(subject: string): Promise<void> {
+    async unsubscribe(subject: string): Promise<void> {
         const sub = this.subscriptions.get(subject);
         sub?.unsubscribe();
         this.subscriptions.delete(subject);
