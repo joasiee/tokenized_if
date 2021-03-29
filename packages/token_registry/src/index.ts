@@ -224,12 +224,23 @@ console.log(extraData);
           console.log("Something went wrong while submitting your transaction:", error)
         }
        });
-       
-
-      console.log(await escrowInstance.getTokenPrice());
+      
+       // need to connect AS importer before setting token price
+      escrowInstance = TitleEscrowFactory.connect(escrowInstance.address, importerSigner);
+      await escrowInstance.setTokenPrice(1, escrowInstance2.address);
+      console.log("Token price is: ", await escrowInstance.getTokenPrice());
 
       let bal = (await escrowInstance.getBalance())._hex;
       console.log(web3.utils.fromWei(bal));
+
+      console.log("balance1: " + await tokenRegistry["balanceOf(address)"](escrowInstance.address));
+      console.log("balance2: " + await tokenRegistry["balanceOf(address)"](escrowInstance2.address));
+      await escrowInstance.buyToken(escrowInstance2.address);
+      console.log("balance1: " + await tokenRegistry["balanceOf(address)"](escrowInstance.address));
+      console.log("balance2: " + await tokenRegistry["balanceOf(address)"](escrowInstance2.address));
+
+    
+
       
       }
      

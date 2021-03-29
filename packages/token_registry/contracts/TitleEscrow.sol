@@ -74,6 +74,9 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
   // For exiting into non-title escrow contracts
   address public approvedOwner;
 
+  // Destination to transfer token to, after purchase
+  address public contractDest;
+
   //TODO: change ERC721 to address so that external contracts don't need to import ERC721 to use this
   constructor(ERC721 _tokenRegistry, address _beneficiary, address _holder, address _titleEscrowFactoryAddress)
     public
@@ -87,8 +90,10 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
 
    function () external payable {}
   
-  function setTokenPrice(uint256 price) public payable {
+  function setTokenPrice(uint256 price, address dest) public isHoldingToken onlyBeneficiary {
+    require(tokenPrice == 0, "Cannot adjust price after set");
         tokenPrice = price;
+        contractDest = dest;
     }
 
   function getTokenPrice() public view returns (uint256) {
@@ -99,8 +104,12 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
     return address(this).balance;
   }
 
-  function buyToken(uint256 tokenID) public {
+  function buyToken(address dest) public {
     //msg.value
+    require(tokenPrice > 0, "TitleEscrow buyToken: tokenPrice was not set, thus you cannot buy");
+    require(dest == contractDest, "TitleEscrow buyToken: the dest address is not the same as contractDest");
+    require(address(this).balance >= tokenPrice, "TitleEscrow buyToken: have not received enough funds to buy the token");
+    _transferTo(dest);
   }
 
   function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)
