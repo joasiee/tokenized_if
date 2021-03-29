@@ -214,20 +214,11 @@ console.log(extraData);
      };
      
      
-     const signedTx = await web3.eth.accounts.signTransaction(transaction, "5da13d12265521d67dc19146cc23ea51f65885a43b14d54a69a77262dee71291");
-    
-     
-    await web3.eth.sendSignedTransaction(signedTx.rawTransaction!, function(error, hash) {
-        if (!error) {
-          console.log("The hash of your transaction is: ", hash);
-        } else {
-          console.log("Something went wrong while submitting your transaction:", error)
-        }
-       });
+
       
        // need to connect AS importer before setting token price
       escrowInstance = TitleEscrowFactory.connect(escrowInstance.address, importerSigner);
-      await escrowInstance.setTokenPrice(1, escrowInstance2.address);
+      await escrowInstance.setTokenDeal(web3.utils.toWei('5','ether'), escrowInstance2.address);
       console.log("Token price is: ", await escrowInstance.getTokenPrice());
 
       let bal = (await escrowInstance.getBalance())._hex;
@@ -235,10 +226,30 @@ console.log(extraData);
 
       console.log("balance1: " + await tokenRegistry["balanceOf(address)"](escrowInstance.address));
       console.log("balance2: " + await tokenRegistry["balanceOf(address)"](escrowInstance2.address));
-      await escrowInstance.buyToken(escrowInstance2.address);
+    
+
+
+      console.log(await escrowInstance.getTokenDeal());
+      const signedTx = await web3.eth.accounts.signTransaction(transaction, "5da13d12265521d67dc19146cc23ea51f65885a43b14d54a69a77262dee71291");
+     
+      
+     
+      await web3.eth.sendSignedTransaction(signedTx.rawTransaction!, function(error, hash) {
+          if (!error) {
+            console.log("The hash of your transaction is: ", hash);
+          } else {
+            console.log("Something went wrong while submitting your transaction:", error)
+          }
+         });
+
+
+
+
+
+
       console.log("balance1: " + await tokenRegistry["balanceOf(address)"](escrowInstance.address));
       console.log("balance2: " + await tokenRegistry["balanceOf(address)"](escrowInstance2.address));
-
+     
     
 
       

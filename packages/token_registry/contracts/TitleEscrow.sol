@@ -88,13 +88,20 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
     _registerInterface(_INTERFACE_ID_TITLEESCROW);
   }
 
-   function () external payable {}
+   function () external payable {
+     buyToken();
+   }
   
-  function setTokenPrice(uint256 price, address dest) public isHoldingToken onlyBeneficiary {
-    require(tokenPrice == 0, "Cannot adjust price after set");
+  function setTokenDeal(uint256 price, address dest) public isHoldingToken onlyBeneficiary {
+    require(tokenPrice == 0, "TitleEscrow setTokenDeal: Cannot adjust price after set");
+    require(contractDest == address(0), "TitleEscrow setTokenDeal: Cannot adjust contractDest after set");
         tokenPrice = price;
         contractDest = dest;
     }
+  
+  function getTokenDeal() public isHoldingToken view returns (uint256, address) {
+    return (tokenPrice, contractDest);
+  }
 
   function getTokenPrice() public view returns (uint256) {
     return tokenPrice;
@@ -104,12 +111,13 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
     return address(this).balance;
   }
 
-  function buyToken(address dest) public {
-    //msg.value
+  function buyToken() public payable isHoldingToken{
     require(tokenPrice > 0, "TitleEscrow buyToken: tokenPrice was not set, thus you cannot buy");
-    require(dest == contractDest, "TitleEscrow buyToken: the dest address is not the same as contractDest");
-    require(address(this).balance >= tokenPrice, "TitleEscrow buyToken: have not received enough funds to buy the token");
-    _transferTo(dest);
+    require(msg.value>= tokenPrice, "TitleEscrow buyToken: have not received enough funds to buy the token");
+    _transferTo(contractDest);
+    if (msg.value > tokenPrice) {
+      msg.sender.send(msg.value - tokenPrice);
+    }
   }
 
   function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)
