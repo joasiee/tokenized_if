@@ -7,12 +7,16 @@
     "ts:build": "tsc --build",
     "ts:clean": "tsc --build --clean",
     "build": "yarn ts:clean && yarn ts:build",
+    "build:packages": "lerna run build --concurrency=1 --stream",
     "start:main": "yarn workspace tokenized_if start",
     "start:baseline": "yarn workspace baseline start",
-    "postinstall": "update-ts-references"
+    "postinstall": "update-ts-references",
+    "test:ci": "lerna run test:ci --concurrency=1 --stream"
   },
   "devDependencies": {
+    "lerna": "^4.0.0",
     "typescript": "^4.2.3",
     "update-ts-references": "^2.0.0"
-  }
+  },
+  "name": "tokenized_if"
 }
