@@ -21,13 +21,13 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Build Packages
-          command: yarn workspaces run build
+          command: yarn lerna run build
       - run:
           name: Build Main
           command: yarn build
       - run:
           name: Run all CI tests
-          command: yarn workspaces run test
+          command: yarn lerna run test
 workflows:
   test_my_app:
     jobs:

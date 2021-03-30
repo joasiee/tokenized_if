@@ -5,9 +5,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "build": ":",
-    "test": ":"
+    "start": "ts-node src/index.ts"
   },
   "devDependencies": {
     "ts-node": "^9.1.1",

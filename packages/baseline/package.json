@@ -7,8 +7,6 @@
   "license": "ISC",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "build": ":",
-    "test": ":",
     "compile:contracts": "./node_modules/.bin/truffle compile"
   },
   "dependencies": {
