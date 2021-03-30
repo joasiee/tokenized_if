@@ -10,55 +10,66 @@ import { Wallet, providers, getDefaultProvider, ethers, Contract} from "ethers";
 import { TitleEscrow } from "./contracts/TitleEscrow";
 import Web3 from "web3";
 
+// Variables
 var tokenRegistry: TradeTrustErc721;
 var titleEscrowFactory: TitleEscrowCreator;
 
-const url = "http://172.19.16.1:7545";
-const provider = new providers.JsonRpcProvider(url);
+// Setting up ganache connections
+const ganacheURL = "http://172.19.16.1:7545";
+const provider = new providers.JsonRpcProvider(ganacheURL);
+var web3 = new Web3(new Web3.providers.HttpProvider(ganacheURL));
 
-//const Web3 = require('web3');
-var web3 = new Web3(new Web3.providers.HttpProvider(url));
+// Signers, abstraction of ethereum account to sign messages/transactions.
+const LSPSigner = provider.getSigner(0);
+const importerSigner = provider.getSigner(1);
+const financerSigner = provider.getSigner(2);
+
+// Public addresses for importer and financer.
+var importerPublicAddress: string;
+var financerPublicAddress: string;
+
+// tokenRegistryFactory, used to deploy token registry.
+const tokenRegistryFactory = new TradeTrustErc721Factory(LSPSigner);
+
+// tokenId, should be the hash of the document.
+const tokenID = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
 
 
-// Getting the accounts
-web3.eth.getAccounts().then(console.log);
+/**************** **************** **************** 
+**************** Useful Functions  *******************
+**************** **************** **************** */
 
-
-
-async function blaa() {
+// Sets up public addresses for importer and financer.
+async function setupPublicAddresses() {
   try {
-    let accounts;
-    web3.eth.getAccounts().then(function(response) { accounts = response; console.log(accounts[0]); });
-  }
+    importerPublicAddress = await importerSigner.getAddress();
+    financerPublicAddress = await financerSigner.getAddress();
+    }
   catch (e) {
     console.log(e);
   }
 }
 
 
+// Printing all accounts from Ganache.
+function printAllAccounts() {
+  web3.eth.getAccounts().then(console.log);
+}
 
-const LSPSigner = provider.getSigner(0);
-const importerSigner = provider.getSigner(1);
-const financerSigner = provider.getSigner(2);
+// Helper function if we need it to get a single account.
+async function getSingleAccount(index:number) {
+  try {
+    let accounts;
+    web3.eth.getAccounts().then(function(response) { 
+      accounts = response; console.log(accounts[index]); 
+    });
+  }
+  catch (e) {
+    console.log(e);
+  }
+}
 
-
-// Ropsten related stuff
-/*
-//const API_KEY = "KKQGPV4TGV17WWAQQREJCA9A6TJ5Z1CK6I";
-//const ropstenProvider = getDefaultProvider("ropsten");
-//const ropstenProvider = providers.getDefaultProvider("ropsten", {etherscan: API_KEY});
-const LSPPrivateKey = new Wallet("0x5485ebeeee4e87ee89aba34834d406172f83271df356fd8ad1acbf40538b3b9d", ropstenProvider);
-const LSPpublicAddress = "0xE6235C71b5f8CD01406e806BFc0aDFBDA8aDc936";
-const importerPrivateKey = new Wallet("0x33f68e849850edc3ea1a85280196db68ea086c2cd8a42c8d6425f05b528479b9", ropstenProvider);
-const importerPublicAddress = "0x94289E3fB264f586c1Ef3eb9525340707f820fC5";
-*/
-
-
-
-
-const tokenRegistryFactory = new TradeTrustErc721Factory(LSPSigner);
-const tokenId = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
-
+// Sets up the Token Registry
 async function setupTokenRegistry() {
   try {
     tokenRegistry = await tokenRegistryFactory.deploy("MY_TOKEN_REGISTRY", "MTR");
@@ -69,15 +80,17 @@ async function setupTokenRegistry() {
   }
 }
 
-async function createToken(escrowInstance: TitleEscrow) {
+// This will create a token and put it in a given contract, the escrowInstance.
+async function createToken(escrowInstance: TitleEscrow, tokenID: ethers.BigNumberish) {
   try {
-    await tokenRegistry["safeMint(address,uint256)"](escrowInstance.address, tokenId);
+    await tokenRegistry["safeMint(address,uint256)"](escrowInstance.address, tokenID);
   }
   catch (e) {
     console.log(e);
   }
-
 }
+
+// Deploys the title escrow contract on the blockchain with a given beneficiary and holder.
 async function deployTitleEscrow(beneficiary: string, holder: string) {
   var instance;
   try {
@@ -91,29 +104,53 @@ async function deployTitleEscrow(beneficiary: string, holder: string) {
   return instance;
 }
 
+// The LSP deploys the importer escrow contract on the blockchain with importer as owner.
+// A token will de made from the tokenID and placed in this contract.
+async function deployImporterEscrow(tokenID : ethers.BigNumberish) {
+  var escrowInstance;
+  try {
+      escrowInstance = await deployTitleEscrow(importerPublicAddress, importerPublicAddress);
+      if (escrowInstance != null) {
+        createToken(escrowInstance, tokenID);
+      }  
+  }
+  catch (e) {
+    console.log(e);
+  }
+  return escrowInstance;
+}
+
+// Returns the owner of a token, given a tokenID.
+async function ownerOfToken(tokenID : ethers.BigNumberish) {
+  var result;
+  try {
+    result = await tokenRegistry["ownerOf(uint256)"](tokenID);
+  }
+  catch (e) {
+    console.log(e);
+  }
+  return result;
+}
+
+
+
+
+/**************** **************** **************** 
+**************** Main  *******************
+**************** **************** **************** */
 
 async function main() {
-  console.log("Hello world");
+  console.log("Running main");
   try {
+    await setupPublicAddresses();
     await setupTokenRegistry();
-    let importerPublicAddress = await importerSigner.getAddress();
-    let financerPublicAddress = await financerSigner.getAddress();
+    // Deploys an escrow contract as owner the importer.
+    var escrowInstance = await deployImporterEscrow(tokenID);
 
-   
-
-    
-    var escrowInstance = await deployTitleEscrow(importerPublicAddress, importerPublicAddress);
-    if (escrowInstance != null) {
-      createToken(escrowInstance);
-      var beneficiary = await escrowInstance.beneficiary();
-      var holder = await escrowInstance.holder();
-      console.log("beneficiary is: " + beneficiary);
-      console.log("holder is: " + holder);
-    }
 
     var escrowInstance2 = await deployTitleEscrow(financerPublicAddress, financerPublicAddress);
     console.log("Deployed escrow instance 2");
-    console.log("Current owner of token is: " + await tokenRegistry["ownerOf(uint256)"](tokenId));
+    console.log("Current owner of token is: " + await tokenRegistry["ownerOf(uint256)"](tokenID));
 
     if (escrowInstance != null && escrowInstance2 != null) {
       //escrowInstance = TitleEscrowFactory.connect(escrowInstance.address, importerSigner);
