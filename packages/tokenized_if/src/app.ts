@@ -1,24 +1,12 @@
-import {
-  baselineServiceFactory,
-  baselineProviderRpc,
-  IBaselineRPC,
-  IBlockchainService,
-  IRegistry,
-  IVault,
-} from "@baseline-protocol/api";
+import express from 'express';
 
-let rpcConfig: any;
-rpcConfig = {
-  rpcEndpoint: "localhost:4001/jsonrpc",
-  rpcScheme: "http",
-  rpcVersion: "2.0",
-};
+const port = parseInt(process.env.PORT) || 3000;
 
-let baseline: IBaselineRPC & IBlockchainService & IRegistry & IVault;
-baselineServiceFactory(baselineProviderRpc, rpcConfig).then((res) => {
-  console.log(res);
-  baseline = res;
-  baseline.getTracked().then((res) => {
-    console.log(res);
-  });
-});
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => res.send('App works'));
+
+app.listen(port, () => console.log(`App listening on port ${port}`));
