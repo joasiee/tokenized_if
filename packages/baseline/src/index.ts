@@ -3,7 +3,8 @@ import { Organization, OrgRegistry } from "@tokenized_if/shared/src/proto/organi
 
 const main = async () => {
   const service: OrganizationsService = new OrganizationsService();
-  const reg = await service.deployRegistry(new OrgRegistry().setName("test"));
+  await service.init();
+  const reg = await service.getRegistry(new OrgRegistry().setName("test"));
   await service.addOrganization(
     reg,
     new Organization()

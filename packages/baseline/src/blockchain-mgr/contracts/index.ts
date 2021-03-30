@@ -6,9 +6,9 @@ import { HDWallet } from "../wallet";
 import { config } from "../../config";
 
 const logger = getLogger("blockchain-mgr");
+const wallet = HDWallet.getInstance().getWallet();
 
 export async function deployContract(contract: string, args: any[]): Promise<Contract> {
-  const wallet = HDWallet.getInstance().getWallet();
   const filePath = path.join(config.APP_ROOT, "dist", "artifacts", contract);
   try {
     if (fs.existsSync(filePath)) {
@@ -24,7 +24,6 @@ export async function deployContract(contract: string, args: any[]): Promise<Con
 }
 
 export function getContract(address: string, contract: string): Contract {
-  const wallet = HDWallet.getInstance().getWallet();
   const filePath = path.join(config.APP_ROOT, "dist", "artifacts", contract);
   try {
     if (fs.existsSync(filePath)) {
@@ -36,4 +35,8 @@ export function getContract(address: string, contract: string): Contract {
   } catch (err) {
     logger.error(`Could not get contract at: ${filePath}, error: ${err}`);
   }
+}
+
+export async function isDeployed(address: string): Promise<boolean> {
+  return (await wallet.provider.getCode(address)) != "0x";
 }

@@ -1,16 +1,16 @@
-import { Document, Schema, model, Mixed } from "mongoose";
+import { organization, workgroup } from "./index";
+import { Document, Schema, model } from "mongoose";
 import { Organization, OrgRegistry, Workgroup } from "@tokenized_if/shared/src/proto/organizations_pb";
 
 const schemaFields: Record<keyof OrgRegistry.AsObject, any> = {
   address: { type: String, required: true, unique: true },
-  name: String,
-  orgsList: Schema.Types.Mixed,
-  groupsList: Schema.Types.Mixed,
+  name: { type: String, required: true, unique: true },
+  orgsList: [organization.schema],
+  groupsList: [workgroup.schema],
 };
 
+export const schema = new Schema(schemaFields);
 export interface IOrgRegistry extends OrgRegistry.AsObject, Document {}
-
-const schema = new Schema(schemaFields);
 export const db = model<IOrgRegistry>("OrgRegistry", schema);
 
 export function fromModel(model: IOrgRegistry): OrgRegistry {

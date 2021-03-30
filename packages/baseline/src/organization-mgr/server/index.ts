@@ -6,11 +6,11 @@ import { OrganizationsService } from "../service";
 const service = new OrganizationsService();
 
 export const OrganizationsServer: IOrganizationsServer = {
-  deployOrgRegistry: async (
+  getOrgRegistry: async (
     call: ServerUnaryCall<OrgRegistry, OrgRegistry>,
     callback: sendUnaryData<OrgRegistry>
   ): Promise<void> => {
     const req = call.request as OrgRegistry;
-    callback(null, await service.deployRegistry(req));
+    callback(null, await service.getRegistry(req));
   },
 };
