@@ -193,14 +193,15 @@ contract OrgRegistry is Ownable, ERC165Compatible, Registrar, IOrgRegistry {
             _shieldAddress,
             _verifierAddress
         );
+      
+        orgInterfaceCount++;
 
         emit RegisterGroup(
             _groupName,
             _tokenAddress,
             _shieldAddress,
-            _verifierAddress);
-      
-        orgInterfaceCount++;
+            _verifierAddress
+        );
         return true;
     }
 

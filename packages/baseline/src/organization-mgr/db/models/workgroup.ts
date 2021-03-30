@@ -1,3 +1,4 @@
+import { utils } from "ethers";
 import { Document, Schema, model } from "mongoose";
 import { Workgroup } from "@tokenized_if/shared/src/proto/organizations_pb";
 
@@ -20,4 +21,17 @@ export function fromModel(model: IWorkgroup): Workgroup {
     .setTokenaddress(model.tokenaddress)
     .setVerifieraddress(model.verifieraddress)
     .setWorkstep(model.workstep);
+}
+
+export function fromContract(group: {
+  name: string;
+  tokenAddress: string;
+  shieldAddress: string;
+  verifierAddress: string;
+}) {
+  return new Workgroup()
+    .setName(utils.parseBytes32String(group.name))
+    .setTokenaddress(group.tokenAddress)
+    .setShieldaddress(group.shieldAddress)
+    .setVerifieraddress(group.verifierAddress);
 }

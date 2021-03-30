@@ -1,7 +1,9 @@
 import { getContract, isDeployed } from "../../blockchain-mgr";
-import { orgregistry, organization } from "./models";
+import { orgregistry, organization, workgroup } from "./models";
 import { config } from "../../config";
 import { getLogger } from "@tokenized_if/shared";
+import { OrgRegistry as OrgRegistryContract } from "dist/typechain/OrgRegistry";
+import { Organization, Workgroup } from "@tokenized_if/shared/src/proto/organizations_pb";
 
 const logger = getLogger("org-service");
 
@@ -17,11 +19,43 @@ export async function updateRegistry(registry: orgregistry.IOrgRegistry): Promis
     await registry.deleteOne();
     return false;
   }
-  registry.orgsList = [];
-  registry.groupsList = [];
+  const contract: OrgRegistryContract = getContract(
+    registry.address,
+    config.CONTRACTS.ORG_REGISTRY
+  ) as OrgRegistryContract;
+  registry.orgsList = await getOrgs(contract);
+  registry.groupsList = await getGroups(contract);
   await registry.save();
-  await registerCallbacks(registry);
+  // await registerCallbacks(registry);
   return true;
+}
+
+async function getOrgs(contract: OrgRegistryContract): Promise<Organization.AsObject[]> {
+  const orgs = [];
+  const orgCount = await contract.getOrgCount();
+  for (let i = 0; orgCount.gt(i); i++) {
+    orgs.push(await contract.orgs(i));
+  }
+  return orgs.map(function (org) {
+    return organization.fromContract(org).toObject();
+  });
+}
+
+async function getGroups(contract: OrgRegistryContract): Promise<Workgroup.AsObject[]> {
+  const groups = await contract.getInterfaceAddresses();
+  const res = [];
+  const { 0: names, 1: tokens, 2: shields, 3: verifiers } = groups;
+  for (let i = 0; i < names.length; i++) {
+    res.push({
+      name: names[i],
+      tokenAddress: tokens[i],
+      shieldAddress: shields[i],
+      verifierAddress: verifiers[i],
+    });
+  }
+  return res.map(function (group) {
+    return workgroup.fromContract(group).toObject();
+  });
 }
 
 async function registerCallbacks(registry: orgregistry.IOrgRegistry) {
@@ -38,6 +72,19 @@ async function registerCallbacks(registry: orgregistry.IOrgRegistry) {
     const org = organization.fromContract(data);
     const reg = await orgregistry.db.findOne({ name: registry.name });
     reg.orgsList.push(org.toObject());
+    await reg.save();
+  });
+  contract.on("RegisterGroup", async function (name, tokenAddress, shieldAddress, verifierAddress, event) {
+    const data = {
+      name: name,
+      tokenAddress: tokenAddress,
+      shieldAddress: shieldAddress,
+      verifierAddress: verifierAddress,
+    };
+    logger.debug(`Triggered register group event: ${data}`);
+    const group = workgroup.fromContract(data);
+    const reg = await orgregistry.db.findOne({ name: registry.name });
+    reg.groupsList.push(group.toObject());
     await reg.save();
   });
 }
