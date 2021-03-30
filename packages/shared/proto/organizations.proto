@@ -25,7 +25,19 @@ message Workgroup {
     int32 workStep = 5;
 }
 
+message AddOrgRequest {
+    OrgRegistry registry = 1;
+    Organization organization = 2;
+}
+
+message AddGroupRequest {
+    OrgRegistry registry = 1;
+    Workgroup workgroup = 2;
+}
+
 service Organizations {
     rpc GetOrgRegistry(OrgRegistry) returns (OrgRegistry);
     rpc DeployOrgRegistry(OrgRegistry) returns (OrgRegistry);
+    rpc AddOrganization(AddOrgRequest) returns (OrgRegistry);
+    rpc AddWorkgroup(AddGroupRequest) returns (OrgRegistry);
 }

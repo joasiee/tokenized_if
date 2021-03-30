@@ -102,3 +102,61 @@ export namespace Workgroup {
         workstep: number,
     }
 }
+
+export class AddOrgRequest extends jspb.Message { 
+
+    hasRegistry(): boolean;
+    clearRegistry(): void;
+    getRegistry(): OrgRegistry | undefined;
+    setRegistry(value?: OrgRegistry): AddOrgRequest;
+
+    hasOrganization(): boolean;
+    clearOrganization(): void;
+    getOrganization(): Organization | undefined;
+    setOrganization(value?: Organization): AddOrgRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): AddOrgRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: AddOrgRequest): AddOrgRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: AddOrgRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): AddOrgRequest;
+    static deserializeBinaryFromReader(message: AddOrgRequest, reader: jspb.BinaryReader): AddOrgRequest;
+}
+
+export namespace AddOrgRequest {
+    export type AsObject = {
+        registry?: OrgRegistry.AsObject,
+        organization?: Organization.AsObject,
+    }
+}
+
+export class AddGroupRequest extends jspb.Message { 
+
+    hasRegistry(): boolean;
+    clearRegistry(): void;
+    getRegistry(): OrgRegistry | undefined;
+    setRegistry(value?: OrgRegistry): AddGroupRequest;
+
+    hasWorkgroup(): boolean;
+    clearWorkgroup(): void;
+    getWorkgroup(): Workgroup | undefined;
+    setWorkgroup(value?: Workgroup): AddGroupRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): AddGroupRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: AddGroupRequest): AddGroupRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: AddGroupRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): AddGroupRequest;
+    static deserializeBinaryFromReader(message: AddGroupRequest, reader: jspb.BinaryReader): AddGroupRequest;
+}
+
+export namespace AddGroupRequest {
+    export type AsObject = {
+        registry?: OrgRegistry.AsObject,
+        workgroup?: Workgroup.AsObject,
+    }
+}
