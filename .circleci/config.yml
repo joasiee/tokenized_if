@@ -1,4 +1,4 @@
-version: '2.1'
+version: "2.1"
 orbs:
   node: circleci/node@4.2.0
 jobs:
@@ -15,14 +15,14 @@ jobs:
           name: Install Dependencies
           command: yarn install --immutable
       - run:
+          name: Build Packages
+          command: yarn workspaces run build
+      - run:
           name: Build Main
           command: yarn build
       - run:
-          name: Build Packages
-          command: yarn build:packages
-      - run: 
           name: Run all CI tests
-          command: yarn run test:ci
+          command: yarn workspaces run test:ci
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}

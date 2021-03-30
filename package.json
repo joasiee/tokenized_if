@@ -7,11 +7,9 @@
     "ts:build": "tsc --build",
     "ts:clean": "tsc --build --clean",
     "build": "yarn ts:clean && yarn ts:build",
-    "build:packages": "yarn workspaces run build --concurrency=1 --stream",
     "start:main": "yarn workspace tokenized_if start",
     "start:baseline": "yarn workspace baseline start",
-    "postinstall": "update-ts-references",
-    "test:ci": "yarn workspaces run test:ci --concurrency=1 --stream"
+    "postinstall": "update-ts-references"
   },
   "devDependencies": {
     "typescript": "^4.2.3",
