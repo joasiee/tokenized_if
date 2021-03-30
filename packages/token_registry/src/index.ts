@@ -218,14 +218,15 @@ console.log(extraData);
       
        // need to connect AS importer before setting token price
       escrowInstance = TitleEscrowFactory.connect(escrowInstance.address, importerSigner);
-      await escrowInstance.setTokenDeal(web3.utils.toWei('5','ether'), escrowInstance2.address);
+      
+      
+      
+      await escrowInstance.setTokenDeal(web3.utils.toWei('5','ether'), web3.utils.toWei('7','ether'), financerPublicAddress);
       console.log("Token price is: ", await escrowInstance.getTokenPrice());
 
       let bal = (await escrowInstance.getBalance())._hex;
       console.log(web3.utils.fromWei(bal));
 
-      console.log("balance1: " + await tokenRegistry["balanceOf(address)"](escrowInstance.address));
-      console.log("balance2: " + await tokenRegistry["balanceOf(address)"](escrowInstance2.address));
     
 
 
@@ -233,7 +234,7 @@ console.log(extraData);
       const signedTx = await web3.eth.accounts.signTransaction(transaction, "5da13d12265521d67dc19146cc23ea51f65885a43b14d54a69a77262dee71291");
      
       
-     
+      console.log("HOLDER", await escrowInstance.holder());
       await web3.eth.sendSignedTransaction(signedTx.rawTransaction!, function(error, hash) {
           if (!error) {
             console.log("The hash of your transaction is: ", hash);
@@ -244,13 +245,45 @@ console.log(extraData);
 
 
 
+         console.log("HOLDER", await escrowInstance.holder());
+
+         escrowInstance = TitleEscrowFactory.connect(escrowInstance.address, financerSigner);
 
 
 
-      console.log("balance1: " + await tokenRegistry["balanceOf(address)"](escrowInstance.address));
-      console.log("balance2: " + await tokenRegistry["balanceOf(address)"](escrowInstance2.address));
+
+         const nonce2 = await web3.eth.getTransactionCount(importerPublicAddress, 'latest'); 
+
+         const transaction2 = {
+           'to': escrowInstance.address,
+           'value': 7000000000000000000, // 7 ETH  value: web3.toWei(EtherAmount, 'ether')//EtherAmount=>how much ether you want to move
+           'gas': 5000000, 
+           'gasLimit': 5000000,
+           'nonce': nonce2,
+           //'data' : extraData
+           // optional data field to send message or execute smart contract
+          };
+
+
+          const signedTx2 = await web3.eth.accounts.signTransaction(transaction2, "7b7201b55d3942b2939048e08d2a1fe793f3ee4e79045a34d6b3354265a9aa8b");
+
+         await web3.eth.sendSignedTransaction(signedTx2.rawTransaction!, function(error, hash) {
+          if (!error) {
+            console.log("The hash of your transaction is: ", hash);
+          } else {
+            console.log("Something went wrong while submitting your transaction:", error)
+          }
+         });
+
+         console.log("BOUGHT AGAIN");
+         console.log("HOLDER", await escrowInstance.holder());
+         console.log("Beneficiary", await escrowInstance.beneficiary());
+
+         
+
+
      
-    
+         
 
       
       }

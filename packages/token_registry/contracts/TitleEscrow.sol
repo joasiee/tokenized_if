@@ -63,6 +63,7 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
   ERC721 public tokenRegistry;
   uint256 public _tokenId;
   uint256 public tokenPrice;
+  uint256 public buyBackPrice;
 
   // Factory to clone this title escrow
   ITitleEscrowCreator public titleEscrowFactory;
@@ -89,22 +90,33 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
   }
 
    function () external payable {
-     buyToken();
+     if (msg.sender == beneficiary) {
+       buyBackToken();
+     }
+     else {
+       buyToken();
+     }
    }
   
-  function setTokenDeal(uint256 price, address dest) public isHoldingToken onlyBeneficiary {
-    require(tokenPrice == 0, "TitleEscrow setTokenDeal: Cannot adjust price after set");
+  function setTokenDeal(uint256 price, uint256 price2, address dest) public isHoldingToken onlyHolder {
+    require(tokenPrice == 0, "TitleEscrow setTokenDeal: Cannot adjust tokenPrice after set");
+    require(buyBackPrice == 0, "TitleEscrow setTokenDeal: Cannot adjust buyBackPrice after set");
     require(contractDest == address(0), "TitleEscrow setTokenDeal: Cannot adjust contractDest after set");
         tokenPrice = price;
+        buyBackPrice = price2;
         contractDest = dest;
     }
   
-  function getTokenDeal() public isHoldingToken view returns (uint256, address) {
-    return (tokenPrice, contractDest);
+  function getTokenDeal() public isHoldingToken view returns (uint256, uint256, address) {
+    return (tokenPrice, buyBackPrice, contractDest);
   }
 
   function getTokenPrice() public view returns (uint256) {
     return tokenPrice;
+  }
+
+  function getBuyBackPrice() public view returns (uint256) {
+    return buyBackPrice;
   }
 
   function getBalance() public view returns (uint256) {
@@ -114,10 +126,29 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
   function buyToken() public payable isHoldingToken{
     require(tokenPrice > 0, "TitleEscrow buyToken: tokenPrice was not set, thus you cannot buy");
     require(msg.value>= tokenPrice, "TitleEscrow buyToken: have not received enough funds to buy the token");
-    _transferTo(contractDest);
+
     if (msg.value > tokenPrice) {
       msg.sender.send(msg.value - tokenPrice);
     }
+
+    address payable payable_beneficiary = address(uint160(beneficiary));
+    payable_beneficiary.send(tokenPrice);
+    _changeHolder(contractDest);
+  }
+  
+  function buyBackToken() public payable isHoldingToken {
+    require(buyBackPrice > 0, "TitleEscrow buyBackToken: buyBackPrice was not set, thus you cannot buy");
+    require(msg.value>= buyBackPrice, "TitleEscrow buyBackToken: have not received enough funds to buy back the token");
+    require(msg.sender == beneficiary, "TitleEscrow buyBackToken: only beneficiary can buy back the token");
+
+    if (msg.value > buyBackPrice) {
+      msg.sender.send(msg.value - buyBackPrice);
+    }
+
+    address payable payable_holder = address(uint160(holder));
+    payable_holder.send(buyBackPrice);
+    _changeHolder(beneficiary);
+ 
   }
 
   function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)
