@@ -7,7 +7,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": ":",
-    "test:ci": ":"
+    "test": ":"
   },
   "devDependencies": {
     "ts-node": "^9.1.1",

@@ -8,7 +8,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": ":",
-    "test:ci": ":",
+    "test": ":",
     "compile:contracts": "./node_modules/.bin/truffle compile"
   },
   "dependencies": {
