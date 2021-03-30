@@ -27,6 +27,29 @@ export interface RequestResponseObject<Req, Res> extends ReceivedMessage<Req> {
     respond(response: Res): Promise<void>
 }
 
+/**
+ * Wrapper allowing for easier interactions with distributed messaging client.
+ * 
+ * The {@link IMessagingClient} supports publish and subscribe as well as reqeuest
+ * and reply messaging. Both messaging schemes require to setup a function handler 
+ * for subscribing/replying to specific subjects. Calling subscribe/reply(subject)
+ * returns an {@link AsyncIterable}, which can be iterated over using 'for await'
+ * in anonymous or named function.
+ * 
+ * Example request/reply:
+ * ```
+ * // setup replier
+ * sub = client.reply('time');
+ * (async (sub) => {
+ *   for await (const m of sub) {
+ *     await m.respond(Date.now());
+ *   }
+ * })(sub); // here we call the anonymous function using our obtained iterable
+ * 
+ * // request time
+ * const time = await client2.request('time');
+ * ```
+ */
 export interface IMessagingClient {
     /**
      * Connects client and indicates whether client is succesfully connected.
@@ -73,7 +96,7 @@ export interface IMessagingClient {
      * Setup a way to reply to a request on a given subject
      * @param subject subject to listen on for requests
      */
-    reply<I, O>(subject: string): AsyncIterable<RequestResponseObject<I, O>>
+    reply<I, O>(subject: string): AsyncGenerator<RequestResponseObject<I, O>>
 
     /**
      * Unsubscribes the client from the given subject.

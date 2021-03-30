@@ -96,7 +96,7 @@ export class MessagingClient implements IMessagingClient {
         return result;
     }
 
-    async *reply<I, O>(subject: string): AsyncIterable<RequestResponseObject<I, O>> {
+    async *reply<I, O>(subject: string): AsyncGenerator<RequestResponseObject<I, O>> {
         if (this.subscriptions.has(subject)) {
             this.subscriptions.get(subject).unsubscribe();
         }
