@@ -27,4 +27,5 @@ message Workgroup {
 
 service Organizations {
     rpc GetOrgRegistry(OrgRegistry) returns (OrgRegistry);
+    rpc DeployOrgRegistry(OrgRegistry) returns (OrgRegistry);
 }

@@ -23,16 +23,14 @@ export function fromModel(model: IOrganization): Organization {
     .setZkpkey(model.zkpkey);
 }
 
-export function fromContract(
-  org: [string, string, string, string, string, string] & {
-    orgAddress: string;
-    name: string;
-    messagingEndpoint: string;
-    whisperKey: string;
-    zkpPublicKey: string;
-    metadata: string;
-  }
-): Organization {
+export function fromContract(org: {
+  orgAddress: string;
+  name: string;
+  messagingEndpoint: string;
+  whisperKey: string;
+  zkpPublicKey: string;
+  metadata: string;
+}): Organization {
   return new Organization()
     .setName(utils.parseBytes32String(org.name))
     .setAddress(org.orgAddress)

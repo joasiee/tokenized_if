@@ -2,9 +2,7 @@ clean:
 	docker-compose down --rmi all --volumes --remove-orphans
 logs: 
 	docker-compose logs -f
-reset: stop clean
-	docker-compose up -d --build --force-recreate --remove-orphans
-restart: stop start
+reset: stop clean start
 start: 
 	docker-compose up -d --remove-orphans
 start-attached:	

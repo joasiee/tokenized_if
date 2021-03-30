@@ -2,8 +2,8 @@ import { utils } from "ethers";
 import { OrgRegistry, Organization } from "@tokenized_if/shared/src/proto/organizations_pb";
 import { dbConnect, getLogger } from "@tokenized_if/shared";
 import { deployContract, getContract } from "../../blockchain-mgr";
-import { orgregistry } from "../models";
-import { updateDB } from "../util/db";
+import { orgregistry } from "../db/models";
+import { updateDB } from "../db/util";
 import { config } from "../../config";
 import { OrgRegistry as OrgRegistryContract } from "../../../dist/typechain/OrgRegistry";
 
@@ -18,12 +18,12 @@ export class OrganizationsService {
   async getRegistry(registry: OrgRegistry): Promise<OrgRegistry> {
     logger.debug(`Checking if registry ${registry.getName()} exists.`);
     if (await orgregistry.db.exists({ name: registry.getName() })) {
-      return orgregistry.fromModel(await orgregistry.db.findOne({ name: registry.getName() }));
+      return Promise.resolve(orgregistry.fromModel(await orgregistry.db.findOne({ name: registry.getName() })));
     }
-    return this.deployRegistry(registry);
+    return Promise.reject(`Registry with name ${registry.getName()} not in local db.`);
   }
 
-  private async deployRegistry(registry: OrgRegistry): Promise<OrgRegistry> {
+  async deployRegistry(registry: OrgRegistry): Promise<OrgRegistry> {
     logger.debug(`Trying to deploy registry ${registry.getName()}`);
     try {
       const erc1820 = await deployContract(config.CONTRACTS.ERC_1820, []);

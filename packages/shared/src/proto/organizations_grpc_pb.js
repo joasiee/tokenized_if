@@ -28,6 +28,17 @@ var OrganizationsService = exports.OrganizationsService = {
     responseSerialize: serialize_organizations_OrgRegistry,
     responseDeserialize: deserialize_organizations_OrgRegistry,
   },
+  deployOrgRegistry: {
+    path: '/organizations.Organizations/DeployOrgRegistry',
+    requestStream: false,
+    responseStream: false,
+    requestType: organizations_pb.OrgRegistry,
+    responseType: organizations_pb.OrgRegistry,
+    requestSerialize: serialize_organizations_OrgRegistry,
+    requestDeserialize: deserialize_organizations_OrgRegistry,
+    responseSerialize: serialize_organizations_OrgRegistry,
+    responseDeserialize: deserialize_organizations_OrgRegistry,
+  },
 };
 
 exports.OrganizationsClient = grpc.makeGenericClientConstructor(OrganizationsService);

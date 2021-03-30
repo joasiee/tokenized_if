@@ -13,4 +13,11 @@ export const OrganizationsServer: IOrganizationsServer = {
     const req = call.request as OrgRegistry;
     callback(null, await service.getRegistry(req));
   },
+  deployOrgRegistry: async (
+    call: ServerUnaryCall<OrgRegistry, OrgRegistry>,
+    callback: sendUnaryData<OrgRegistry>
+  ): Promise<void> => {
+    const req = call.request as OrgRegistry;
+    callback(null, await service.deployRegistry(req));
+  },
 };
