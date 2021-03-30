@@ -12,15 +12,16 @@ export async function updateDB() {
   }
 }
 
-async function updateRegistry(registry: orgregistry.IOrgRegistry) {
+export async function updateRegistry(registry: orgregistry.IOrgRegistry): Promise<boolean> {
   if (!(await isDeployed(registry.address))) {
     await registry.deleteOne();
-    return;
+    return false;
   }
   registry.orgsList = [];
   registry.groupsList = [];
   await registry.save();
   await registerCallbacks(registry);
+  return true;
 }
 
 async function registerCallbacks(registry: orgregistry.IOrgRegistry) {

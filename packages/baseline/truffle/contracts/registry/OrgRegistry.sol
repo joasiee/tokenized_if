@@ -54,6 +54,13 @@ contract OrgRegistry is Ownable, ERC165Compatible, Registrar, IOrgRegistry {
         bytes _metadata
     );
 
+    event RegisterGroup(
+        bytes32 _groupName,
+        address _tokenAddress,
+        address _shieldAddress,
+        address _verifierAddress
+    );
+
     /// @dev constructor function that takes the address of a pre-deployed ERC1820
     /// registry. Ideally, this contract is a publicly known address:
     /// 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24. Inherently, the constructor
@@ -186,6 +193,12 @@ contract OrgRegistry is Ownable, ERC165Compatible, Registrar, IOrgRegistry {
             _shieldAddress,
             _verifierAddress
         );
+
+        emit RegisterGroup(
+            _groupName,
+            _tokenAddress,
+            _shieldAddress,
+            _verifierAddress);
       
         orgInterfaceCount++;
         return true;

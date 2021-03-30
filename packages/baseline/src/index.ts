@@ -1,10 +1,15 @@
 import { OrganizationsService } from "./organization-mgr/service";
-import { Organization, OrgRegistry } from "@tokenized_if/shared/src/proto/organizations_pb";
+import { Organization, OrgRegistry, Workgroup } from "@tokenized_if/shared/src/proto/organizations_pb";
 
 const main = async () => {
   const service: OrganizationsService = new OrganizationsService();
   await service.init();
-  // const reg = await service.deployRegistry(new OrgRegistry().setName("test"));
+  const addr = "0xa447b62903070991CF0642d43644Db1192D915b7";
+  const reg = await service.getRegistry(new OrgRegistry().setName("test").setAddress(addr));
+  // await service.addWorkgroup(
+  //   reg,
+  //   new Workgroup().setName("henk groep").setShieldaddress(addr).setTokenaddress(addr).setVerifieraddress(addr)
+  // );
   // await service.addOrganization(
   //   reg,
   //   new Organization()

@@ -1,9 +1,9 @@
 import { utils } from "ethers";
-import { OrgRegistry, Organization } from "@tokenized_if/shared/src/proto/organizations_pb";
+import { OrgRegistry, Organization, Workgroup } from "@tokenized_if/shared/src/proto/organizations_pb";
 import { dbConnect, getLogger } from "@tokenized_if/shared";
 import { deployContract, getContract } from "../../blockchain-mgr";
 import { orgregistry } from "../db/models";
-import { updateDB } from "../db/util";
+import { updateDB, updateRegistry } from "../db/util";
 import { config } from "../../config";
 import { OrgRegistry as OrgRegistryContract } from "../../../dist/typechain/OrgRegistry";
 
@@ -20,6 +20,10 @@ export class OrganizationsService {
     if (await orgregistry.db.exists({ name: registry.getName() })) {
       return Promise.resolve(orgregistry.fromModel(await orgregistry.db.findOne({ name: registry.getName() })));
     }
+    const model = await orgregistry.db.create(registry.toObject());
+    if (await updateRegistry(model)) {
+      return orgregistry.fromModel(await orgregistry.db.findOne({ name: registry.getName() }));
+    }
     return Promise.reject(`Registry with name ${registry.getName()} not in local db.`);
   }
 
@@ -34,13 +38,14 @@ export class OrganizationsService {
       return registry;
     } catch (err) {
       logger.error(err);
+      return Promise.reject(err);
     }
   }
 
   async addOrganization(registry: OrgRegistry, org: Organization): Promise<OrgRegistry> {
     logger.debug(`Trying to add organization ${org.getName()} to registry ${registry.getName()}`);
     try {
-      const model: orgregistry.IOrgRegistry = await orgregistry.db.findOne({ address: registry.getAddress() });
+      const model: orgregistry.IOrgRegistry = await orgregistry.db.findOne({ name: registry.getName() });
       let contract: OrgRegistryContract = getContract(
         registry.getAddress(),
         config.CONTRACTS.ORG_REGISTRY
@@ -61,10 +66,41 @@ export class OrganizationsService {
       registry.getOrgsList().push(org);
       model.orgsList.push(org.toObject());
       await model.save();
-      logger.debug(`Successfully added ${org.getName()} to registry.`);
+      logger.debug(`Successfully added organization ${org.getName()} to registry.`);
       return registry;
     } catch (err) {
       logger.error(err);
+      return Promise.reject(err);
+    }
+  }
+
+  async addWorkgroup(registry: OrgRegistry, workgroup: Workgroup): Promise<OrgRegistry> {
+    logger.debug(`Trying to add workgroup ${workgroup.getName()} to registry ${registry.getName()}`);
+    try {
+      const model: orgregistry.IOrgRegistry = await orgregistry.db.findOne({ name: registry.getName() });
+      let contract: OrgRegistryContract = getContract(
+        registry.getAddress(),
+        config.CONTRACTS.ORG_REGISTRY
+      ) as OrgRegistryContract;
+      if (model.groupsList.some((x) => x.name === workgroup.getName())) {
+        const msg = `Registry already contains group: ${workgroup.getName()}`;
+        logger.debug(msg);
+        return;
+      }
+      await contract.registerInterfaces(
+        utils.formatBytes32String(workgroup.getName()),
+        workgroup.getTokenaddress(),
+        workgroup.getShieldaddress(),
+        workgroup.getVerifieraddress()
+      );
+      registry.getGroupsList().push(workgroup);
+      model.groupsList.push(workgroup.toObject());
+      await model.save();
+      logger.debug(`Successfully added group ${workgroup.getName()} to registry.`);
+      return registry;
+    } catch (err) {
+      logger.error(err);
+      return Promise.reject(err);
     }
   }
 }
