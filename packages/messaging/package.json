@@ -13,7 +13,7 @@
     "test:startup": "docker run -d --name nats-test -p 4222:4222 nats",
     "test:teardown": "docker stop nats-test && docker container rm nats-test",
     "lint": "eslint . --ext .ts --fix",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts --write"
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' 'test/**/*.ts' --write"
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",
