@@ -6,12 +6,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run:
-          name: Install node/npm/yarn
-          command: |
-          sudo apt update
-          sudo apt install nodejs npm
-          npm install -g yarn
+      - run: sudo apt update && sudo apt install nodejs npm -y && npm install -g yarn | bash
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
