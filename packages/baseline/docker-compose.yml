@@ -21,7 +21,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_DATABASE: root-db
     volumes:
-      - ./ops/db:/docker-entrypoint-initdb.d:ro
+      - ./ops/init-db.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - mongo:/data/db
     logging:
       options:
