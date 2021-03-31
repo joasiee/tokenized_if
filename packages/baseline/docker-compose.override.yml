@@ -1,3 +1,4 @@
+version: "3.5"
 services:
   ganache:
     command: ganache-cli -m "elephant season wise pyramid jaguar number away trap skirt guilt capital reveal" --networkId 101010 --allowUnlimitedContractSize --noVMErrorsOnRPCResponse
