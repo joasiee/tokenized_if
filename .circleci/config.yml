@@ -8,8 +8,8 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Start Docker
-        command: sudo systemctl start docker
+          name: Start Docker
+          command: sudo systemctl start docker
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
