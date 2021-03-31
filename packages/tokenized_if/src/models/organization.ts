@@ -1,3 +1,1 @@
-export interface Organization {
-
-}
+export interface Organization {}
