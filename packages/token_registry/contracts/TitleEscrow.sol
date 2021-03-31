@@ -25,6 +25,7 @@ contract HasHolder is Context {
   address public holder;
 
   event HolderChanged(address indexed previousHolder, address indexed newHolder);
+
   constructor(address _holder) internal {
     holder = _holder;
     emit HolderChanged(address(0), _holder);
@@ -79,57 +80,82 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
   address public contractDest;
 
   //TODO: change ERC721 to address so that external contracts don't need to import ERC721 to use this
-  constructor(ERC721 _tokenRegistry, address _beneficiary, address _holder, address _titleEscrowFactoryAddress)
-    public
-    HasNamedBeneficiary(_beneficiary)
-    HasHolder(_holder)
-  {
+  constructor(
+    ERC721 _tokenRegistry,
+    address _beneficiary,
+    address _holder,
+    address _titleEscrowFactoryAddress
+  ) public HasNamedBeneficiary(_beneficiary) HasHolder(_holder) {
     tokenRegistry = ERC721(_tokenRegistry);
     titleEscrowFactory = ITitleEscrowCreator(_titleEscrowFactoryAddress);
     _registerInterface(_INTERFACE_ID_TITLEESCROW);
   }
 
-   function () external payable {
-     if (msg.sender == beneficiary) {
-       buyBackToken();
-     }
-     else {
-       buyToken();
-     }
-   }
-  
-  function setTokenDeal(uint256 price, uint256 price2, address dest) public isHoldingToken onlyHolder {
+  // 'Fallback function'. It is used to receive ethers, and call the buyBackToken or buyToken afterwards.
+  // If sender is beneficiary, then he wants to buy back the token.
+  // If not, then it is an financer that wants to buy the token.
+  function() external payable {
+    if (msg.sender == beneficiary) {
+      buyBackToken();
+    } else {
+      buyToken();
+    }
+  }
+
+  // Sets the token deal to trade it. The prices and destination are fixed, and cannot be changed anymore after it is set in the contract.
+  // Note that only the holder can set this deal.
+  function setTokenDeal(
+    uint256 price,
+    uint256 price2,
+    address dest
+  ) public isHoldingToken onlyHolder {
     require(tokenPrice == 0, "TitleEscrow setTokenDeal: Cannot adjust tokenPrice after set");
     require(buyBackPrice == 0, "TitleEscrow setTokenDeal: Cannot adjust buyBackPrice after set");
     require(contractDest == address(0), "TitleEscrow setTokenDeal: Cannot adjust contractDest after set");
-        tokenPrice = price;
-        buyBackPrice = price2;
-        contractDest = dest;
-    }
-  
-  function getTokenDeal() public isHoldingToken view returns (uint256, uint256, address) {
+    tokenPrice = price;
+    buyBackPrice = price2;
+    contractDest = dest;
+  }
+
+  // Gets the token deal that was set before and returns it.
+  function getTokenDeal()
+    public
+    view
+    isHoldingToken
+    returns (
+      uint256,
+      uint256,
+      address
+    )
+  {
     return (tokenPrice, buyBackPrice, contractDest);
   }
 
+  // Gets the token price that was set before.
   function getTokenPrice() public view returns (uint256) {
     return tokenPrice;
   }
 
+  // Gets the buy back price that was set before.
   function getBuyBackPrice() public view returns (uint256) {
     return buyBackPrice;
   }
 
+  // Gets the destination address (the new holder), so after payment the holder will change to this new address.
   function getContractDest() public view returns (address) {
     return contractDest;
   }
 
+  // Returns the ether balance stored in the contract.
   function getBalance() public view returns (uint256) {
     return address(this).balance;
   }
 
-  function buyToken() public payable isHoldingToken{
+  // Buying a token. If the buyer had paid more than was set, the remaining funds will be transferred back.
+  // After payment, the holder is immediately changed to contractDest. And the beneficiary receives the money.
+  function buyToken() public payable isHoldingToken {
     require(tokenPrice > 0, "TitleEscrow buyToken: tokenPrice was not set, thus you cannot buy");
-    require(msg.value>= tokenPrice, "TitleEscrow buyToken: have not received enough funds to buy the token");
+    require(msg.value >= tokenPrice, "TitleEscrow buyToken: have not received enough funds to buy the token");
 
     if (msg.value > tokenPrice) {
       msg.sender.send(msg.value - tokenPrice);
@@ -139,10 +165,15 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
     payable_beneficiary.send(tokenPrice);
     _changeHolder(contractDest);
   }
-  
+
+  // Buying back the token. This function is called by the importer.
+  // After payment, the importer will immediately become the new holder of the token.
   function buyBackToken() public payable isHoldingToken {
     require(buyBackPrice > 0, "TitleEscrow buyBackToken: buyBackPrice was not set, thus you cannot buy");
-    require(msg.value>= buyBackPrice, "TitleEscrow buyBackToken: have not received enough funds to buy back the token");
+    require(
+      msg.value >= buyBackPrice,
+      "TitleEscrow buyBackToken: have not received enough funds to buy back the token"
+    );
     require(msg.sender == beneficiary, "TitleEscrow buyBackToken: only beneficiary can buy back the token");
 
     if (msg.value > buyBackPrice) {
@@ -152,13 +183,14 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
     address payable payable_holder = address(uint160(holder));
     payable_holder.send(buyBackPrice);
     _changeHolder(beneficiary);
- 
   }
 
-  function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)
-    external
-    returns (bytes4)
-  {
+  function onERC721Received(
+    address operator,
+    address from,
+    uint256 tokenId,
+    bytes calldata data
+  ) external returns (bytes4) {
     require(status == StatusTypes.Uninitialised, "TitleEscrow: Contract has been used before");
     require(
       _msgSender() == address(tokenRegistry),
@@ -220,11 +252,8 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
     onlyHolder
     allowTransferTitleEscrow(newBeneficiary, newHolder)
   {
-    address newTitleEscrowAddress = titleEscrowFactory.deployNewTitleEscrow(
-      address(tokenRegistry),
-      newBeneficiary,
-      newHolder
-    );
+    address newTitleEscrowAddress =
+      titleEscrowFactory.deployNewTitleEscrow(address(tokenRegistry), newBeneficiary, newHolder);
     _transferTo(newTitleEscrowAddress);
   }
 
@@ -236,6 +265,5 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
 
     approvedBeneficiary = newBeneficiary;
     approvedHolder = newHolder;
-
   }
 }
