@@ -1,15 +1,13 @@
 version: "2.1"
 orbs:
   node: circleci/node@4.2.0
+  docker: circleci/docker@1.5.0
 jobs:
-  build_test:
+  build:
     docker:
       - image: cimg/node:15.11.0
     steps:
       - checkout
-      - run:
-          name: Start Docker
-          command: sudo systemctl start docker
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
