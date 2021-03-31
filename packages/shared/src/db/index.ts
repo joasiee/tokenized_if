@@ -3,6 +3,7 @@ import { getLogger } from "../logger";
 
 const logger = getLogger("mongodb");
 
+// mongo config
 const config = {
   mongo: {
     debug: true,
@@ -58,6 +59,12 @@ function simpleSleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/**
+ * Connects to db.
+ * @param user username
+ * @param pwd password
+ * @param db database name
+ */
 export async function dbConnect(user: string, pwd: string, db: string) {
   mongoUrl = `mongodb://${user}:${pwd}@${process.env.MONGO_HOST}/${db}`;
   logger.info(`Trying to connect to db at: ${mongoUrl}`);

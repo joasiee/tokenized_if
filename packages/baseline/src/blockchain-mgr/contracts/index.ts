@@ -8,6 +8,12 @@ import { config } from "../../config";
 const logger = getLogger("blockchain-mgr");
 const wallet = HDWallet.getInstance().getWallet();
 
+/**
+ * Deploys contract from artifacts folder, compiled by @tokenized_if/truffle package.
+ * @param contract contract name, including .json
+ * @param args constructor args as array
+ * @returns ethers {@link Contract}
+ */
 export async function deployContract(contract: string, args: any[]): Promise<Contract> {
   const filePath = path.join(config.APP_ROOT, "dist", "artifacts", contract);
   try {
@@ -23,6 +29,12 @@ export async function deployContract(contract: string, args: any[]): Promise<Con
   }
 }
 
+/**
+ * Gets {@link Contract} instance connected to deployed contract.
+ * @param address address of deployed contract
+ * @param contract contract json name
+ * @returns {@link Contract}
+ */
 export function getContract(address: string, contract: string): Contract {
   const filePath = path.join(config.APP_ROOT, "dist", "artifacts", contract);
   try {
@@ -37,6 +49,11 @@ export function getContract(address: string, contract: string): Contract {
   }
 }
 
+/**
+ * Checks if a contract is deployed at address.
+ * @param address
+ * @returns
+ */
 export async function isDeployed(address: string): Promise<boolean> {
   return (await wallet.provider.getCode(address)) != "0x";
 }

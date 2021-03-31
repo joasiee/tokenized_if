@@ -1,5 +1,6 @@
 import path from "path";
 
+/** Global app config interface. */
 interface Config {
   APP_ROOT: string;
   CONTRACTS: {

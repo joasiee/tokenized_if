@@ -9,12 +9,24 @@ import { OrgRegistry as OrgRegistryContract } from "../../../dist/typechain/OrgR
 
 const logger = getLogger("org-service");
 
+/**
+ * Service for {@link OrganizationsServer}.
+ */
 export class OrganizationsService {
+  /**
+   * Connect to local mongodb, update previously stored registries.
+   */
   async init() {
     await dbConnect(process.env.OMGR_DATABASE_USER, process.env.OMGR_DATABASE_PASSWORD, process.env.OMGR_DATABASE_NAME);
     await updateDB();
   }
 
+  /**
+   * GetS a registry.
+   * First checks if it is available in local db, if not checks on chain at address.
+   * @param registry
+   * @returns
+   */
   async getRegistry(registry: OrgRegistry): Promise<OrgRegistry> {
     logger.debug(`Checking if registry ${registry.getName()} exists.`);
     if (await orgregistry.db.exists({ name: registry.getName() })) {
@@ -27,6 +39,13 @@ export class OrganizationsService {
     return Promise.reject(`Registry with name ${registry.getName()} not in local db.`);
   }
 
+  /**
+   * Deploys registry.
+   * First deploys erc1820 (dev), then deploys orgregistry using address of deployed erc1820.
+   * Also saves deployed registry locally.
+   * @param registry
+   * @returns
+   */
   async deployRegistry(registry: OrgRegistry): Promise<OrgRegistry> {
     logger.debug(`Trying to deploy registry ${registry.getName()}`);
     try {
@@ -37,11 +56,16 @@ export class OrganizationsService {
       logger.debug(`Successfully deployed registry at: ${registry.getAddress()}`);
       return registry;
     } catch (err) {
-      logger.error(err);
       return Promise.reject(err);
     }
   }
 
+  /**
+   * Adds organization to specific registry.
+   * @param registry registry to add org to
+   * @param org org to add
+   * @returns updated registry
+   */
   async addOrganization(registry: OrgRegistry, org: Organization): Promise<OrgRegistry> {
     logger.debug(`Trying to add organization ${org.getName()} to registry ${registry.getName()}`);
     try {
@@ -50,11 +74,13 @@ export class OrganizationsService {
         registry.getAddress(),
         config.CONTRACTS.ORG_REGISTRY
       ) as OrgRegistryContract;
+      // do not add if org is already added locally.
       if (model.orgsList.some((x) => x.name === org.getName())) {
         const msg = `Registry already contains org: ${org.getName()}`;
         logger.debug(msg);
         return;
       }
+      // contract interaction
       await contract.registerOrg(
         org.getAddress(),
         utils.formatBytes32String(org.getName()),
@@ -63,17 +89,23 @@ export class OrganizationsService {
         utils.toUtf8Bytes(org.getZkpkey()),
         utils.toUtf8Bytes("{}")
       );
+      // update locally
       registry.getOrgsList().push(org);
       model.orgsList.push(org.toObject());
       await model.save();
       logger.debug(`Successfully added organization ${org.getName()} to registry.`);
       return registry;
     } catch (err) {
-      logger.error(err);
       return Promise.reject(err);
     }
   }
 
+  /**
+   * Adds workgroup to registry.
+   * @param registry registry to add workgroup to
+   * @param workgroup workgroup to add
+   * @returns
+   */
   async addWorkgroup(registry: OrgRegistry, workgroup: Workgroup): Promise<OrgRegistry> {
     logger.debug(`Trying to add workgroup ${workgroup.getName()} to registry ${registry.getName()}`);
     try {
@@ -99,7 +131,6 @@ export class OrganizationsService {
       logger.debug(`Successfully added group ${workgroup.getName()} to registry.`);
       return registry;
     } catch (err) {
-      logger.error(err);
       return Promise.reject(err);
     }
   }

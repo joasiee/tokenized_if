@@ -5,6 +5,9 @@ import { OrganizationsService } from "../service";
 
 const service = new OrganizationsService();
 
+/**
+ * RPC server, implements interface from generated protobuf in {@link IOrganizationsServer}.
+ */
 export const OrganizationsServer: IOrganizationsServer = {
   getOrgRegistry: async (call: ServerUnaryCall<OrgRegistry, OrgRegistry>, callback: sendUnaryData<OrgRegistry>) => {
     const req = call.request as OrgRegistry;

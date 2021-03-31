@@ -7,6 +7,9 @@ import { Organization, Workgroup } from "@tokenized_if/shared/src/proto/organiza
 
 const logger = getLogger("org-service");
 
+/**
+ * Updates local db, by checking registries deployed on-chain.
+ */
 export async function updateDB() {
   const registries = await orgregistry.db.find();
   for (const registry of registries) {
@@ -14,6 +17,11 @@ export async function updateDB() {
   }
 }
 
+/**
+ * Checks if registry is deployed, and if so retrieves the organizations and workgroups.
+ * @param registry local registry
+ * @returns true if deployed, false if not
+ */
 export async function updateRegistry(registry: orgregistry.IOrgRegistry): Promise<boolean> {
   if (!(await isDeployed(registry.address))) {
     await registry.deleteOne();
@@ -26,10 +34,15 @@ export async function updateRegistry(registry: orgregistry.IOrgRegistry): Promis
   registry.orgsList = await getOrgs(contract);
   registry.groupsList = await getGroups(contract);
   await registry.save();
-  // await registerCallbacks(registry);
+  await registerCallbacks(registry);
   return true;
 }
 
+/**
+ * Gets organizations from deployed contract.
+ * @param contract
+ * @returns array containing orgs, using mongoose defined schema
+ */
 async function getOrgs(contract: OrgRegistryContract): Promise<Organization.AsObject[]> {
   const orgs = [];
   const orgCount = await contract.getOrgCount();
@@ -41,6 +54,11 @@ async function getOrgs(contract: OrgRegistryContract): Promise<Organization.AsOb
   });
 }
 
+/**
+ * Gets groups from deployed contract.
+ * @param contract
+ * @returns array containing groups, using mongoose defined schema
+ */
 async function getGroups(contract: OrgRegistryContract): Promise<Workgroup.AsObject[]> {
   const groups = await contract.getInterfaceAddresses();
   const res = [];
@@ -58,6 +76,12 @@ async function getGroups(contract: OrgRegistryContract): Promise<Workgroup.AsObj
   });
 }
 
+/**
+ * Registers callbacks for contract.
+ * Listens for RegisterOrg and RegisterGroup events.
+ * On event update local db accordingly.
+ * @param registry
+ */
 async function registerCallbacks(registry: orgregistry.IOrgRegistry) {
   const contract = getContract(registry.address, config.CONTRACTS.ORG_REGISTRY);
   contract.on("RegisterOrg", async function (name, address, msgUrl, msgKey, zkpKey, metadata, event) {
@@ -71,8 +95,10 @@ async function registerCallbacks(registry: orgregistry.IOrgRegistry) {
     };
     const org = organization.fromContract(data);
     const reg = await orgregistry.db.findOne({ name: registry.name });
-    reg.orgsList.push(org.toObject());
-    await reg.save();
+    if (!reg.orgsList.some((x) => x.name === org.getName())) {
+      reg.orgsList.push(org.toObject());
+      await reg.save();
+    }
   });
   contract.on("RegisterGroup", async function (name, tokenAddress, shieldAddress, verifierAddress, event) {
     const data = {
@@ -84,7 +110,9 @@ async function registerCallbacks(registry: orgregistry.IOrgRegistry) {
     logger.debug(`Triggered register group event: ${data}`);
     const group = workgroup.fromContract(data);
     const reg = await orgregistry.db.findOne({ name: registry.name });
-    reg.groupsList.push(group.toObject());
-    await reg.save();
+    if (!reg.groupsList.some((x) => x.name === group.getName())) {
+      reg.groupsList.push(group.toObject());
+      await reg.save();
+    }
   });
 }
