@@ -106,16 +106,18 @@ async function deployTitleEscrow(beneficiary: string, holder: string) {
 
 // The LSP deploys the importer escrow contract on the blockchain with importer as owner.
 // A token will de made from the tokenID and placed in this contract.
-async function deployImporterEscrow(tokenID : ethers.BigNumberish) {
+async function deployImporterEscrow(tokenID : ethers.BigNumberish) : Promise<TitleEscrow> {
   var escrowInstance;
   try {
       escrowInstance = await deployTitleEscrow(importerPublicAddress, importerPublicAddress);
-      if (escrowInstance != null) {
-        createToken(escrowInstance, tokenID);
-      }  
+      if (escrowInstance) {
+        await createToken(escrowInstance, tokenID);
+      }
+      else throw new Error("deployImporterEscrow: escrowInstance creation encountered a problem");  
   }
   catch (e) {
     console.log(e);
+    throw(e);
   }
   return escrowInstance;
 }
@@ -131,6 +133,12 @@ async function ownerOfToken(tokenID : ethers.BigNumberish) {
   }
   return result;
 }
+
+// Sleep helper function. Not used at the moment, leaving it just in case.
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 
 
 
@@ -148,12 +156,13 @@ async function main() {
     var escrowInstance = await deployImporterEscrow(tokenID);
 
 
-    var escrowInstance2 = await deployTitleEscrow(financerPublicAddress, financerPublicAddress);
+    //var escrowInstance2 = await deployTitleEscrow(financerPublicAddress, financerPublicAddress);
     console.log("Deployed escrow instance 2");
+    
+
     console.log("Current owner of token is: " + await tokenRegistry["ownerOf(uint256)"](tokenID));
 
-    if (escrowInstance != null && escrowInstance2 != null) {
-      //escrowInstance = TitleEscrowFactory.connect(escrowInstance.address, importerSigner);
+      escrowInstance = TitleEscrowFactory.connect(escrowInstance.address, importerSigner);
       //escrowInstance = TitleEscrowFactory.connect("0x507D2ceA921E20E85cA58aa2AaF09DE65e127db6", importerSigner);
       console.log("balance: " + await tokenRegistry["balanceOf(address)"](escrowInstance.address));
 
@@ -323,7 +332,7 @@ console.log(extraData);
          
 
       
-      }
+      
      
  
  
