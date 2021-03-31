@@ -1,5 +1,5 @@
 clean: 
-	docker-compose down --rmi all --volumes --remove-orphans
+	docker-compose down --volumes --remove-orphans
 logs: 
 	docker-compose logs -f
 reset: stop clean start

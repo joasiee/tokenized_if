@@ -4,7 +4,6 @@ services:
   ganache:
     container_name: ganache
     image: trufflesuite/ganache-cli:latest
-    command: ganache-cli -m 'elephant season wise pyramid jaguar number away trap skirt guilt capital reveal' --networkId '101010' --allowUnlimitedContractSize --noVMErrorsOnRPCResponse
     ports:
       - 8545:8545
 
@@ -12,8 +11,6 @@ services:
     container_name: mongo
     image: mongo:latest
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password123
       MONGO_INITDB_ROOT_DATABASE: root-db
     volumes:
       - ./ops/db:/docker-entrypoint-initdb.d:ro
@@ -27,12 +24,11 @@ services:
   mongo-express:
     image: mongo-express
     container_name: mongo-express
+    profiles: ["development"]
     ports:
       - 8081:8081
     environment:
       ME_CONFIG_MONGODB_SERVER: mongo
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: password123
     depends_on:
       - mongo
 
