@@ -31,3 +31,7 @@ jobs:
       - run:
           name: Run all CI tests
           command: yarn lerna run test
+workflows:
+  tests:
+    jobs:
+      - build_test
