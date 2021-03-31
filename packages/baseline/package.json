@@ -6,7 +6,7 @@
   "license": "ISC",
   "scripts": {
     "start": "ts-node -r dotenv-flow/config src/index.ts",
-    "test": "make reset && NODE_ENV=development ./node_modules/.bin/mocha -r dotenv-flow/config -r ts-node/register 'tests/**/*.test.ts' && make stop"
+    "test": "make reset && sleep 5 && NODE_ENV=development ./node_modules/.bin/mocha -r dotenv-flow/config -r ts-node/register 'tests/**/*.test.ts' && make stop"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.2.12",

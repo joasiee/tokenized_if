@@ -5,7 +5,7 @@
   "scripts": {
     "compile": "yarn truffle compile",
     "generate:types": "yarn typechain --target ethers-v5 --outDir ../dist/typechain '../dist/artifacts/*.json'",
-    "postinstall": "yarn compile && yarn generate:types"
+    "build": "yarn compile && yarn generate:types"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^3.1.0",
