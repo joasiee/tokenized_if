@@ -46,7 +46,7 @@ const tokenRegistryFactory = new TradeTrustErc721Factory(LSPSigner);
 **************** **************** **************** */
 
 // Sets up public addresses for importer and financer.
-async function setupPublicAddresses() {
+export async function setupPublicAddresses() {
   try {
     importerPublicAddress = await importerSigner.getAddress();
     financerPublicAddress = await financerSigner.getAddress();
@@ -56,9 +56,8 @@ async function setupPublicAddresses() {
   }
 }
 
-
 // Printing all accounts from Ganache.
-function printAllAccounts() {
+export function printAllAccounts() {
   web3.eth.getAccounts().then(console.log);
 }
 
@@ -76,7 +75,7 @@ async function getSingleAccount(index: number) {
 }
 
 // Sets up the Token Registry
-async function setupTokenRegistry() {
+export async function setupTokenRegistry() {
   try {
     tokenRegistry = await tokenRegistryFactory.deploy("MY_TOKEN_REGISTRY", "MTR");
     console.log("Deploying token registry");
@@ -87,7 +86,7 @@ async function setupTokenRegistry() {
 }
 
 // This will create a token and put it in a given contract, the escrowInstance.
-async function createToken(escrowInstance: TitleEscrow, tokenID: ethers.BigNumberish) {
+export async function createToken(escrowInstance: TitleEscrow, tokenID: ethers.BigNumberish) {
   try {
     await tokenRegistry["safeMint(address,uint256)"](escrowInstance.address, tokenID);
   }
@@ -97,7 +96,7 @@ async function createToken(escrowInstance: TitleEscrow, tokenID: ethers.BigNumbe
 }
 
 // Deploys the title escrow contract on the blockchain with a given beneficiary and holder.
-async function deployTitleEscrow(beneficiary: string, holder: string) {
+export async function deployTitleEscrow(beneficiary: string, holder: string) {
   var instance;
   try {
     const factory = new TitleEscrowFactory(LSPSigner);
@@ -112,7 +111,7 @@ async function deployTitleEscrow(beneficiary: string, holder: string) {
 
 // The LSP deploys the importer escrow contract on the blockchain with importer as owner.
 // A token will de made from the tokenID and placed in this contract.
-async function deployImporterEscrow(tokenID: ethers.BigNumberish): Promise<TitleEscrow> {
+export async function deployImporterEscrow(tokenID: ethers.BigNumberish): Promise<TitleEscrow> {
   var escrowInstance;
   try {
     escrowInstance = await deployTitleEscrow(importerPublicAddress, importerPublicAddress);
@@ -129,7 +128,7 @@ async function deployImporterEscrow(tokenID: ethers.BigNumberish): Promise<Title
 }
 
 // Returns the owner of a token, given a tokenID.
-async function ownerOfToken(tokenID: ethers.BigNumberish) {
+export async function ownerOfToken(tokenID: ethers.BigNumberish) {
   var result;
   try {
     result = await tokenRegistry["ownerOf(uint256)"](tokenID);
@@ -141,7 +140,7 @@ async function ownerOfToken(tokenID: ethers.BigNumberish) {
 }
 
 // Sleep helper function. Not used at the moment, leaving it just in case.
-function sleep(ms: number) {
+export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -154,26 +153,26 @@ function connectEscrowInstance(address: string, signerOrProvider: ethers.Signer 
 }
 
 // Use this function to connect to an existing TokenRegistry on the blockchain.
-function connectTokenRegistry(address: string, signerOrProvider: ethers.Signer | providers.Provider) {
+export function connectTokenRegistry(address: string, signerOrProvider: ethers.Signer | providers.Provider) {
   tokenRegistry = TradeTrustErc721Factory.connect(address, signerOrProvider);
   return tokenRegistry;
 }
 
 // Gets the token balance from a given TitleEscrow.
-async function getTokenBalance(escrowInstance: TitleEscrow) {
+export async function getTokenBalance(escrowInstance: TitleEscrow) {
   var result;
   result = await tokenRegistry["balanceOf(address)"](escrowInstance.address);
   return result;
 }
 
 // Convert ether to wei.
-function ethToWei(eth: string | number): string {
+export function ethToWei(eth: string | number): string {
   eth = eth.toString()
   return web3.utils.toWei(eth, 'ether');
 }
 
 // Sends ether from an address to another address.
-async function sendEther(from_address: string, to_address: string, amount_ether: string | number, priv_key: string) {
+export async function sendEther(from_address: string, to_address: string, amount_ether: string | number, priv_key: string) {
   const nonce = await web3.eth.getTransactionCount(from_address, 'latest');
   const transaction = {
     'to': to_address,
@@ -194,30 +193,30 @@ async function sendEther(from_address: string, to_address: string, amount_ether:
 }
 
 // Used to parse BigNumber, and hex to numberString.
-function parseBigNumber(number: ethers.BigNumber) {
+export function parseBigNumber(number: ethers.BigNumber) {
   return web3.utils.hexToNumberString(number._hex);
 }
 
 // Retrieves tokenPrice and converts to ether amount.
-async function getTokenPrice(escrowInstance: TitleEscrow): Promise<string> {
+export async function getTokenPrice(escrowInstance: TitleEscrow): Promise<string> {
   var price = await escrowInstance.getTokenPrice();
   return web3.utils.fromWei(parseBigNumber(price));
 }
 
 // Retrieves buyBackPrice and converts to ether amount.
-async function getTokenBuyBackPrice(escrowInstance: TitleEscrow): Promise<string> {
+export async function getTokenBuyBackPrice(escrowInstance: TitleEscrow): Promise<string> {
   var buyBackPrice = await escrowInstance.getBuyBackPrice();
   return web3.utils.fromWei(parseBigNumber(buyBackPrice));
 }
 
 // Retrieves the contract destination address. This is the address where the token transfers to, after payment.
-async function getContractDest(escrowInstance: TitleEscrow): Promise<string> {
+export async function getContractDest(escrowInstance: TitleEscrow): Promise<string> {
   return await escrowInstance.getcontractDest();
 }
 
 // Gets the deal which includes price, buyBackPrice and the contract destination.
 // It returns an array which contains the three variables.
-async function getTokenDeal(escrowInstance: TitleEscrow) {
+export async function getTokenDeal(escrowInstance: TitleEscrow) {
   var deal = await escrowInstance.getTokenDeal();
   var price = web3.utils.fromWei(parseBigNumber(deal[0]));
   var buyBackPrice = web3.utils.fromWei(parseBigNumber(deal[1]));
@@ -226,7 +225,7 @@ async function getTokenDeal(escrowInstance: TitleEscrow) {
 }
 
 // Returns the ether balance stored in a TitleEscrow.
-async function getETHBalance(escrowInstance: TitleEscrow) {
+export async function getETHBalance(escrowInstance: TitleEscrow) {
   var balance = (await escrowInstance.getBalance())._hex;
   return web3.utils.fromWei(balance);
 }
