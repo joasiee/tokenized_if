@@ -11,7 +11,9 @@
     "test": "npm run test:startup && mocha -r ts-node/register --exit test/integration.ts ; npm run test:teardown",
     "test:ci": "npm test",
     "test:startup": "docker run -d --name nats-test -p 4222:4222 nats",
-    "test:teardown": "docker stop nats-test && docker container rm nats-test"
+    "test:teardown": "docker stop nats-test && docker container rm nats-test",
+    "lint": "eslint . --ext .ts --fix",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts --write"
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",

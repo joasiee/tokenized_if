@@ -5,7 +5,6 @@ import { connect, JSONCodec, NatsConnection, nkeyAuthenticator, Subscription } f
  * Implementations of {@link IMessagingClient} using NATS
  */
 export class MessagingClient implements IMessagingClient {
-
     private readonly url = process.env.NATS_URL;
     private readonly seed?: Uint8Array;
 
