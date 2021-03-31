@@ -6,7 +6,7 @@ export { getTitleEscrowCreatorAddress } from "./config";
 import { TradeTrustErc721 } from "../types/TradeTrustErc721";
 import { TitleEscrowCreator } from "../types/TitleEscrowCreator";
 import { TitleEscrowFactory, TradeTrustErc721Factory, TitleEscrowCreatorFactory } from "./index";
-import { Wallet, providers, getDefaultProvider, ethers, Contract} from "ethers";
+import { Wallet, providers, getDefaultProvider, ethers, Contract } from "ethers";
 import { TitleEscrow } from "./contracts/TitleEscrow";
 import Web3 from "web3";
 
@@ -28,11 +28,17 @@ const financerSigner = provider.getSigner(2);
 var importerPublicAddress: string;
 var financerPublicAddress: string;
 
-// tokenRegistryFactory, used to deploy token registry.
-const tokenRegistryFactory = new TradeTrustErc721Factory(LSPSigner);
+// Private keys
+var importerPrivateKey = "7b7201b55d3942b2939048e08d2a1fe793f3ee4e79045a34d6b3354265a9aa8b";
+var financerPrivateKey = "5da13d12265521d67dc19146cc23ea51f65885a43b14d54a69a77262dee71291";
 
 // tokenId, should be the hash of the document.
 const tokenID = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
+
+// tokenRegistryFactory, used to deploy token registry.
+const tokenRegistryFactory = new TradeTrustErc721Factory(LSPSigner);
+
+
 
 
 /**************** **************** **************** 
@@ -44,7 +50,7 @@ async function setupPublicAddresses() {
   try {
     importerPublicAddress = await importerSigner.getAddress();
     financerPublicAddress = await financerSigner.getAddress();
-    }
+  }
   catch (e) {
     console.log(e);
   }
@@ -57,11 +63,11 @@ function printAllAccounts() {
 }
 
 // Helper function if we need it to get a single account.
-async function getSingleAccount(index:number) {
+async function getSingleAccount(index: number) {
   try {
     let accounts;
-    web3.eth.getAccounts().then(function(response) { 
-      accounts = response; console.log(accounts[index]); 
+    web3.eth.getAccounts().then(function (response) {
+      accounts = response; console.log(accounts[index]);
     });
   }
   catch (e) {
@@ -106,24 +112,24 @@ async function deployTitleEscrow(beneficiary: string, holder: string) {
 
 // The LSP deploys the importer escrow contract on the blockchain with importer as owner.
 // A token will de made from the tokenID and placed in this contract.
-async function deployImporterEscrow(tokenID : ethers.BigNumberish) : Promise<TitleEscrow> {
+async function deployImporterEscrow(tokenID: ethers.BigNumberish): Promise<TitleEscrow> {
   var escrowInstance;
   try {
-      escrowInstance = await deployTitleEscrow(importerPublicAddress, importerPublicAddress);
-      if (escrowInstance) {
-        await createToken(escrowInstance, tokenID);
-      }
-      else throw new Error("deployImporterEscrow: escrowInstance creation encountered a problem");  
+    escrowInstance = await deployTitleEscrow(importerPublicAddress, importerPublicAddress);
+    if (escrowInstance) {
+      await createToken(escrowInstance, tokenID);
+    }
+    else throw new Error("deployImporterEscrow: escrowInstance creation encountered a problem");
   }
   catch (e) {
     console.log(e);
-    throw(e);
+    throw (e);
   }
   return escrowInstance;
 }
 
 // Returns the owner of a token, given a tokenID.
-async function ownerOfToken(tokenID : ethers.BigNumberish) {
+async function ownerOfToken(tokenID: ethers.BigNumberish) {
   var result;
   try {
     result = await tokenRegistry["ownerOf(uint256)"](tokenID);
@@ -139,12 +145,95 @@ function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Use this function to connect to an existing titleEscrow on the blockchain.
+// connectEscrowInstance("0x....", importerSigner).
+function connectEscrowInstance(address: string, signerOrProvider: ethers.Signer | providers.Provider): TitleEscrow {
+  var escrowInstance;
+  escrowInstance = TitleEscrowFactory.connect(address, signerOrProvider);
+  return escrowInstance;
+}
 
+// Use this function to connect to an existing TokenRegistry on the blockchain.
+function connectTokenRegistry(address: string, signerOrProvider: ethers.Signer | providers.Provider) {
+  tokenRegistry = TradeTrustErc721Factory.connect(address, signerOrProvider);
+  return tokenRegistry;
+}
 
+// Gets the token balance from a given TitleEscrow.
+async function getTokenBalance(escrowInstance: TitleEscrow) {
+  var result;
+  result = await tokenRegistry["balanceOf(address)"](escrowInstance.address);
+  return result;
+}
 
+// Convert ether to wei.
+function ethToWei(eth: string | number): string {
+  eth = eth.toString()
+  return web3.utils.toWei(eth, 'ether');
+}
+
+// Sends ether from an address to another address.
+async function sendEther(from_address: string, to_address: string, amount_ether: string | number, priv_key: string) {
+  const nonce = await web3.eth.getTransactionCount(from_address, 'latest');
+  const transaction = {
+    'to': to_address,
+    'value': ethToWei(amount_ether),
+    'gas': 5000000,
+    'gasLimit': 5000000,
+    'nonce': nonce,
+  };
+  const signedTx = await web3.eth.accounts.signTransaction(transaction, priv_key);
+  await web3.eth.sendSignedTransaction(signedTx.rawTransaction!, function (error, hash) {
+    if (!error) {
+      console.log("sent " + amount_ether + "ETH" + ", Hash of transaction is: ", hash);
+    }
+    else {
+      console.log("Something went wrong with sendEther transaction:", error)
+    }
+  });
+}
+
+// Used to parse BigNumber, and hex to numberString.
+function parseBigNumber(number: ethers.BigNumber) {
+  return web3.utils.hexToNumberString(number._hex);
+}
+
+// Retrieves tokenPrice and converts to ether amount.
+async function getTokenPrice(escrowInstance: TitleEscrow): Promise<string> {
+  var price = await escrowInstance.getTokenPrice();
+  return web3.utils.fromWei(parseBigNumber(price));
+}
+
+// Retrieves buyBackPrice and converts to ether amount.
+async function getTokenBuyBackPrice(escrowInstance: TitleEscrow): Promise<string> {
+  var buyBackPrice = await escrowInstance.getBuyBackPrice();
+  return web3.utils.fromWei(parseBigNumber(buyBackPrice));
+}
+
+// Retrieves the contract destination address. This is the address where the token transfers to, after payment.
+async function getContractDest(escrowInstance: TitleEscrow): Promise<string> {
+  return await escrowInstance.getcontractDest();
+}
+
+// Gets the deal which includes price, buyBackPrice and the contract destination.
+// It returns an array which contains the three variables.
+async function getTokenDeal(escrowInstance: TitleEscrow) {
+  var deal = await escrowInstance.getTokenDeal();
+  var price = web3.utils.fromWei(parseBigNumber(deal[0]));
+  var buyBackPrice = web3.utils.fromWei(parseBigNumber(deal[1]));
+  var to_addr = deal[2];
+  return [price, buyBackPrice, to_addr];
+}
+
+// Returns the ether balance stored in a TitleEscrow.
+async function getETHBalance(escrowInstance: TitleEscrow) {
+  var balance = (await escrowInstance.getBalance())._hex;
+  return web3.utils.fromWei(balance);
+}
 
 /**************** **************** **************** 
 **************** Main  *******************
+      ** An example of the flow **
 **************** **************** **************** */
 
 async function main() {
@@ -155,200 +244,28 @@ async function main() {
     // Deploys an escrow contract as owner the importer.
     var escrowInstance = await deployImporterEscrow(tokenID);
 
+    console.log("Current owner of token is: " + await ownerOfToken(tokenID));
+    escrowInstance = connectEscrowInstance(escrowInstance.address, importerSigner);
+    console.log("token balance on contract is : " + await getTokenBalance(escrowInstance));
 
-    //var escrowInstance2 = await deployTitleEscrow(financerPublicAddress, financerPublicAddress);
-    console.log("Deployed escrow instance 2");
-    
+    // Sets a deal tokenPrice = 5ETH, buyBackPrice = 7ETH, holder will transfer to financer after payment
+    await escrowInstance.setTokenDeal(ethToWei(5), ethToWei(7), financerPublicAddress);
+    var deal = await getTokenDeal(escrowInstance);
+    console.log("[DEAL] price: ", deal[0], ", buyBackprice: ", deal[1], ", token transferred to: ", deal[2]);
+    console.log("Current Holder: ", await escrowInstance.holder());
+    sendEther(financerPublicAddress, escrowInstance.address, 5, financerPrivateKey);
 
-    console.log("Current owner of token is: " + await tokenRegistry["ownerOf(uint256)"](tokenID));
+    console.log("Current holder", await escrowInstance.holder());
+    sendEther(importerPublicAddress, escrowInstance.address, 7, importerPrivateKey);
 
-      escrowInstance = TitleEscrowFactory.connect(escrowInstance.address, importerSigner);
-      //escrowInstance = TitleEscrowFactory.connect("0x507D2ceA921E20E85cA58aa2AaF09DE65e127db6", importerSigner);
-      console.log("balance: " + await tokenRegistry["balanceOf(address)"](escrowInstance.address));
-
-      console.log(escrowInstance.address);
-      //await escrowInstance.setTokenPrice(5);
-      //await escrowInstance.getTokenPrice().then(x => console.log(x));
-
-      //await tokenRegistry.setTokenPrice(tokenId, 20);
-
-      //console.log(web3.utils.fromWei((await tokenRegistry.getTokenPrice(tokenId)).toString()));
-      //console.log(await tokenRegistry.getTokenPrice(tokenId));
-
-      //console.log(tokenRegistry.address);
-
-      //var blabla = TradeTrustErc721Factory.connect("0x953d45Df76905E92A02b371424C287D5C79353d8", importerSigner);
-      //await blabla["setTokenPrice(uint256,uint256)"](tokenId, 5);
-      
-      //console.log(await blabla["getTokenPrice(uint256)"](tokenId));
-      
-
-      
-
-      /*
-      console.log("transferring");
-      await escrowInstance.transferTo(escrowInstance2.address);
-      console.log("balance: " + await tokenRegistry["balanceOf(address)"](escrowInstance.address));
-      console.log("Current owner of token is: " + await tokenRegistry["ownerOf(uint256)"](tokenId));
-      console.log(await escrowInstance2.holder());
-
-      */
-  
-      //var fs = require('fs');
-      //var erc721 = JSON.parse(fs.readFileSync("../build/contracts/ERC721.json"));
-      //var abi = erc721.abi
-
-      //console.log(abi);
-      
-
-      //var fs = require('fs');
-      //var jsonFile = '../build/contracts/ERC721.json';
-      //var parsed= JSON.parse(fs.readFileSync(jsonFile));
-      //var abi = parsed.abi;
-
-      //const yourContract = new web3.eth.Contract(abi, tokenRegistry.address);
-      
-
-      //var extraData =  await yourContract.methods.setTokenPrice(tokenId, "7");
-
-      //var contract_abi = web3.eth.abi.encodeFunctionSignature("setTokenPrice(uint256,uint256)");
-      //var parameters = web3.eth.abi.encodeParameters(['uint256','uint256'], [tokenId, 3]);
-      
-      //var data_test = web3.eth.abi.encodeFunctionCall(abi, ["1", "2"]);
-      //console.log(data_test);
-
-      /*
-      var extraData = web3.eth.abi.encodeFunctionCall({
-        name: 'setTokenPrice',
-        type: 'function',
-        inputs: [{
-            type: 'uint256',
-            name: 'tokenID'
-        },{
-            type: 'uint256',
-            name: 'price'
-        }]
-    
-      }
-    , ['0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3', '7']);
-    */
-
-  var extraData = web3.eth.abi.encodeFunctionCall({
-    name: 'setTokenPrice',
-    type: 'function',
-    inputs: [{
-        type: 'uint256',
-        name: 'price'
-    }]
-
+    console.log("Current holder", await escrowInstance.holder());
+    console.log("Beneficiary", await escrowInstance.beneficiary());
   }
-, ['7']);
 
-console.log(extraData);
-
-
-    const nonce = await web3.eth.getTransactionCount(financerPublicAddress, 'latest'); 
-
-    const transaction = {
-      'to': escrowInstance.address,
-      'value': 5000000000000000000, // 5 ETH  value: web3.toWei(EtherAmount, 'ether')//EtherAmount=>how much ether you want to move
-      'gas': 5000000, 
-      'gasLimit': 5000000,
-      'nonce': nonce,
-      //'data' : extraData
-      // optional data field to send message or execute smart contract
-     };
-     
-     
-
-      
-       // need to connect AS importer before setting token price
-      escrowInstance = TitleEscrowFactory.connect(escrowInstance.address, importerSigner);
-      
-      
-      
-      await escrowInstance.setTokenDeal(web3.utils.toWei('5','ether'), web3.utils.toWei('7','ether'), financerPublicAddress);
-      console.log("Token price is: ", await escrowInstance.getTokenPrice());
-
-      let bal = (await escrowInstance.getBalance())._hex;
-      console.log(web3.utils.fromWei(bal));
-
-    
-
-
-      console.log(await escrowInstance.getTokenDeal());
-      const signedTx = await web3.eth.accounts.signTransaction(transaction, "5da13d12265521d67dc19146cc23ea51f65885a43b14d54a69a77262dee71291");
-     
-      
-      console.log("HOLDER", await escrowInstance.holder());
-      await web3.eth.sendSignedTransaction(signedTx.rawTransaction!, function(error, hash) {
-          if (!error) {
-            console.log("The hash of your transaction is: ", hash);
-          } else {
-            console.log("Something went wrong while submitting your transaction:", error)
-          }
-         });
-
-
-
-         console.log("HOLDER", await escrowInstance.holder());
-
-         escrowInstance = TitleEscrowFactory.connect(escrowInstance.address, financerSigner);
-
-
-
-
-         const nonce2 = await web3.eth.getTransactionCount(importerPublicAddress, 'latest'); 
-
-         const transaction2 = {
-           'to': escrowInstance.address,
-           'value': 7000000000000000000, // 7 ETH  value: web3.toWei(EtherAmount, 'ether')//EtherAmount=>how much ether you want to move
-           'gas': 5000000, 
-           'gasLimit': 5000000,
-           'nonce': nonce2,
-           //'data' : extraData
-           // optional data field to send message or execute smart contract
-          };
-
-
-          const signedTx2 = await web3.eth.accounts.signTransaction(transaction2, "7b7201b55d3942b2939048e08d2a1fe793f3ee4e79045a34d6b3354265a9aa8b");
-
-         await web3.eth.sendSignedTransaction(signedTx2.rawTransaction!, function(error, hash) {
-          if (!error) {
-            console.log("The hash of your transaction is: ", hash);
-          } else {
-            console.log("Something went wrong while submitting your transaction:", error)
-          }
-         });
-
-         console.log("BOUGHT AGAIN");
-         console.log("HOLDER", await escrowInstance.holder());
-         console.log("Beneficiary", await escrowInstance.beneficiary());
-
-         
-
-
-     
-         
-
-      
-      
-     
- 
- 
-       
-
-    }
-  
-
-    
-  
   catch (e) {
     console.log(e);
   }
 }
-
-
 
 main();
 

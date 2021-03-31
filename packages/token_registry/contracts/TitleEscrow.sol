@@ -119,6 +119,10 @@ contract TitleEscrow is Context, ITitleEscrow, HasNamedBeneficiary, HasHolder, E
     return buyBackPrice;
   }
 
+  function getContractDest() public view returns (address) {
+    return contractDest;
+  }
+
   function getBalance() public view returns (uint256) {
     return address(this).balance;
   }
