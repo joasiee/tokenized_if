@@ -7,8 +7,8 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Install node/npm/yarn
-        command: |
+          name: Install node/npm/yarn
+          command: |
           sudo apt update
           sudo apt install nodejs npm
           npm install -g yarn
