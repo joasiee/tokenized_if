@@ -1,13 +1,11 @@
-version: "2.1"
-orbs:
-  node: circleci/node@4.2.0
-  docker: circleci/docker@1.5.0
+version: 2
 jobs:
-  build_test:
-    docker:
-      - image: cimg/node:15.11.0
+  build:
+    machine: true
+    working_directory: ~/repo
     steps:
       - checkout
+      - run: curl -o- -L https://yarnpkg.com/install.sh | bash
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -20,16 +18,4 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run:
-          name: Build Packages
-          command: yarn lerna run build
-      - run:
-          name: Build Main
-          command: yarn build
-      - run:
-          name: Run all CI tests
-          command: yarn lerna run test
-workflows:
-  test_my_app:
-    jobs:
-      - build_test
+      - run: cd packages/baseline && make start
