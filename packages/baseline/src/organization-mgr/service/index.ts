@@ -70,10 +70,10 @@ export class OrganizationsService {
     logger.debug(`Trying to add organization ${org.getName()} to registry ${registry.getName()}`);
     try {
       const model: orgregistry.IOrgRegistry = await orgregistry.db.findOne({ name: registry.getName() });
-      let contract: OrgRegistryContract = getContract(
+      let contract: OrgRegistryContract = (await getContract(
         registry.getAddress(),
         config.CONTRACTS.ORG_REGISTRY
-      ) as OrgRegistryContract;
+      )) as OrgRegistryContract;
       // do not add if org is already added locally.
       if (model.orgsList.some((x) => x.name === org.getName())) {
         const msg = `Registry already contains org: ${org.getName()}`;
@@ -110,10 +110,10 @@ export class OrganizationsService {
     logger.debug(`Trying to add workgroup ${workgroup.getName()} to registry ${registry.getName()}`);
     try {
       const model: orgregistry.IOrgRegistry = await orgregistry.db.findOne({ name: registry.getName() });
-      let contract: OrgRegistryContract = getContract(
+      let contract: OrgRegistryContract = (await getContract(
         registry.getAddress(),
         config.CONTRACTS.ORG_REGISTRY
-      ) as OrgRegistryContract;
+      )) as OrgRegistryContract;
       if (model.groupsList.some((x) => x.name === workgroup.getName())) {
         const msg = `Registry already contains group: ${workgroup.getName()}`;
         logger.debug(msg);

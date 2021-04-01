@@ -27,10 +27,10 @@ export async function updateRegistry(registry: orgregistry.IOrgRegistry): Promis
     await registry.deleteOne();
     return false;
   }
-  const contract: OrgRegistryContract = getContract(
+  const contract: OrgRegistryContract = (await getContract(
     registry.address,
     config.CONTRACTS.ORG_REGISTRY
-  ) as OrgRegistryContract;
+  )) as OrgRegistryContract;
   registry.orgsList = await getOrgs(contract);
   registry.groupsList = await getGroups(contract);
   await registry.save();
@@ -83,7 +83,7 @@ async function getGroups(contract: OrgRegistryContract): Promise<Workgroup.AsObj
  * @param registry
  */
 async function registerCallbacks(registry: orgregistry.IOrgRegistry) {
-  const contract = getContract(registry.address, config.CONTRACTS.ORG_REGISTRY);
+  const contract = await getContract(registry.address, config.CONTRACTS.ORG_REGISTRY);
   contract.on("RegisterOrg", async function (name, address, msgUrl, msgKey, zkpKey, metadata, event) {
     const data = {
       orgAddress: address,
