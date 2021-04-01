@@ -35,17 +35,19 @@ export async function deployContract(contract: string, args: any[]): Promise<Con
  * @param contract contract json name
  * @returns {@link Contract}
  */
-export function getContract(address: string, contract: string): Contract {
+export async function getContract(address: string, contract: string): Promise<Contract> {
   const filePath = path.join(config.APP_ROOT, "dist", "artifacts", contract);
   try {
     if (fs.existsSync(filePath)) {
-      const contract = require(filePath);
-      return new Contract(address, contract.abi, wallet);
+      const contract = new Contract(address, require(filePath).abi, wallet);
+      await contract.deployed();
+      return contract;
     } else {
       logger.debug(`File does not exist at: ${filePath}`);
     }
   } catch (err) {
-    logger.error(`Could not get contract at: ${filePath}, error: ${err}`);
+    logger.debug(`Could not get contract at: ${filePath}, error: ${err}`);
+    return Promise.reject(err);
   }
 }
 

@@ -31,9 +31,25 @@ describe("Blockchain Manager", function () {
   });
 
   describe("Contracts", function () {
-    describe("deployContract", function () {
-      it("should deploy erc1820 contract", async function () {
-        const contract = await deployContract(config.CONTRACTS.ERC_1820, []);
+    it("should deploy erc1820 contract", async function () {
+      const contract = await deployContract(config.CONTRACTS.ERC_1820, []);
+      expect(await isDeployed(contract.address)).to.be.true;
+    });
+    it("should get deployed contract at address", async function () {
+      const contract = await deployContract(config.CONTRACTS.ERC_1820, []);
+      const contract2 = await getContract(contract.address, config.CONTRACTS.ERC_1820);
+      expect(contract.address).to.eq(contract2.address);
+      expect(contract.interface).to.deep.eq(contract2.interface);
+    });
+    it("should not get deployed contract using wrong interface", async function () {
+      const contract = await deployContract(config.CONTRACTS.ERC_1820, []);
+      const contract2 = await getContract(contract.address, config.CONTRACTS.ORG_REGISTRY);
+      expect(contract.address).to.eq(contract2.address);
+      expect(contract.interface).to.not.deep.eq(contract2.interface);
+    });
+    it("should not get contract for non existent address", function () {
+      getContract("0xe78f4e45e2b2518b9af85f16b814ddd66b1d053f", config.CONTRACTS.ORG_REGISTRY).catch(function (err) {
+        expect(err.reason).to.eq("contract not deployed");
       });
     });
   });

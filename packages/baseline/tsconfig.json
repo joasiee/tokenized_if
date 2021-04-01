@@ -10,7 +10,7 @@
     "resolveJsonModule": true,
     "typeRoots": ["./node_modules/@types"]
   },
-  "exclude": ["dist", "truffle", "tests"],
+  "exclude": ["dist", "truffle", "tests", "ops"],
   "references": [
     {
       "path": "../shared"
