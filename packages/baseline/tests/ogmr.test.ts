@@ -71,7 +71,7 @@ describe("Organization Manager", function () {
     });
   });
 
-  // close db connection
+  // close db connection.
   after(function () {
     dbClose();
   });
