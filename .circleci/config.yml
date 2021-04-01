@@ -20,11 +20,10 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+            - node_modules
       - run:
           name: Build all packages
           command: yarn build
       - run:
           name: Run all CI tests
           command: yarn lerna run test
-      - store_test_results:
-          path: test-results

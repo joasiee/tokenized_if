@@ -3,7 +3,12 @@ import { IOrganizationsServer } from "@tokenized_if/shared/src/proto/organizatio
 import { OrgRegistry, AddOrgRequest, AddGroupRequest } from "@tokenized_if/shared/src/proto/organizations_pb";
 import { OrganizationsService } from "../service";
 
-const service = new OrganizationsService();
+let service: OrganizationsService;
+
+export async function initServer() {
+  service = new OrganizationsService();
+  await service.init();
+}
 
 /**
  * RPC server, implements interface from generated protobuf in {@link IOrganizationsServer}.
