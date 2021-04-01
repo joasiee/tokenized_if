@@ -1,11 +1,13 @@
 version: 2
+orbs:
+  - git-shallow-clone: guitarrapc/git-shallow-clone@2.0.3
 jobs:
   build:
     machine:
       image: ubuntu-2004:202101-01
     working_directory: ~/repo
     steps:
-      - checkout
+      - git-shallow-clone/checkout
       - run: sudo apt update && sudo apt install nodejs npm -y && npm install -g yarn
       - restore_cache:
           name: Restore Yarn Package Cache
