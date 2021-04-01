@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="6.4460" tests="14" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-04-01T19:10:54" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Blockchain Manager" timestamp="2021-04-01T19:10:54" tests="0" file="/home/joasiee/projects/tokenized_if/packages/baseline/tests/bmgr.test.ts" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="HD Wallet" timestamp="2021-04-01T19:10:54" tests="3" file="/home/joasiee/projects/tokenized_if/packages/baseline/tests/bmgr.test.ts" time="0.1240" failures="0">
+    <testcase name="Blockchain Manager HD Wallet should not return wallet with master mnemonic" time="0.0290" classname="should not return wallet with master mnemonic">
+    </testcase>
+    <testcase name="Blockchain Manager HD Wallet should return new wallets on updateWallet" time="0.0540" classname="should return new wallets on updateWallet">
+    </testcase>
+    <testcase name="Blockchain Manager HD Wallet should return similar wallets when no update is issued" time="0.0410" classname="should return similar wallets when no update is issued">
+    </testcase>
+  </testsuite>
+  <testsuite name="Contracts" timestamp="2021-04-01T19:10:54" tests="4" file="/home/joasiee/projects/tokenized_if/packages/baseline/tests/bmgr.test.ts" time="0.0520" failures="0">
+    <testcase name="Blockchain Manager Contracts should deploy erc1820 contract" time="0.0180" classname="should deploy erc1820 contract">
+    </testcase>
+    <testcase name="Blockchain Manager Contracts should get deployed contract at address" time="0.0160" classname="should get deployed contract at address">
+    </testcase>
+    <testcase name="Blockchain Manager Contracts should not get deployed contract using wrong interface" time="0.0170" classname="should not get deployed contract using wrong interface">
+    </testcase>
+    <testcase name="Blockchain Manager Contracts should not get contract for non existent address" time="0.0010" classname="should not get contract for non existent address">
+    </testcase>
+  </testsuite>
+  <testsuite name="Organization Manager" timestamp="2021-04-01T19:10:55" tests="0" file="/home/joasiee/projects/tokenized_if/packages/baseline/tests/ogmr.test.ts" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Mongoose models" timestamp="2021-04-01T19:11:00" tests="3" file="/home/joasiee/projects/tokenized_if/packages/baseline/tests/ogmr.test.ts" time="0.1030" failures="0">
+    <testcase name="Organization Manager Mongoose models should add registry with no groups or orgs" time="0.0590" classname="should add registry with no groups or orgs">
+    </testcase>
+    <testcase name="Organization Manager Mongoose models should add registry with orgs and groups" time="0.0250" classname="should add registry with orgs and groups">
+    </testcase>
+    <testcase name="Organization Manager Mongoose models should contruct protobuf from model" time="0.0190" classname="should contruct protobuf from model">
+    </testcase>
+  </testsuite>
+  <testsuite name="Organization service" timestamp="2021-04-01T19:11:00" tests="4" file="/home/joasiee/projects/tokenized_if/packages/baseline/tests/ogmr.test.ts" time="6.1670" failures="0">
+    <testcase name="Organization Manager Organization service should deploy registry" time="0.4650" classname="should deploy registry">
+    </testcase>
+    <testcase name="Organization Manager Organization service should add organization to deployed registry" time="0.3090" classname="should add organization to deployed registry">
+    </testcase>
+    <testcase name="Organization Manager Organization service should add workgroup to deployed registry" time="0.1750" classname="should add workgroup to deployed registry">
+    </testcase>
+    <testcase name="Organization Manager Organization service should refresh from on chain data correctly" time="5.2180" classname="should refresh from on chain data correctly">
+    </testcase>
+  </testsuite>
+</testsuites>
