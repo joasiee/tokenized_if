@@ -4,6 +4,7 @@ import { config } from "../src/config";
 
 import { HDWallet } from "../src/blockchain-mgr";
 import { deployContract, getContract, isDeployed } from "../src/blockchain-mgr";
+import { Contract } from "ethers";
 
 describe("Blockchain Manager", function () {
   describe("HD Wallet", function () {
@@ -31,18 +32,19 @@ describe("Blockchain Manager", function () {
   });
 
   describe("Contracts", function () {
+    let contract: Contract;
+    before(async function () {
+      contract = await deployContract(config.CONTRACTS.ERC_1820, []);
+    });
     it("should deploy erc1820 contract", async function () {
-      const contract = await deployContract(config.CONTRACTS.ERC_1820, []);
       expect(await isDeployed(contract.address)).to.be.true;
     });
     it("should get deployed contract at address", async function () {
-      const contract = await deployContract(config.CONTRACTS.ERC_1820, []);
       const contract2 = await getContract(contract.address, config.CONTRACTS.ERC_1820);
       expect(contract.address).to.eq(contract2.address);
       expect(contract.interface).to.deep.eq(contract2.interface);
     });
     it("should not get deployed contract using wrong interface", async function () {
-      const contract = await deployContract(config.CONTRACTS.ERC_1820, []);
       const contract2 = await getContract(contract.address, config.CONTRACTS.ORG_REGISTRY);
       expect(contract.address).to.eq(contract2.address);
       expect(contract.interface).to.not.deep.eq(contract2.interface);

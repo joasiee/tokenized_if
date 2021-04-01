@@ -13,22 +13,6 @@ const schemaFields: Record<keyof Organization.AsObject, any> = {
 
 // instantiate schema, interface and model
 export const schema = new Schema(schemaFields);
-export interface IOrganization extends Organization.AsObject, Document {}
-export const db = model<IOrganization>("Organization", schema);
-
-/**
- * Converts mongoose model to protobuf class.
- * @param model
- * @returns
- */
-export function fromModel(model: IOrganization): Organization {
-  return new Organization()
-    .setName(model.name)
-    .setAddress(model.address)
-    .setMsgurl(model.msgurl)
-    .setMsgkey(model.msgkey)
-    .setZkpkey(model.zkpkey);
-}
 
 /**
  * Converts data from smart contract to protobuf class.

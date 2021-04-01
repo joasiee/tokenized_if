@@ -20,10 +20,7 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
-          name: Build Packages
-          command: yarn lerna run build
-      - run:
-          name: Build Main
+          name: Build all packages
           command: yarn build
       - run:
           name: Run all CI tests

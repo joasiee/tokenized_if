@@ -18,7 +18,6 @@ npm install -g node-gyp
 In root folder:
 
 ```
-cp packages/baseline/.env.example packages/baseline/.env
 yarn
 yarn build
 make start
