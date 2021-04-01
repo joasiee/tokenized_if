@@ -27,4 +27,4 @@ jobs:
           name: Run all CI tests
           command: yarn lerna run test
       - store_test_results:
-          path: tests
+          path: test-results
