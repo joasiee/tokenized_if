@@ -1,9 +1,9 @@
 import { utils } from "ethers";
 import { OrgRegistry, Organization, Workgroup } from "@tokenized_if/shared/src/proto/organizations_pb";
-import { dbConnect, getLogger } from "@tokenized_if/shared";
+import { dbConnect, getLogger, dbClose } from "@tokenized_if/shared";
 import { deployContract, getContract } from "../../blockchain-mgr";
-import { orgregistry } from "../db/models";
-import { updateDB, updateRegistry } from "../db/util";
+import { orgregistry } from "../db";
+import { DBSync } from "./dbsync";
 import { config } from "../../config";
 import { OrgRegistry as OrgRegistryContract } from "../../../dist/typechain/OrgRegistry";
 
@@ -13,12 +13,22 @@ const logger = getLogger("org-service");
  * Service for {@link OrganizationsServer}.
  */
 export class OrganizationsService {
+  private dbsync: DBSync = new DBSync();
+
   /**
    * Connect to local mongodb, update previously stored registries.
    */
   async init() {
     await dbConnect(process.env.OMGR_DATABASE_USER, process.env.OMGR_DATABASE_PASSWORD, process.env.OMGR_DATABASE_NAME);
-    await updateDB();
+    await this.dbsync.updateDB();
+  }
+
+  /**
+   * Shutdown service.
+   */
+  shutdown() {
+    this.dbsync.shutdown();
+    dbClose();
   }
 
   /**
@@ -30,10 +40,10 @@ export class OrganizationsService {
   async getRegistry(registry: OrgRegistry): Promise<OrgRegistry> {
     logger.debug(`Checking if registry ${registry.getName()} exists.`);
     if (await orgregistry.db.exists({ name: registry.getName() })) {
-      return Promise.resolve(orgregistry.fromModel(await orgregistry.db.findOne({ name: registry.getName() })));
+      return orgregistry.fromModel(await orgregistry.db.findOne({ name: registry.getName() }));
     }
     const model = await orgregistry.db.create(registry.toObject());
-    if (await updateRegistry(model)) {
+    if (await this.dbsync.updateRegistry(model)) {
       return orgregistry.fromModel(await orgregistry.db.findOne({ name: registry.getName() }));
     }
     return Promise.reject(`Registry with name ${registry.getName()} not in local db.`);

@@ -96,4 +96,5 @@ export async function dbConnect(user: string, pwd: string, db: string) {
 export function dbClose() {
   logger.info("Closing db connection.");
   conn.close();
+  mongoose.disconnect();
 }

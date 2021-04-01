@@ -27,7 +27,7 @@ export function fromContract(group: {
 }) {
   return new Workgroup()
     .setName(utils.parseBytes32String(group.name))
-    .setTokenaddress(group.tokenAddress)
-    .setShieldaddress(group.shieldAddress)
-    .setVerifieraddress(group.verifierAddress);
+    .setTokenaddress(group.tokenAddress.toLowerCase())
+    .setShieldaddress(group.shieldAddress.toLowerCase())
+    .setVerifieraddress(group.verifierAddress.toLowerCase());
 }

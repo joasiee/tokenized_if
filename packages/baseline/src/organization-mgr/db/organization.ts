@@ -29,7 +29,7 @@ export function fromContract(org: {
 }): Organization {
   return new Organization()
     .setName(utils.parseBytes32String(org.name))
-    .setAddress(org.orgAddress)
+    .setAddress(org.orgAddress.toLowerCase())
     .setMsgurl(utils.toUtf8String(org.messagingEndpoint))
     .setMsgkey(utils.toUtf8String(org.whisperKey))
     .setZkpkey(utils.toUtf8String(org.zkpPublicKey));
