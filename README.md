@@ -20,7 +20,6 @@ In root folder:
 ```
 yarn
 yarn build
-make start
 yarn start:baseline
 yarn start:api
 ```
