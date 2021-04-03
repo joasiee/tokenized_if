@@ -1,13 +1,5 @@
 {
   "files": [],
-  "references": [
-    {
-      "path": "packages/baseline"
-    },
-    {
-      "path": "packages/tokenized_if"
-    }
-  ],
   "exclude": [
     "legacy/**/*",
     "ops/**/*"

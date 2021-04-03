@@ -1,7 +1,9 @@
 {
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/tokenized_if/*",
+    "packages/messaging/*",
+    "packages/basline/*"
   ],
   "scripts": {
     "ts:build": "tsc --build",
@@ -12,7 +14,9 @@
     "postinstall": "update-ts-references"
   },
   "devDependencies": {
+    "lerna": "^4.0.0",
     "typescript": "^4.2.3",
     "update-ts-references": "^2.0.0"
-  }
+  },
+  "name": "tokenized_if"
 }
