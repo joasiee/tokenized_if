@@ -7,6 +7,6 @@ const apiRouter = express.Router();
 apiRouter.get("/organizations", OrganizationController.getAll);
 
 // Workflow Routes
-apiRouter.use("/workflows", WorkflowController.getAll);
+apiRouter.get("/workflows", WorkflowController.getAll);
 
 export default apiRouter;
