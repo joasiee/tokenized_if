@@ -15,7 +15,7 @@ var tokenRegistry: TradeTrustErc721;
 var titleEscrowFactory: TitleEscrowCreator;
 
 // Setting up ganache connections
-const ganacheURL = "http://172.19.16.1:7545";
+const ganacheURL = "http://172.30.64.1:7545";
 const provider = new providers.JsonRpcProvider(ganacheURL);
 var web3 = new Web3(new Web3.providers.HttpProvider(ganacheURL));
 
@@ -29,8 +29,8 @@ var importerPublicAddress: string;
 var financerPublicAddress: string;
 
 // Private keys
-var importerPrivateKey = "7b7201b55d3942b2939048e08d2a1fe793f3ee4e79045a34d6b3354265a9aa8b";
-var financerPrivateKey = "5da13d12265521d67dc19146cc23ea51f65885a43b14d54a69a77262dee71291";
+var importerPrivateKey = "deb457fd9ead02fba320d3c8db3b14fa7df0eb8fa2401ad82531ebce3b218e8c";
+var financerPrivateKey = "15b2027cc808d97e3c9b0be3db579fd6c3a64ee3e7ae53446f8060b46cf27f68";
 
 // tokenId, should be the hash of the document.
 const tokenID = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
@@ -273,6 +273,25 @@ export async function getETHBalance(escrowInstance: TitleEscrow) {
   return web3.utils.fromWei(balance);
 }
 
+
+/**
+ * Sends a release by sending the token back to the token registry.
+ */
+export async function sendRelease(escrowInstance: TitleEscrow) {
+  await escrowInstance.transferTo(tokenRegistry.address);
+  console.log("Sending release");
+}
+
+/**
+ * Calls the destroy Token function from the token registry contract.
+ * New owner will be 0x000000000000000000000000000000000000dEaD.
+ * @param tokenID The token ID to burn
+ */
+export async function burnToken(tokenID: ethers.BigNumberish) {
+  await tokenRegistry["destroyToken(uint256)"](tokenID);
+  console.log("Token burned, owner of token is: " + await ownerOfToken(tokenID));
+}
+
 /**************** **************** **************** 
 **************** Main  *******************
       ** An example of the flow **
@@ -296,12 +315,20 @@ async function main() {
     console.log("[DEAL] price: ", deal[0], ", buyBackprice: ", deal[1], ", token transferred to: ", deal[2]);
     console.log("Current Holder: ", await escrowInstance.holder());
     sendEther(financerPublicAddress, escrowInstance.address, 5, financerPrivateKey);
-
     console.log("Current holder", await escrowInstance.holder());
     sendEther(importerPublicAddress, escrowInstance.address, 7, importerPrivateKey);
 
     console.log("Current holder", await escrowInstance.holder());
     console.log("Beneficiary", await escrowInstance.beneficiary());
+
+    console.log("Current owner of token is: " + await ownerOfToken(tokenID));
+    await sendRelease(escrowInstance);
+    console.log("token balance on contract is : " + await getTokenBalance(escrowInstance));
+    console.log("Current owner of token is: " + await ownerOfToken(tokenID));
+
+    // Important to connect to token registry as LSP to call burnToken!! And use await.
+    connectTokenRegistry(tokenRegistry.address, LSPSigner);
+    await burnToken(tokenID);
   }
 
   catch (e) {
