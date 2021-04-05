@@ -9,7 +9,14 @@
     },
     {
       "path": "packages/tokenized_if"
+    },
+    {
+      "path": "packages/tradetrust"
     }
   ],
-  "exclude": ["legacy/**/*", "ops/**/*"]
+  "exclude": [
+    "legacy/**/*",
+    "ops/**/*",
+    "node_modules/**/*"
+  ]
 }
