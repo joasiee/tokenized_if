@@ -16,7 +16,7 @@ services:
 
   mongo:
     container_name: mongo
-    image: mongo:latest
+    image: mongo
     environment:
       MONGO_INITDB_ROOT_DATABASE: root-db
     volumes:
@@ -27,6 +27,12 @@ services:
         max-size: 10m
     ports:
       - 27117:27017
+
+  nats:
+    container_name: nats
+    image: nats
+    ports:
+      - 4222:4222
 
   mongo-express:
     image: mongo-express

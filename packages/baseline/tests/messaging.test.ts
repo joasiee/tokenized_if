@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import "mocha";
 
-import { createMessagingClient } from "../src";
-import { IMessagingClient, IMessagingClientConfig } from "../src/interfaces";
+import { createMessagingClient } from "../src/messaging";
+import { IMessagingClient, IMessagingClientConfig } from "../src/messaging";
 
 const config: IMessagingClientConfig = { serverUrl: "nats://localhost:4222" };
 
@@ -57,19 +57,13 @@ describe("messaging service", function () {
       }
     };
 
-    beforeEach(
-      "create clean messaging client for each test",
-      async function () {
-        client = createMessagingClient(config);
-        await client.connect();
-      }
-    );
-    afterEach(
-      "close connection of messaging client after each test",
-      async function () {
-        await client.disconnect();
-      }
-    );
+    beforeEach("create clean messaging client for each test", async function () {
+      client = createMessagingClient(config);
+      await client.connect();
+    });
+    afterEach("close connection of messaging client after each test", async function () {
+      await client.disconnect();
+    });
 
     it("receives published messages without payload", async function () {
       const sub = client.subscribe(subject);
@@ -147,19 +141,13 @@ describe("messaging service", function () {
     let client: IMessagingClient;
     const subject = "increment";
 
-    beforeEach(
-      "create clean messaging client for each test",
-      async function () {
-        client = createMessagingClient(config);
-        await client.connect();
-      }
-    );
-    afterEach(
-      "close connection of messaging client after each test",
-      async function () {
-        await client.disconnect();
-      }
-    );
+    beforeEach("create clean messaging client for each test", async function () {
+      client = createMessagingClient(config);
+      await client.connect();
+    });
+    afterEach("close connection of messaging client after each test", async function () {
+      await client.disconnect();
+    });
 
     it("replies to messages without payload", async function () {
       const rro = client.reply(subject);
@@ -201,10 +189,7 @@ describe("messaging service", function () {
           await r.respond({ num: parseInt(r.payload.str) });
         }
       })();
-      const reply = await client.request<{ str: string }, { num: number }>(
-        subject,
-        { str: "42" }
-      );
+      const reply = await client.request<{ str: string }, { num: number }>(subject, { str: "42" });
       expect(reply.num).to.equal(42);
     });
 
