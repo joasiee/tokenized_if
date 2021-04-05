@@ -28,7 +28,7 @@ export default {
                     type: 'item',
                     role: 'lsp',
                     icon: 'feather icon-user',
-                    url: '/profile'
+                    url: '/lsp/listofgoods'
                 },
                 {
                     id: 'releaserequests',
@@ -36,7 +36,7 @@ export default {
                     type: 'item',
                     role: 'lsp',
                     icon: 'feather icon-user',
-                    url: '/profile'
+                    url: '/lsp/releaserequests'
                 },
 
             ]
@@ -54,7 +54,7 @@ export default {
                     role: 'imp',
                     type: 'item',
                     icon: 'feather icon-user',
-                    url: '/profile'
+                    url: '/imp/overview'
                 },
                 {
                     id: 'tokenize',
@@ -62,7 +62,7 @@ export default {
                     role: 'imp',
                     type: 'item',
                     icon: 'feather icon-user',
-                    url: '/profile'
+                    url: '/imp/announce'
                 },
                 {
                     id: 'impwallet',
@@ -70,7 +70,7 @@ export default {
                     role: 'imp',
                     type: 'item',
                     icon: 'feather icon-user',
-                    url: '/profile'
+                    url: '/imp/wallet'
                 },
 
             ]
@@ -88,7 +88,7 @@ export default {
                     role: 'fin',
                     type: 'item',
                     icon: 'feather icon-user',
-                    url: '/profile'
+                    url: '/fin/overview'
                 },
                 {
                     id: 'fintokens',
@@ -96,7 +96,7 @@ export default {
                     role: 'fin',
                     type: 'item',
                     icon: 'feather icon-user',
-                    url: '/profile'
+                    url: '/fin/tokens'
                 },
                 {
                     id: 'finwallet',
@@ -104,7 +104,7 @@ export default {
                     title: 'Wallet of financier',
                     type: 'item',
                     icon: 'feather icon-user',
-                    url: '/profile',
+                    url: '/fin/wallet',
                     classes: "nav-item"
                 },
 
