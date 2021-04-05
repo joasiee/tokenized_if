@@ -6,6 +6,8 @@ class OfferController {
   }
 
   post(req: express.Request, res: express.Response) {
+    // Deploy escrow
+    //
     res.status(201).send({});
   }
 }

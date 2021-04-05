@@ -10,7 +10,6 @@ export interface Offer {
 }
 
 export interface AcceptOffer {
-    financer: string,
     cargoHash: string,
 }
 

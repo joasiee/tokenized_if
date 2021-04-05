@@ -25,4 +25,4 @@ export const addParticipant = async function (dco: CreateParticipant) :Promise<P
     const values = [dco.name, dco.address];
     const { rows } = await pool.query("INSERT INTO participant(name, address) VALUES ($1, $2) returning *", values);
     return mapToParticipant(rows[0]);
-}
+};

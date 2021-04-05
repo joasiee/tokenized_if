@@ -3,7 +3,7 @@
   "workspaces": [
     "packages/tokenized_if/*",
     "packages/messaging/*",
-    "packages/basline/*"
+    "packages/baseline/*"
   ],
   "scripts": {
     "ts:build": "tsc --build",

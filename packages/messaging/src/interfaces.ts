@@ -6,6 +6,8 @@ export interface IMessagingClientConfig {
   serverUrl: string;
   /** Optional NKey seed (private key) */
   seed?: string;
+  /** Optional username */
+  user?: string;
 }
 
 /**
@@ -13,6 +15,7 @@ export interface IMessagingClientConfig {
  */
 export interface ReceivedMessage<T> {
   subject: string;
+  user?: string;
   payload?: T;
 }
 

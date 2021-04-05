@@ -6,11 +6,23 @@ import {
 } from "./interfaces";
 import {
   connect,
+  headers,
   JSONCodec,
+  MsgHdrs,
   NatsConnection,
   nkeyAuthenticator,
   Subscription,
 } from "nats";
+
+/**
+ * Returns a new {@link MessagingClient}
+ * @param config Optional configuration object
+ */
+export function createMessagingClient(
+  config?: IMessagingClientConfig
+): IMessagingClient {
+  return new MessagingClient(config);
+}
 
 /**
  * Implementations of {@link IMessagingClient} using NATS
@@ -18,15 +30,23 @@ import {
 export class MessagingClient implements IMessagingClient {
   private readonly url = process.env.NATS_URL;
   private readonly seed?: Uint8Array;
+  private readonly username: string;
+  private readonly headers? : MsgHdrs;
 
   private nc: NatsConnection;
   private subscriptions = new Map<string, Subscription>();
+
 
   constructor(config?: IMessagingClientConfig) {
     if (config) {
       this.url = config.serverUrl;
       if (config.seed) {
         this.seed = new TextEncoder().encode(config.seed);
+      }
+      if(config.user) {
+        this.username = config.user;
+        this.headers = headers();
+        this.headers.append("user", this.username);
       }
     }
   }
@@ -76,8 +96,14 @@ export class MessagingClient implements IMessagingClient {
     this.subscriptions.set(subject, sub);
     const jc = JSONCodec<T>();
     for await (const m of sub) {
+      if (m.headers) {
+        for (const [key, value] of m.headers) {
+          console.log(`${key}=${value}`);
+        }
+      }
       yield {
         subject: m.subject,
+        ...(m.headers?.has("user") && { user: m.headers.get("user")}),
         ...(m.data.length && { payload: jc.decode(m.data) }),
       };
     }
@@ -88,7 +114,8 @@ export class MessagingClient implements IMessagingClient {
     const jc = JSONCodec<T>();
     this.nc?.publish(
       subject,
-      payload !== undefined ? jc.encode(payload) : undefined
+      payload !== undefined ? jc.encode(payload) : undefined,
+      { headers: this.headers }
     );
     await this.nc.flush();
   }
@@ -105,7 +132,7 @@ export class MessagingClient implements IMessagingClient {
       const reply = await this.nc?.request(
         subject,
         payload !== undefined ? jci.encode(payload) : undefined,
-        { timeout: timeout }
+        { timeout: timeout, headers: this.headers }
       );
       return jco.decode(reply.data);
     } catch (err) {
@@ -129,6 +156,7 @@ export class MessagingClient implements IMessagingClient {
     for await (const m of sub) {
       yield {
         subject: m.subject,
+        ...(m.headers?.has("user") && { user: m.headers.get("user")}),
         ...(m.data.length && { payload: jci.decode(m.data) }),
         // Return a closure instead of function directly
         // to enforce respond being called once
@@ -137,7 +165,7 @@ export class MessagingClient implements IMessagingClient {
           return (response: O) => {
             if (!executed) {
               executed = true;
-              m.respond(jco.encode(response));
+              m.respond(jco.encode(response), { headers: this.headers });
             }
             return Promise.resolve();
           };
