@@ -11,58 +11,32 @@ import { TitleEscrow } from "./contracts/TitleEscrow";
 import Web3 from "web3";
 
 
-
-class token_manager {
-  constructor() {
+class TokenManager {
+  provider: providers.JsonRpcProvider;
+  web3: Web3;
+  signer: Wallet;
+  private_key: string;
+  constructor(ganache_url:string, private_key:string) {
+    this.provider = new providers.JsonRpcProvider(ganache_url);
+    this.web3 = new Web3(new Web3.providers.HttpProvider(ganache_url));
+    this.signer = new Wallet(private_key, this.provider);
+    this.private_key = private_key;
   }
 
 // Variables
 tokenRegistry!: TradeTrustErc721;
 
-// Setting up ganache connections
- ganacheURL = "http://172.30.64.1:7545";
- provider = new providers.JsonRpcProvider(this.ganacheURL);
-web3 = new Web3(new Web3.providers.HttpProvider(this.ganacheURL));
-
-// Signers, abstraction of ethereum account to sign messages/transactions.
- LSPSigner = this.provider.getSigner(0);
- importerSigner = this.provider.getSigner(1);
- financerSigner = this.provider.getSigner(2);
-
-// Public addresses for importer and financer.
-importerPublicAddress!: string;
-financerPublicAddress!: string;
-
-// Private keys
-importerPrivateKey = "deb457fd9ead02fba320d3c8db3b14fa7df0eb8fa2401ad82531ebce3b218e8c";
-financerPrivateKey = "15b2027cc808d97e3c9b0be3db579fd6c3a64ee3e7ae53446f8060b46cf27f68";
-
 // tokenId, should be the hash of the document.
 tokenID = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
 
 // tokenRegistryFactory, used to deploy token registry.
-tokenRegistryFactory = new TradeTrustErc721Factory(this.LSPSigner);
-
-
+tokenRegistryFactory!: TradeTrustErc721Factory;
 
 
 /**************** **************** **************** 
 **************** Useful Functions  *******************
 **************** **************** **************** */
 
-
-/**
-* Sets up public addresses for importer and financer.
-*/
-async setupPublicAddresses() {
-  try {
-    this.importerPublicAddress = await this.importerSigner.getAddress();
-    this.financerPublicAddress = await this.financerSigner.getAddress();
-  }
-  catch (e) {
-    console.log(e);
-  }
-}
 
 /**
 * Printing all accounts from Ganache.
@@ -91,6 +65,7 @@ async getSingleAccount(index: number) {
 */
 async setupTokenRegistry() {
   try {
+    this.tokenRegistryFactory = new TradeTrustErc721Factory(this.signer);
     this.tokenRegistry = await this.tokenRegistryFactory.deploy("MY_TOKEN_REGISTRY", "MTR");
     console.log("Deploying token registry");
   }
@@ -117,7 +92,7 @@ async setupTokenRegistry() {
  async  deployTitleEscrow(beneficiary: string, holder: string) {
   var instance;
   try {
-    const factory = new TitleEscrowFactory(this.LSPSigner);
+    const factory = new TitleEscrowFactory(this.signer);
     instance = await factory.deploy(this.tokenRegistry.address, beneficiary, holder, beneficiary);
     console.log("executing deploy title escrow");
   }
@@ -132,10 +107,10 @@ async setupTokenRegistry() {
 * The LSP deploys the importer escrow contract on the blockchain with importer as owner.
 * A token will de made from the tokenID and placed in this contract.
 */
- async  deployImporterEscrow(tokenID: ethers.BigNumberish): Promise<TitleEscrow> {
+ async  deployImporterEscrow(tokenID: ethers.BigNumberish, importerPublicAddress: string): Promise<TitleEscrow> {
   var escrowInstance;
   try {
-    escrowInstance = await this.deployTitleEscrow(this.importerPublicAddress, this.importerPublicAddress);
+    escrowInstance = await this.deployTitleEscrow(importerPublicAddress, importerPublicAddress);
     if (escrowInstance) {
       await this.createToken(escrowInstance, tokenID);
     }
@@ -297,11 +272,16 @@ async setupTokenRegistry() {
   console.log("Token burned, owner of token is: " + await this.ownerOfToken(tokenID));
 }
 
+getRegistry() {
+  return this.tokenRegistry.address;
+}
+
 /**************** **************** **************** 
 **************** Main  *******************
       ** An example of the flow **
 **************** **************** **************** */
 
+/** 
 async  main() {
   console.log("Running main");
   try {
@@ -340,7 +320,5 @@ async  main() {
     console.log(e);
   }
 }
-
+*/
 }
-
-export var tm= new token_manager();
