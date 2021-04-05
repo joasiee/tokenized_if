@@ -1,6 +1,6 @@
 import express from "express";
 
-class ProposalController {
+class OfferController {
   getAll(req: express.Request, res: express.Response) {
     res.status(200).send([]);
   }
@@ -10,4 +10,4 @@ class ProposalController {
   }
 }
 
-export default new ProposalController();
+export default new OfferController();

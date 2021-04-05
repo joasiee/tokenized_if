@@ -3,6 +3,11 @@ import express from "express";
 import apiRouter from "./routes";
 import { getLogger } from "./logging";
 
+import dotenv from "dotenv";
+
+// Load .env variables in process.env
+dotenv.config();
+
 const port = parseInt(process.env.PORT) || 3000;
 
 const app = express();

@@ -1,9 +1,18 @@
 import express from "express";
-import { Organization } from "../models/organization";
+import { addParticipant, getAllParticipants } from "../db/participant_queries";
+import { CreateParticipant } from "../models/participant";
+import { successMessage } from "./helpers/status";
 
 class OrganizationController {
-  getAll(req: express.Request, res: express.Response) {
-    res.status(200).send([]);
+  async getAll(req: express.Request, res: express.Response) {
+    const participants = await getAllParticipants();
+    res.status(200).send(participants);
+  }
+
+  async post(req: express.Request, res: express.Response) {
+    const participant = await addParticipant(req.body as CreateParticipant)
+    successMessage.data = participant;
+    res.status(201).send(successMessage);
   }
 }
 

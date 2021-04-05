@@ -1,16 +1,17 @@
 import express from "express";
-import { OrganizationController, ProposalController, WorkflowController } from "../controllers";
+import { OrganizationController, OfferController, WorkflowController } from "../controllers";
 
 const apiRouter = express.Router();
 
 // Organization Routes
 apiRouter.get("/organizations", OrganizationController.getAll);
+apiRouter.post("/organizations", OrganizationController.post);
 
 // Workflow Routes
 apiRouter.get("/workflows", WorkflowController.getAll);
 
-// Proposal Routes
-apiRouter.get("/proposals", ProposalController.getAll);
-apiRouter.post("/proposals", ProposalController.post);
+// Offer Routes
+apiRouter.get("/offers", OfferController.getAll);
+apiRouter.post("/offers", OfferController.post);
 
 export default apiRouter;
