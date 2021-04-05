@@ -1,13 +1,13 @@
 import { expect } from "chai";
 import "mocha";
 
-import { createMessagingClient } from "../src/messaging";
-import { IMessagingClient, IMessagingClientConfig } from "../src/messaging";
+import { createMessagingClient } from "../src/message-mgr";
+import { IMessagingClient, IMessagingClientConfig } from "../src/message-mgr";
 
 const config: IMessagingClientConfig = { serverUrl: "nats://localhost:4222" };
 
-describe("messaging service", function () {
-  describe("server connection", function () {
+describe("messaging service", function() {
+  describe("server connection", function() {
     const client = createMessagingClient(config);
     it("is disconnected after initialization", () => {
       expect(client.isConnected()).to.be.false;
@@ -25,16 +25,16 @@ describe("messaging service", function () {
       expect(client.isConnected()).to.be.true;
     });
 
-    after("ensure connection closes", async function () {
+    after("ensure connection closes", async function() {
       await client.disconnect();
     });
   });
 
-  describe("authenticated requests", function () {
+  describe("authenticated requests", function() {
     const authConfig: IMessagingClientConfig = {
       serverUrl: "nats://localhost:4222",
       // DO NOT USE THIS SPECIFIC SEED IN PRODUCTION!!!
-      seed: "SUAKBQLSEALNTLABG6XCLLWHYHIAOFM3HXD6RUHRPQ53GZNZ3MVLTZCZOM",
+      seed: "SUAKBQLSEALNTLABG6XCLLWHYHIAOFM3HXD6RUHRPQ53GZNZ3MVLTZCZOM"
     };
     const client = createMessagingClient(authConfig);
     it("establishes an authenticated connection", async () => {
@@ -42,12 +42,12 @@ describe("messaging service", function () {
       expect(client.isConnected()).to.be.true;
     });
 
-    after("ensure connection closes", async function () {
+    after("ensure connection closes", async function() {
       await client.disconnect();
     });
   });
 
-  describe("publish and subscribe", function () {
+  describe("publish and subscribe", function() {
     let client: IMessagingClient;
     const subject = "time";
 
@@ -57,15 +57,15 @@ describe("messaging service", function () {
       }
     };
 
-    beforeEach("create clean messaging client for each test", async function () {
+    beforeEach("create clean messaging client for each test", async function() {
       client = createMessagingClient(config);
       await client.connect();
     });
-    afterEach("close connection of messaging client after each test", async function () {
+    afterEach("close connection of messaging client after each test", async function() {
       await client.disconnect();
     });
 
-    it("receives published messages without payload", async function () {
+    it("receives published messages without payload", async function() {
       const sub = client.subscribe(subject);
       const iter = returnFirst(sub);
       await client.publish(subject);
@@ -74,7 +74,7 @@ describe("messaging service", function () {
       expect(message.payload).to.be.undefined;
     });
 
-    it("receives published messages with payload (number)", async function () {
+    it("receives published messages with payload (number)", async function() {
       const payload = 42;
       const sub = client.subscribe<number>(subject);
       const iter = returnFirst(sub);
@@ -84,7 +84,7 @@ describe("messaging service", function () {
       expect(message.payload).to.equal(payload);
     });
 
-    it("receives published messages with payload (string)", async function () {
+    it("receives published messages with payload (string)", async function() {
       const payload = "a simple string";
       const sub = client.subscribe<string>(subject);
       const iter = returnFirst(sub);
@@ -94,7 +94,7 @@ describe("messaging service", function () {
       expect(message.payload).to.equal(payload);
     });
 
-    it("receives published messages with payload (object)", async function () {
+    it("receives published messages with payload (object)", async function() {
       const payload = { name: "a value", value: 42 };
       const sub = client.subscribe<{ name; value }>(subject);
       const iter = returnFirst(sub);
@@ -105,7 +105,7 @@ describe("messaging service", function () {
       expect(message.payload.value).to.equal(payload.value);
     });
 
-    it("receives multiple messages in FIFO order", async function () {
+    it("receives multiple messages in FIFO order", async function() {
       const sub = client.subscribe<number>(subject);
       const iter = (async () => {
         const numbers: number[] = [];
@@ -125,7 +125,7 @@ describe("messaging service", function () {
       expect(numbers).deep.equals(payload);
     });
 
-    it("receives no more messages after unsubscribing", async function () {
+    it("receives no more messages after unsubscribing", async function() {
       const sub = client.subscribe(subject);
       const iter = returnFirst(sub);
       await client.unsubscribe(subject);
@@ -137,19 +137,19 @@ describe("messaging service", function () {
     });
   });
 
-  describe("request and reply", function () {
+  describe("request and reply", function() {
     let client: IMessagingClient;
     const subject = "increment";
 
-    beforeEach("create clean messaging client for each test", async function () {
+    beforeEach("create clean messaging client for each test", async function() {
       client = createMessagingClient(config);
       await client.connect();
     });
-    afterEach("close connection of messaging client after each test", async function () {
+    afterEach("close connection of messaging client after each test", async function() {
       await client.disconnect();
     });
 
-    it("replies to messages without payload", async function () {
+    it("replies to messages without payload", async function() {
       const rro = client.reply(subject);
       void (async () => {
         for await (const r of rro) {
@@ -160,7 +160,7 @@ describe("messaging service", function () {
       expect(reply).to.equal(1);
     });
 
-    it("replies to messages with payload (number)", async function () {
+    it("replies to messages with payload (number)", async function() {
       const rro = client.reply<number, number>(subject);
       void (async () => {
         for await (const r of rro) {
@@ -171,7 +171,7 @@ describe("messaging service", function () {
       expect(reply).to.equal(43);
     });
 
-    it("replies to messages with payload (string)", async function () {
+    it("replies to messages with payload (string)", async function() {
       const rro = client.reply<string, string>(subject);
       void (async () => {
         for await (const r of rro) {
@@ -182,7 +182,7 @@ describe("messaging service", function () {
       expect(reply).to.equal("hello world");
     });
 
-    it("replies to messages with payload (object)", async function () {
+    it("replies to messages with payload (object)", async function() {
       const rro = client.reply<{ str: string }, { num: number }>(subject);
       void (async () => {
         for await (const r of rro) {
@@ -193,7 +193,7 @@ describe("messaging service", function () {
       expect(reply.num).to.equal(42);
     });
 
-    it("replies to multiple requests", async function () {
+    it("replies to multiple requests", async function() {
       const rro = client.reply(subject);
       void (async () => {
         let timesCalled = 0;

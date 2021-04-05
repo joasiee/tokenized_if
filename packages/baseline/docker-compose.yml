@@ -26,13 +26,33 @@ services:
       options:
         max-size: 10m
     ports:
-      - 27117:27017
+      - 27017:27017
 
   nats:
     container_name: nats
     image: nats
     ports:
       - 4222:4222
+
+  # zkp:
+  #   hostname: zkp
+  #   container_name: zkp
+  #   build:
+  #     context: ./src/zkp-mgr/
+  #     dockerfile: dev.Dockerfile
+  #   command: npm run dev
+  #   volumes:
+  #     - ./zkp/circuits:/app/circuits:delegated
+  #     - ./zkp/src:/app/src:delegated
+  #     - ./zkp/dist:/app/dist:delegated
+  #     - ./zkp/output:/app/output:delegated
+  #   environment:
+  #     PROVING_SCHEME: "gm17"
+  #     MONGO_URL: mongodb://mongo
+  #     MONGO_DB_NAME: "zkp-mgr"
+  #     MONGO_CONNECTION_RETRIES: 5
+  #   ports:
+  #     - 8080:80
 
   mongo-express:
     image: mongo-express

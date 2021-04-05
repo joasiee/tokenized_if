@@ -8,7 +8,7 @@ import { dbConnect } from "@tokenized_if/shared";
 import { get_ws_provider, restartSubscriptions } from "./blockchain";
 
 export const commitMgrStart = async () => {
-  const port = process.env.CMGR_SERVER_PORT;
+  const port = process.env.CMGR_PORT;
 
   logger.info("Starting commmitment manager server...");
 
