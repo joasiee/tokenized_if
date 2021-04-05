@@ -20,6 +20,10 @@ services:
     volumes:
       - ./ops/db:/docker-entrypoint-initdb.d/
       - pgdata:/var/lib/postgresql/data/
-
+  nats:
+    image: nats
+    container_name: nats
+    ports:
+      - 4222:4222
 volumes:
   pgdata:

@@ -7,7 +7,8 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 	CREATE TABLE participant(
 		id SERIAL PRIMARY KEY,
 		name TEXT,
-		address bytea
+		address bytea,
+		nats TEXT
 	);
 
 	CREATE TABLE shipment(
