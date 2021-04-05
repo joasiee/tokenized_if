@@ -19,7 +19,7 @@ export class OrganizationsService {
    * Connect to local mongodb, update previously stored registries.
    */
   async init() {
-    await dbConnect(process.env.OMGR_DATABASE_USER, process.env.OMGR_DATABASE_PASSWORD, process.env.OMGR_DATABASE_NAME);
+    await dbConnect(process.env.OMGR_DATABASE_NAME);
     await this.dbsync.updateDB();
   }
 
@@ -85,7 +85,7 @@ export class OrganizationsService {
         config.CONTRACTS.ORG_REGISTRY
       )) as OrgRegistryContract;
       // do not add if org is already added locally.
-      if (model.orgsList.some((x) => x.name === org.getName())) {
+      if (model.orgsList.some(x => x.name === org.getName())) {
         const msg = `Registry already contains org: ${org.getName()}`;
         logger.debug(msg);
         return;
@@ -124,7 +124,7 @@ export class OrganizationsService {
         registry.getAddress(),
         config.CONTRACTS.ORG_REGISTRY
       )) as OrgRegistryContract;
-      if (model.groupsList.some((x) => x.name === workgroup.getName())) {
+      if (model.groupsList.some(x => x.name === workgroup.getName())) {
         const msg = `Registry already contains group: ${workgroup.getName()}`;
         logger.debug(msg);
         return;

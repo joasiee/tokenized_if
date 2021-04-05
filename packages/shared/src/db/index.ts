@@ -8,7 +8,7 @@ const config = {
   mongo: {
     debug: true,
     bufferMaxEntries: 8,
-    firstConnectRetryDelaySecs: 5,
+    firstConnectRetryDelaySecs: 5
   },
   mongoose: {
     useUnifiedTopology: true,
@@ -17,8 +17,8 @@ const config = {
     useCreateIndex: true,
     poolSize: 5,
     socketTimeoutMS: 0,
-    keepAlive: true,
-  },
+    keepAlive: true
+  }
 };
 
 const { firstConnectRetryDelaySecs } = config.mongo;
@@ -37,7 +37,7 @@ conn.once("open", () => {
   });
 
   // If the connection throws an error
-  conn.on("error", (err) => {
+  conn.on("error", err => {
     logger.error("Db connection error: %o", err);
   });
 
@@ -56,7 +56,7 @@ conn.once("open", () => {
 });
 
 function simpleSleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /**
@@ -65,14 +65,14 @@ function simpleSleep(ms) {
  * @param pwd password
  * @param db database name
  */
-export async function dbConnect(user: string, pwd: string, db: string) {
-  mongoUrl = `mongodb://${user}:${pwd}@${process.env.MONGO_HOST}/${db}`;
+export async function dbConnect(db: string) {
+  mongoUrl = `mongodb://${process.env.MONGO_HOST}/${db}`;
   logger.info(`Trying to connect to db at: ${mongoUrl}`);
   if (config.mongo.debug === true) {
-    mongoose.set("debug", function (collection, method, query, doc, options) {
+    mongoose.set("debug", function(collection, method, query, doc, options) {
       logger.debug(`Mongoose ${method} on ${collection} with query:\n%o`, query, {
         doc,
-        options,
+        options
       });
     });
   }
