@@ -1,0 +1,38 @@
+[
+    {
+        "id": 0,
+        "owner": "Iemand",
+        "cargo": {
+            "uuid": 1,
+            "items": [
+                {
+                    "description": "Iets",
+                    "amount": 5
+                },
+                {
+                    "description": "Nog Iets",
+                    "amount": 2
+                }
+            ]
+        },
+        "cargo_hash": "42"
+    },
+    {
+        "id": 1,
+        "owner": "Niemand",
+        "cargo": {
+            "uuid": 2,
+            "items": [
+                {
+                    "description": "Iets",
+                    "amount": 12
+                },
+                {
+                    "description": "Nog Iets",
+                    "amount": 22
+                }
+            ]
+        },
+        "cargo_hash": "423"
+    }
+]

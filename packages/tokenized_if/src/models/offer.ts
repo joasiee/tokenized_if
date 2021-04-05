@@ -13,6 +13,11 @@ export interface AcceptOffer {
     cargoHash: string,
 }
 
+export interface EscrowAddress {
+    address: string,
+    tokenRegistryAddress?: string,
+}
+
 export interface CreateOffer {
     owner: string,
     shipment: Shipment,

@@ -6,8 +6,9 @@ class OfferController {
   }
 
   post(req: express.Request, res: express.Response) {
-    // Deploy escrow
-    //
+    // vanuit financer submit
+    // client connect(importer)
+    // publish acceptoffer(req.hash)
     res.status(201).send({});
   }
 }
