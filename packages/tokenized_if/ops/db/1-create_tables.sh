@@ -21,8 +21,8 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 	CREATE TABLE offer(
 		id SERIAL PRIMARY KEY,
 		shipment_id integer references shipment,
-		financer TEXT references participant,
-		contract_address bytea NOT NULL,
+		financer TEXT,
+		contract_address bytea,
 		price numeric(12,6),
 		buyback numeric(12,6)
 	);

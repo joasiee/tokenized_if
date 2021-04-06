@@ -1,5 +1,5 @@
 import express from "express";
-import { OrganizationController, OfferController, WorkflowController } from "../controllers";
+import { OrganizationController, OfferController, WorkflowController, ShipmentController } from "../controllers";
 
 const apiRouter = express.Router();
 
@@ -10,10 +10,13 @@ apiRouter.post("/organizations", OrganizationController.post);
 // Workflow Routes
 apiRouter.get("/workflows", WorkflowController.getAll);
 
-// 
+// Shipment Routes
+apiRouter.get("/shipment", ShipmentController.getAll);
+apiRouter.post("/shipment", ShipmentController.post);
+apiRouter.put("/shipment/:shipmentId", ShipmentController.offer);
 
 // Offer Routes
 apiRouter.get("/offers", OfferController.getAll);
-apiRouter.post("/offers", OfferController.post);
+apiRouter.post("/offers", OfferController.acceptOffer);
 
 export default apiRouter;

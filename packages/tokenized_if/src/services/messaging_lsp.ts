@@ -24,7 +24,7 @@ const subscriptions: Subscription = {
     });
 
     await client.connect();
-    console.log("Connected to NATS Server");
+    console.log("(LSP)Connected to NATS Server");
 
     // Subscribe for clients wanting to join
     const admitSub = client.reply<Participant, Participant[]>('admittance');
