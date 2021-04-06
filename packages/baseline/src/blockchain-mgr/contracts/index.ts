@@ -23,9 +23,11 @@ export async function deployContract(contract: string, args: any[]): Promise<Con
       return factory.deploy(...args);
     } else {
       logger.debug(`File does not exist at: ${filePath}`);
+      return Promise.reject(`File does not exist at: ${filePath}`);
     }
   } catch (err) {
     logger.error(`Could not deploy contract at: ${filePath}, error: ${err}`);
+    return Promise.reject(err);
   }
 }
 
