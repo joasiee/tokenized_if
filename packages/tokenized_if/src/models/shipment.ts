@@ -1,14 +1,18 @@
 import { Cargo } from "./cargo";
 
 export interface Shipment {
-    id: number,
     owner: string,
     cargo: Cargo,
     cargo_hash: string,
 }
 
-export interface CreateShipment {
-    owner: number,
+export interface CreateShipmentObject {
+    owner: string,
     cargo: Cargo,
+}
+
+export interface CreateShipmentDao {
+    owner: string,
+    cargo: string,
     cargo_hash: string,
 }

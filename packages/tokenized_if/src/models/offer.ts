@@ -19,9 +19,6 @@ export interface EscrowAddress {
 }
 
 export interface CreateOffer {
-    owner: string,
-    shipment: Shipment,
-    contractAddress: string,
     price: number,
     buyback: number,
 }

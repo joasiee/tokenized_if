@@ -11,9 +11,9 @@ apiRouter.post("/organizations", OrganizationController.post);
 apiRouter.get("/workflows", WorkflowController.getAll);
 
 // Shipment Routes
-apiRouter.get("/shipment", ShipmentController.getAll);
-apiRouter.post("/shipment", ShipmentController.post);
-apiRouter.put("/shipment/:shipmentId", ShipmentController.offer);
+apiRouter.get("/shipments", ShipmentController.getAll);
+apiRouter.post("/shipments", ShipmentController.post);
+apiRouter.put("/shipments/:shipmentId", ShipmentController.offer);
 
 // Offer Routes
 apiRouter.get("/offers", OfferController.getAll);

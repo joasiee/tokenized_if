@@ -1,7 +1,10 @@
-import express from "express";
+import express, { json } from "express";
 import { addShipment, getAllShipments } from "../db/shipment_queries";
-import { CreateShipment } from "../models/shipment";
+import { Cargo } from "../models/cargo";
+import { CreateShipmentObject } from "../models/shipment";
 import { successMessage } from "./helpers/status";
+import web3 from "web3";
+import { createOffer } from "../db/offer_queries";
 
 class ShipmentController {
   async getAll(req: express.Request, res: express.Response) {
@@ -10,8 +13,11 @@ class ShipmentController {
   }
 
   async post(req: express.Request, res: express.Response) {
-    const shipment = await addShipment(req.body as CreateShipment);
-    successMessage.data = shipment
+    const create = req.body as CreateShipmentObject;
+    const cargoString = JSON.stringify(create.cargo);
+    const cargo_hash = web3.utils.sha3(cargoString);
+    const shipment = await addShipment({owner: create.owner, cargo: cargoString, cargo_hash: cargo_hash});
+    successMessage.data = shipment;
     res.status(201).send(successMessage);
   }
 
@@ -19,7 +25,7 @@ class ShipmentController {
     const { shipmentId } = req.params;
     const price = req.body.price;
     const buyback = req.body.buyback;
-
+    // const offer = await createOffer()
     // insert into own db
     // send offer to all the subscribed financers
   }

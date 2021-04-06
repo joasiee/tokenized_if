@@ -6,23 +6,22 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
   BEGIN;
 	CREATE TABLE participant(
 		name TEXT PRIMARY KEY,
-		address bytea,
+		address TEXT,
 		nats TEXT,
 		role TEXT
 	);
 
 	CREATE TABLE shipment(
-		id SERIAL PRIMARY KEY,
+		cargo_hash TEXT PRIMARY KEY,
 		owner TEXT references participant,
-		data json,
-		data_hash bytea
+		cargo json
 	);
 
 	CREATE TABLE offer(
 		id SERIAL PRIMARY KEY,
-		shipment_id integer references shipment,
+		shipment_hash TEXT references shipment,
 		financer TEXT,
-		contract_address bytea,
+		contract_address TEXT,
 		price numeric(12,6),
 		buyback numeric(12,6)
 	);

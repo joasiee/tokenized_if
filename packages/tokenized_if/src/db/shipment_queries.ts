@@ -1,31 +1,22 @@
-import { CreateShipment, Shipment } from "../models/shipment";
+import { CreateShipmentDao, Shipment } from "../models/shipment";
 import { query } from "./helpers/query";
 
-const selectQuery = 
-`select s.id
-, p.name as owner
-, s.data
-, s.data_hash
-from shipment s
-    join participant p on p.id = s.owner_id;`
-
-const mapDaoToShipment = function(dao: any) : Shipment {
-    return {
-        id: dao.id,
-        owner: dao.owner,
-        cargo: JSON.parse(dao.data),
-        cargo_hash: dao.hash,
-    }
-}
+// const mapDaoToShipment = function(dao: CreateShipmentDao) : Shipment {
+//     return {
+//         owner: dao.owner,
+//         cargo: dao.cargo,
+//         cargo_hash: dao.cargo_hash,
+//     };
+// }
 
 export const getAllShipments = async function () : Promise<Shipment[]> {
-    const { rows } = await query(selectQuery);
-    let result = rows.map(mapDaoToShipment);
-    return result;
+    const { rows } = await query("SELECT * from shipment");
+    //let result = rows.map(mapDaoToShipment);
+    return rows;
 };
 
-export const addShipment = async function (dco: CreateShipment) : Promise<Shipment> {
-    const values = [dco.owner, JSON.stringify(dco.cargo), dco.cargo_hash];
-    const { rows } = await query("INSERT INTO shipment(owner_id, data, data_hash) VALUES ($1, $2, $3) returning *;", values);
-    return mapDaoToShipment(rows[0]);
+export const addShipment = async function (dao: CreateShipmentDao) : Promise<Shipment> {
+    const values = [dao.cargo_hash, dao.owner, dao.cargo];
+    const { rows } = await query("INSERT INTO shipment(cargo_hash, owner, cargo) VALUES ($1, $2, $3) returning *;", values);
+    return rows[0];
 }
