@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import jayson from "jayson";
 import url from "url";
 import * as promiseJayson from "jayson/promise";
@@ -10,9 +9,6 @@ import { updateTree, getSiblingPathByLeafIndex } from "./merkle-tree";
 import { getLeafByLeafIndex, getLeavesByLeafIndexRange } from "./merkle-tree/leaves.js";
 import { concatenateThenHash } from "./merkle-tree/hash.js";
 import { txManagerServiceFactory } from "./tx-manager";
-
-// configs loaded
-dotenv.config();
 
 // Forward these requests to the web3 provider service
 // NOTE: although `url.parse` is deprecated `new URL('<url-here>')` does not provide
@@ -33,7 +29,7 @@ const relayRequest = (methodName: any) => {
       done(error, result);
     },
     {
-      useContext: true,
+      useContext: true
     }
   );
 };
@@ -52,7 +48,7 @@ const baseline_getCommit = new jayson.Method(
     done(null, result);
   },
   {
-    useContext: true,
+    useContext: true
   }
 );
 
@@ -72,7 +68,7 @@ const baseline_getCommits = new jayson.Method(
       error = {
         code: -32602,
         message: `Invalid params`,
-        data: `Param "count" must be greater than 0`,
+        data: `Param "count" must be greater than 0`
       };
       done(error, null);
       return;
@@ -83,7 +79,7 @@ const baseline_getCommits = new jayson.Method(
     done(null, result);
   },
   {
-    useContext: true,
+    useContext: true
   }
 );
 
@@ -104,7 +100,7 @@ const baseline_getRoot = new jayson.Method(
       logger.error(`[baseline_getRoot] ${err}`);
       error = {
         code: -32603,
-        message: `Internal server error`,
+        message: `Internal server error`
       };
       done(error, null);
       return;
@@ -112,7 +108,7 @@ const baseline_getRoot = new jayson.Method(
     done(null, root);
   },
   {
-    useContext: true,
+    useContext: true
   }
 );
 
@@ -133,7 +129,7 @@ const baseline_getProof = new jayson.Method(
       logger.error(`[baseline_getProof] ${err}`);
       error = {
         code: -32603,
-        message: `Internal server error`,
+        message: `Internal server error`
       };
       done(error, null);
       return;
@@ -141,7 +137,7 @@ const baseline_getProof = new jayson.Method(
     done(null, pathNodes);
   },
   {
-    useContext: true,
+    useContext: true
   }
 );
 
@@ -158,7 +154,7 @@ const baseline_getTracked = new jayson.Method(
     const trackedContracts = await merkleTrees
       .find({
         _id: { $regex: /_0$/ },
-        active: true,
+        active: true
       })
       .select("_id")
       .lean();
@@ -171,7 +167,7 @@ const baseline_getTracked = new jayson.Method(
     done(null, contractAddresses);
   },
   {
-    useContext: true,
+    useContext: true
   }
 );
 
@@ -197,7 +193,7 @@ const baseline_verifyAndPush = new jayson.Method(
       error = {
         code: -32603,
         message: `Internal server error`,
-        data: `Merkle Tree not found in db: ${contractAddress}`,
+        data: `Merkle Tree not found in db: ${contractAddress}`
       };
       done(error, null);
       return;
@@ -213,7 +209,7 @@ const baseline_verifyAndPush = new jayson.Method(
       logger.error(`[baseline_verifyAndPush] ${err}`);
       error = {
         code: -32603,
-        message: `Internal server error`,
+        message: `Internal server error`
       };
       done(error, null);
       return;
@@ -222,7 +218,7 @@ const baseline_verifyAndPush = new jayson.Method(
     done(result.error, { txHash: result.txHash });
   },
   {
-    useContext: true,
+    useContext: true
   }
 );
 
@@ -236,13 +232,13 @@ const baseline_track = new jayson.Method(
 
     const contractAddress = args[0];
     const merkleTree = await merkleTrees.findOne({
-      _id: `${contractAddress}_0`,
+      _id: `${contractAddress}_0`
     });
     if (merkleTree && merkleTree.active === true) {
       error = {
         code: -32603,
         message: `Internal server error`,
-        data: `Already tracking MerkleTree at address ${contractAddress}`,
+        data: `Already tracking MerkleTree at address ${contractAddress}`
       };
       done(error, null);
       return;
@@ -252,9 +248,9 @@ const baseline_track = new jayson.Method(
     const res = await jsonrpc("eth_call", [
       {
         to: contractAddress,
-        data: methodSignature,
+        data: methodSignature
       },
-      "latest",
+      "latest"
     ]);
     if (res.error) {
       done(res.error, res.result);
@@ -265,7 +261,7 @@ const baseline_track = new jayson.Method(
       error = {
         code: -32603,
         message: `Internal server error`,
-        data: `Could not retreive treeHeight from blockchain`,
+        data: `Could not retreive treeHeight from blockchain`
       };
       done(error, null);
       return;
@@ -277,7 +273,7 @@ const baseline_track = new jayson.Method(
       {
         _id: `${contractAddress}_0`,
         treeHeight,
-        active: true,
+        active: true
       },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
@@ -288,7 +284,7 @@ const baseline_track = new jayson.Method(
     done(error, true);
   },
   {
-    useContext: true,
+    useContext: true
   }
 );
 
@@ -306,7 +302,7 @@ const baseline_untrack = new jayson.Method(
 
     const foundTree = await merkleTrees
       .find({
-        _id: { $regex: new RegExp(contractAddress) },
+        _id: { $regex: new RegExp(contractAddress) }
       })
       .select("_id")
       .lean();
@@ -316,7 +312,7 @@ const baseline_untrack = new jayson.Method(
       error = {
         code: -32603,
         message: `Internal server error`,
-        data: `Merkle Tree not found in db: ${contractAddress}`,
+        data: `Merkle Tree not found in db: ${contractAddress}`
       };
       done(error, null);
       return;
@@ -327,7 +323,7 @@ const baseline_untrack = new jayson.Method(
     // If prune === true, wipe tree from storage
     if (prune === true) {
       await merkleTrees.deleteMany({
-        _id: { $regex: new RegExp(contractAddress) },
+        _id: { $regex: new RegExp(contractAddress) }
       });
     } else {
       await merkleTrees.updateOne({ _id: `${contractAddress}_0` }, { active: false }, { upsert: true, new: true });
@@ -335,7 +331,7 @@ const baseline_untrack = new jayson.Method(
     done(null, true);
   },
   {
-    useContext: true,
+    useContext: true
   }
 );
 
@@ -368,7 +364,7 @@ const baseline_verify = new jayson.Method(
     done(null, result);
   },
   {
-    useContext: true,
+    useContext: true
   }
 );
 
@@ -378,7 +374,7 @@ function validateParams(inputs: any[], numInputs: number) {
     error = {
       code: -32602,
       message: `Invalid params`,
-      data: `Expected number of inputs to be ${numInputs} but received ${inputs.length}`,
+      data: `Expected number of inputs to be ${numInputs} but received ${inputs.length}`
     };
     return error;
   }
@@ -387,7 +383,7 @@ function validateParams(inputs: any[], numInputs: number) {
       error = {
         code: -32602,
         message: `Invalid params`,
-        data: `Param index ${index} not defined`,
+        data: `Param index ${index} not defined`
       };
     }
   }
@@ -404,7 +400,7 @@ const methods = {
   baseline_verifyAndPush,
   baseline_track,
   baseline_untrack,
-  baseline_verify,
+  baseline_verify
 };
 
 // Requests to methods not defined here will produce a response with error code -32601 "Method not found"
@@ -415,5 +411,5 @@ export const rpcServer = new jayson.Server(methods, {
     if (this._methods[method]) return this._methods[method];
     // Blindly relay all methods not defined by this server
     else return relayRequest(method);
-  },
+  }
 });

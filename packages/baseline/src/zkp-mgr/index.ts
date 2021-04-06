@@ -1,4 +1,4 @@
-import { initialize } from "zokrates-js";
+import { initialize, VerificationKey } from "zokrates-js";
 import { readFileSync } from "fs";
 import path from "path";
 import { config } from "../config";
@@ -12,9 +12,8 @@ const main = async function() {
   const keys = zok.setup(artifacts.program);
   const verifier = zok.exportSolidityVerifier(keys.vk, "v2");
 
-  const circuit = schema.fromCircuit("test", artifacts, keys, verifier);
   await dbConnect("zkp-mgr");
-  await schema.db.create(circuit.toObject());
+  await schema.db.create(schema.zokToModel("test2", artifacts, keys, verifier));
 };
 
 main();

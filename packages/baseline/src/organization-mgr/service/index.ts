@@ -32,7 +32,7 @@ export class OrganizationsService {
   }
 
   /**
-   * GetS a registry.
+   * Gets a registry.
    * First checks if it is available in local db, if not checks on chain at address.
    * @param registry
    * @returns
