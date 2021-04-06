@@ -6,9 +6,11 @@
   "scripts": {
     "ts:build": "tsc --build",
     "ts:clean": "tsc --build --clean",
-    "build": "yarn ts:clean && yarn ts:build",
-    "start:main": "yarn workspace tokenized_if start",
-    "start:baseline": "yarn workspace baseline start",
+    "ts:watch": "tsc --build --watch",
+    "dev": "yarn ts:clean && yarn ts:watch",
+    "build": "yarn lerna run build && yarn ts:clean && yarn ts:build",
+    "start:api": "yarn workspace @tokenized_if/backend start",
+    "start:baseline": "yarn workspace @tokenized_if/baseline start",
     "postinstall": "update-ts-references"
   },
   "devDependencies": {

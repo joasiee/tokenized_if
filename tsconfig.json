@@ -5,14 +5,18 @@
       "path": "packages/baseline"
     },
     {
-      "path": "packages/messaging"
+      "path": "packages/shared"
     },
     {
       "path": "packages/tokenized_if"
+    },
+    {
+      "path": "packages/tradetrust"
     }
   ],
   "exclude": [
     "legacy/**/*",
-    "ops/**/*"
+    "ops/**/*",
+    "node_modules/**/*"
   ]
 }

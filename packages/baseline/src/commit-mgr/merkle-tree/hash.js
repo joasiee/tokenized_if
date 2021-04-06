@@ -8,8 +8,8 @@ import { config } from "./config";
  * If no 0x is present then it returns the string un-altered.
  */
 function strip0x(hex) {
-  if (typeof hex === 'undefined') return '';
-  if (typeof hex === 'string' && hex.indexOf('0x') === 0) {
+  if (typeof hex === "undefined") return "";
+  if (typeof hex === "string" && hex.indexOf("0x") === 0) {
     return hex.slice(2).toString();
   }
   return hex.toString();
@@ -33,13 +33,10 @@ function concatenate(a, b) {
 
 function shaHash(...items) {
   const concatValue = items
-    .map(item => Buffer.from(strip0x(item), 'hex'))
+    .map((item) => Buffer.from(strip0x(item), "hex"))
     .reduce((acc, item) => concatenate(acc, item));
 
-  const h = `0x${crypto
-    .createHash('sha256')
-    .update(concatValue, 'hex')
-    .digest('hex')}`;
+  const h = `0x${crypto.createHash("sha256").update(concatValue, "hex").digest("hex")}`;
   return h;
 }
 
@@ -54,8 +51,8 @@ function shaHash(...items) {
 function concatenateThenHash(...items) {
   let inputs = items;
   for (let index = 0; index < items.length; index++) {
-    inputs[index] = items[index].slice(-config.NODE_HASHLENGTH * 2)
-  };
+    inputs[index] = items[index].slice(-config.NODE_HASHLENGTH * 2);
+  }
   logger.debug(`concatenateThenHash inputs: %o`, inputs);
   const h = shaHash(...inputs);
   logger.debug(`Hash result: ${h}`);
@@ -63,6 +60,4 @@ function concatenateThenHash(...items) {
 }
 
 // Used in utils.js
-export {
-  concatenateThenHash,
-};
+export { concatenateThenHash };

@@ -1,0 +1,49 @@
+version: "3.8"
+services:
+  ganache:
+    container_name: ganache
+    image: trufflesuite/ganache-cli:latest
+    ports:
+      - 8545:8545
+    volumes:
+      - ./ops/ganache_health.sh:/app/health-check.sh:delegated
+    healthcheck:
+      test: ["CMD", "sh", "health-check.sh"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_DATABASE: root-db
+    volumes:
+      - ./ops/init-db.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongo:/data/db
+    logging:
+      options:
+        max-size: 10m
+    ports:
+      - 27117:27017
+
+  nats:
+    container_name: nats
+    image: nats
+    ports:
+      - 4222:4222
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    profiles: ["development"]
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+    depends_on:
+      - mongo
+
+volumes:
+  mongo:

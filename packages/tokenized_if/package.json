@@ -1,5 +1,5 @@
 {
-  "name": "tokenized_if",
+  "name": "@tokenized_if/backend",
   "version": "1.0.0",
   "description": "REST-API for tokenizing inventory, serving as collateral to obtain financing.",
   "main": "dist/index.js",
@@ -10,8 +10,5 @@
   "devDependencies": {
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
-  },
-  "dependencies": {
-    "@baseline-protocol/api": "^0.2.0"
   }
 }

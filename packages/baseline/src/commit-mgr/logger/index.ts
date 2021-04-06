@@ -10,19 +10,19 @@ import {
   filterWithout,
 } from "./format";
 
-const logsPath = path.join(rootPath, './logs');
+const logsPath = path.join(rootPath, "./logs");
 
 // Logging level for environment level
 // TODO: Adjust anyhow
-const env = process.env.NODE_ENV || 'development';
-const envLevel = env === 'production' ? 'info' : 'debug';
+const env = process.env.NODE_ENV || "development";
+const envLevel = env === "production" ? "info" : "debug";
 
 // Date for log filename
 const getDateString = () => {
   const date = new Date();
   const year = date.getFullYear();
-  const month = `${date.getMonth() + 1}`.padStart(2, '0');
-  const day = `${date.getDate()}`.padStart(2, '0');
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
 
@@ -31,13 +31,13 @@ const utcTimestamp = () => {
   const epoch = new Date().getTime();
   const date = new Date(epoch);
   const year = date.getFullYear();
-  const month = `${date.getMonth() + 1}`.padStart(2, '0');
-  const day = `${date.getDate()}`.padStart(2, '0');
-  const hour = `${date.getUTCHours()}`.padStart(2, '0');
-  const minute = `${date.getUTCMinutes()}`.padStart(2, '0');
-  const second = `${date.getUTCSeconds()}`.padStart(2, '0');
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
+  const hour = `${date.getUTCHours()}`.padStart(2, "0");
+  const minute = `${date.getUTCMinutes()}`.padStart(2, "0");
+  const second = `${date.getUTCSeconds()}`.padStart(2, "0");
   return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
-}
+};
 
 // Transports
 const transports = {
@@ -45,19 +45,19 @@ const transports = {
     level: envLevel,
     format: winston.format.combine(
       winston.format.timestamp({
-        format: utcTimestamp
+        format: utcTimestamp,
       }),
       winston.format.errors({ stack: true }),
       winston.format.splat(),
       winston.format.simple(),
-      filterWithout('http'),
+      filterWithout("http"),
       defaultConsoleFormat
     ),
   }),
   reqHttpConsole: new winston.transports.Console({
     format: winston.format.combine(
       winston.format.timestamp({
-        format: utcTimestamp
+        format: utcTimestamp,
       }),
       winston.format.errors({ stack: true }),
       winston.format.splat(),
@@ -70,12 +70,12 @@ const transports = {
     level: envLevel,
     format: winston.format.combine(
       winston.format.timestamp({
-        format: utcTimestamp
+        format: utcTimestamp,
       }),
       winston.format.errors({ stack: true }),
       winston.format.splat(),
       winston.format.simple(),
-      filterWithout('http'),
+      filterWithout("http"),
       defaultFileFormat
     ),
   }),
@@ -95,10 +95,7 @@ const transports = {
 
 // Logger
 export const logger = winston.createLogger({
-  transports: [
-    transports.defaultConsole,
-    transports.defaultFile,
-  ],
+  transports: [transports.defaultConsole, transports.defaultFile],
   levels,
   // Do not exit on handled exceptions
   exitOnError: false,
@@ -106,16 +103,13 @@ export const logger = winston.createLogger({
 
 export const reqLogger = (service) =>
   expressWinston.logger({
-    transports: [
-      transports.reqHttpConsole,
-      transports.reqHttpFile
-    ],
+    transports: [transports.reqHttpConsole, transports.reqHttpFile],
     meta: true,
     statusLevels: false,
     colorize: false,
     // Pass service string via msg
     msg: service,
-    bodyWhitelist: ['method'],
+    bodyWhitelist: ["method"],
   });
 
 export const reqErrorLogger = (service) =>
@@ -124,10 +118,7 @@ export const reqErrorLogger = (service) =>
       new winston.transports.Console(),
       new winston.transports.File({ filename: logsPath + `/${getDateString()}_debug.log` }),
     ],
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.json()
-    ),
+    format: winston.format.combine(winston.format.colorize(), winston.format.json()),
     // Pass service string via msg
     msg: service,
   });

@@ -22,7 +22,7 @@ async function getPathByLeafIndex(merkleId, leafIndex) {
   let prevBucket = 0;
   let merkleSegment = merkleTree;
 
-  // Check whether some nodeIndices don't yet exist in the db. 
+  // Check whether some nodeIndices don't yet exist in the db.
   // If they don't, we'll presume their values are zero, and add these to the 'nodes' before returning them.
   for (let count = 0; count < pathIndices.length; count++) {
     const nodeIndex = pathIndices[count];
@@ -36,10 +36,10 @@ async function getPathByLeafIndex(merkleId, leafIndex) {
     const localIndex = nodeIndex % config.BUCKET_SIZE;
     let node = {
       nodeIndex,
-      hash: config.ZERO
-    }
+      hash: config.ZERO,
+    };
     if (nodes[localIndex]) {
-      node.hash = nodes[localIndex].hash
+      node.hash = nodes[localIndex].hash;
     }
     // insert the node into the nodes array:
     pathNodes.push(node);
@@ -76,12 +76,12 @@ async function getSiblingPathByLeafIndex(merkleId, leafIndex) {
     const localIndex = nodeIndex % config.BUCKET_SIZE;
     let node = {
       nodeIndex,
-      hash: config.ZERO
-    }
-    // Check whether some nodeIndices don't yet exist in the db. 
+      hash: config.ZERO,
+    };
+    // Check whether some nodeIndices don't yet exist in the db.
     // If they don't, we'll presume their values are zero, and add these to the 'nodes' before returning them.
     if (nodes[localIndex]) {
-      node.hash = nodes[localIndex].hash
+      node.hash = nodes[localIndex].hash;
     }
     // insert the node into the nodes array:
     siblingNodes.push(node);
@@ -97,18 +97,17 @@ async function getSiblingPathByLeafIndex(merkleId, leafIndex) {
 async function updateTree(merkleId) {
   logger.info(`Updating merkle tree: ${merkleId}`);
 
-  const merkleTree_0 = await merkleTrees.findOne({ _id: `${merkleId}_0` })
+  const merkleTree_0 = await merkleTrees.findOne({ _id: `${merkleId}_0` });
   const { treeHeight, latestLeaf } = merkleTree_0;
 
   if (!latestLeaf.blockNumber) {
-    logger.info('There are no (reliable) leaves in the tree. Nothing to update.');
+    logger.info("There are no (reliable) leaves in the tree. Nothing to update.");
     return "0x0000000000000000000000000000000000000000000000000000000000000000";
   }
 
   // get the latest recalculation (to know how up-to-date the nodes of our tree actually are):
   let latestRecalculation = merkleTree_0.latestRecalculation || {};
-  const latestRecalculationLeafIndex =
-    (latestRecalculation.leafIndex === undefined) ? -1 : latestRecalculation.leafIndex;
+  const latestRecalculationLeafIndex = latestRecalculation.leafIndex === undefined ? -1 : latestRecalculation.leafIndex;
 
   const fromLeafIndex = latestRecalculationLeafIndex + 1;
   const toLeafIndex = latestLeaf && latestLeaf.leafIndex ? latestLeaf.leafIndex : 0;
@@ -126,7 +125,7 @@ async function updateTree(merkleId) {
     let { frontier } = latestRecalculation;
     frontier = frontier === undefined ? [] : frontier;
     const leaves = await getLeavesByLeafIndexRange(merkleId, fromLeafIndex, toLeafIndex);
-    const leafValues = leaves.map(leaf => leaf.hash);
+    const leafValues = leaves.map((leaf) => leaf.hash);
 
     logger.debug(`found leaves: %o`, leaves);
     logger.debug(`leafValues: %o`, leafValues);
@@ -138,8 +137,4 @@ async function updateTree(merkleId) {
   return latestRecalculation.root;
 }
 
-export {
-  getPathByLeafIndex,
-  getSiblingPathByLeafIndex,
-  updateTree
-};
+export { getPathByLeafIndex, getSiblingPathByLeafIndex, updateTree };

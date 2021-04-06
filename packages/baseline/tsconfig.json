@@ -1,6 +1,4 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["dist", "artifacts", "contracts", "node_modules"],
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,
@@ -11,5 +9,11 @@
     "rootDir": "src",
     "resolveJsonModule": true,
     "typeRoots": ["./node_modules/@types"]
-  }
+  },
+  "exclude": ["dist", "truffle", "tests", "ops"],
+  "references": [
+    {
+      "path": "../shared"
+    }
+  ]
 }

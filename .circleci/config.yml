@@ -1,36 +1,29 @@
-version: "2.1"
+version: 2.1
 orbs:
-  node: circleci/node@4.2.0
+  node: circleci/node@4.2.1
 jobs:
-  build_test:
-    docker:
-      - image: cimg/node:15.11.0
+  build:
+    machine:
+      image: ubuntu-2004:202101-01
+    working_directory: ~/repo
     steps:
       - checkout
       - restore_cache:
-          name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
-      - setup_remote_docker:
-          version: 19.03.13
+          command: yarn install --frozen-lockfile
       - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+            - ~/repo/node_modules
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
-          name: Build Packages
-          command: yarn lerna run build
-      - run:
-          name: Build Main
+          name: Build all packages
           command: yarn build
       - run:
           name: Run all CI tests
           command: yarn lerna run test
-workflows:
-  test_my_app:
-    jobs:
-      - build_test

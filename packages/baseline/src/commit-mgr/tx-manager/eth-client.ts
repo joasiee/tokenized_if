@@ -1,7 +1,8 @@
-import { ethers, Wallet } from "ethers";
+import { ethers } from "ethers";
 import { ITxManager } from ".";
 import { logger } from "../logger";
-import { http_provider, jsonrpc, shieldContract } from "../blockchain";
+import { jsonrpc, shieldContract } from "../blockchain";
+import { HDWallet } from "../../blockchain-mgr";
 
 export class EthClient implements ITxManager {
   constructor(private readonly config: any) {
@@ -9,10 +10,7 @@ export class EthClient implements ITxManager {
   }
 
   async signTx(toAddress: string, fromAddress: string, txData: any) {
-    const wallet = new Wallet(
-      process.env.CMGR_WALLET_PRIVATE_KEY,
-      http_provider
-    );
+    const wallet = HDWallet.getInstance().getWallet();
     const nonce = await wallet.getTransactionCount();
     logger.debug(`nonce: ${nonce}`);
     const gasPrice = await wallet.getGasPrice();
@@ -25,7 +23,7 @@ export class EthClient implements ITxManager {
       from: fromAddress,
       data: txData,
       nonce,
-      chainId: parseInt(process.env.CMGR_CHAIN_ID, 10),
+      chainId: parseInt(process.env.ETH_CHAIN_ID, 10),
       gasLimit: 0,
       gasPrice: gasPriceSet,
     };
@@ -39,21 +37,16 @@ export class EthClient implements ITxManager {
     return signedTx;
   }
 
-  async insertLeaf(
-    toAddress: string,
-    fromAddress: string,
-    proof: any[],
-    publicInputs: any[],
-    newCommitment: string
-  ) {
+  async insertLeaf(toAddress: string, fromAddress: string, proof: any[], publicInputs: any[], newCommitment: string) {
     let error = null;
     let txHash: string;
     try {
       const shieldInterface = new ethers.utils.Interface(shieldContract.abi);
-      const txData = shieldInterface.encodeFunctionData(
-        "verifyAndPush(uint256[],uint256[],bytes32)",
-        [proof, publicInputs, newCommitment]
-      );
+      const txData = shieldInterface.encodeFunctionData("verifyAndPush(uint256[],uint256[],bytes32)", [
+        proof,
+        publicInputs,
+        newCommitment,
+      ]);
       const signedTx = await this.signTx(toAddress, fromAddress, txData);
       logger.debug(`signedTx: ${signedTx}`);
       const res = await jsonrpc("eth_sendRawTransaction", [signedTx]);

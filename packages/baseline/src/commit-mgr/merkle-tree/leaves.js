@@ -23,18 +23,12 @@ async function insertLeaf(contractAddress, leaf) {
   nodes[nodeIndex] = leaf;
   const latestLeaf = {
     blockNumber: leaf.blockNumber,
-    leafIndex: leaf.leafIndex
+    leafIndex: leaf.leafIndex,
   };
 
-  await merkleTrees.updateOne(
-    { _id: `${contractAddress}_${bucketIndex}` },
-    { nodes }
-  );
+  await merkleTrees.updateOne({ _id: `${contractAddress}_${bucketIndex}` }, { nodes });
 
-  const updatedTree = await merkleTrees.updateOne(
-    { _id: `${contractAddress}_0` },
-    { latestLeaf }
-  );
+  const updatedTree = await merkleTrees.updateOne({ _id: `${contractAddress}_0` }, { latestLeaf });
 
   return updatedTree;
 }
@@ -55,7 +49,7 @@ async function getLeafByLeafIndex(contractAddress, leafIndex) {
   const bucketIndex = await calculateBucket(nodeIndex);
   const merkleSegment = await merkleTrees.findOne({ _id: `${contractAddress}_${bucketIndex}` });
 
-  const result = merkleSegment.nodes.filter(node => {
+  const result = merkleSegment.nodes.filter((node) => {
     return node && node.leafIndex === leafIndex;
   });
 
@@ -82,8 +76,8 @@ async function getLeavesByLeafIndexRange(contractAddress, minIndex, maxIndex) {
     const nodeIndex = leafIndexToNodeIndex(treeHeight, leafIndex);
     const bucketIndex = await calculateBucket(nodeIndex);
     const merkleSegment = await merkleTrees.findOne({ _id: `${contractAddress}_${bucketIndex}` });
-    const result = merkleSegment.nodes.filter(node => {
-      return node && (node.leafIndex >= leafIndex) && (node.leafIndex <= maxIndex);
+    const result = merkleSegment.nodes.filter((node) => {
+      return node && node.leafIndex >= leafIndex && node.leafIndex <= maxIndex;
     });
     leaves = leaves.concat(result);
     const incr = result.length ? result.length - 1 : 0;
@@ -93,8 +87,4 @@ async function getLeavesByLeafIndexRange(contractAddress, minIndex, maxIndex) {
   return leaves;
 }
 
-export {
-  insertLeaf,
-  getLeafByLeafIndex,
-  getLeavesByLeafIndexRange,
-};
+export { insertLeaf, getLeafByLeafIndex, getLeavesByLeafIndexRange };
