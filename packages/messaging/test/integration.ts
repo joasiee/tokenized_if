@@ -111,6 +111,16 @@ describe("messaging service", function () {
       expect(message.payload.value).to.equal(payload.value);
     });
 
+    it("receives published messages with payload (arr)", async function () {
+      const payload = [1, 2, 3];
+      const sub = client.subscribe<number[]>(subject);
+      const iter = returnFirst(sub);
+      await client.publish(subject, payload);
+      const message = await iter;
+      expect(message.subject).to.eql(subject);
+      expect(message.payload).to.eql(payload);
+    });
+
     it("receives multiple messages in FIFO order", async function () {
       const sub = client.subscribe<number>(subject);
       const iter = (async () => {
