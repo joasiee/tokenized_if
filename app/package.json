@@ -1,8 +1,8 @@
 {
-  "name": "datta-able-rv18.0.4",
-  "version": "0.1.0",
+  "name": "blockchain_engineering_frontend",
+  "version": "0.0.8",
   "private": true,
-  "homepage": "http://lite.codedthemes.com/datta-able/react/default/",
+  "homepage": "http://localhost:9200",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "font-awesome": "^4.7.0",
@@ -29,7 +29,7 @@
     "universal-cookie": "^4.0.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "SET PORT=80 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

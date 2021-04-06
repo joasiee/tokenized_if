@@ -13,7 +13,7 @@ class DashboardDefault extends Component {
         };
     }
     componentDidMount() {
-        fetch('http://localhost:8000/test2.json')
+        fetch('http://localhost:8084/test2.json')
             .then(response => response.json())
             .then(data => this.setState({ item: data.item }));
     }
