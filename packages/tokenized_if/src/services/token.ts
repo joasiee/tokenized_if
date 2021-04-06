@@ -1,4 +1,4 @@
-import {TokenManager} from "../../../token_registry/"
+import { TokenManager } from "../../../token_registry/"
 import dotenv from "dotenv";
 dotenv.config();
 
