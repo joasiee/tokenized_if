@@ -1,5 +1,5 @@
 import { utils } from "ethers";
-import { Document, Schema, model } from "mongoose";
+import { Schema } from "mongoose";
 import { Organization } from "@tokenized_if/shared/src/proto/organizations_pb";
 
 // Enforces Mongoose schema fields to protobuf schema.
@@ -8,7 +8,7 @@ const schemaFields: Record<keyof Organization.AsObject, any> = {
   address: { type: String, required: true, unique: true },
   msgurl: { type: String, required: true },
   msgkey: { type: String, required: true },
-  zkpkey: { type: String, required: true },
+  zkpkey: { type: String, required: true }
 };
 
 // instantiate schema, interface and model
