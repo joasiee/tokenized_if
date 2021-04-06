@@ -5,6 +5,7 @@ import { CreateShipmentObject } from "../models/shipment";
 import { successMessage } from "./helpers/status";
 import web3 from "web3";
 import { createOffer } from "../db/offer_queries";
+import { Offer } from "../models/offer";
 
 class ShipmentController {
   async getAll(req: express.Request, res: express.Response) {
@@ -23,11 +24,22 @@ class ShipmentController {
 
   async offer(req: express.Request, res: express.Response) {
     const { shipmentId } = req.params;
-    const price = req.body.price;
-    const buyback = req.body.buyback;
+    const shipmentIdInt = parseInt(shipmentId);
+    const price = parseFloat(req.body.price);
+    const buyback = parseFloat(req.body.buyback);
+    const offer : Offer = {
+      id: -1,
+      owner: "importer",
+      shipmentId: shipmentIdInt,
+      contractAddress: "0x1234",
+      price: price,
+      buyback: buyback,
+    }
+    successMessage.data = offer;
     // const offer = await createOffer()
     // insert into own db
     // send offer to all the subscribed financers
+    res.send(successMessage);
   }
 }
 

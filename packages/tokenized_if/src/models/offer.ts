@@ -3,8 +3,8 @@ import { Shipment } from "./shipment";
 export interface Offer {
     id: number,
     owner: string,
-    shipment: Shipment,
-    contractAddress: string,
+    shipmentId: number,
+    contractAddress?: string,
     price: number,
     buyback: number,
 }
