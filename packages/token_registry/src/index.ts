@@ -10,7 +10,8 @@ import { Wallet, providers, getDefaultProvider, ethers, Contract } from "ethers"
 import { TitleEscrow } from "./contracts/TitleEscrow";
 import Web3 from "web3";
 
-// Variables
+export const registry {
+  // Variables
 var tokenRegistry: TradeTrustErc721;
 var titleEscrowFactory: TitleEscrowCreator;
 
@@ -308,6 +309,8 @@ async function main() {
     console.log(e);
   }
 }
+}
+
 
 main();
 

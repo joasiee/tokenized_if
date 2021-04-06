@@ -1,27 +1,31 @@
 import { IMessagingClient, createMessagingClient } from "messaging";
 
 import dotenv from "dotenv";
-import { AcceptOffer, Offer } from "../models/offer";
-import { Shipment } from "../models/shipment";
+import { AcceptOffer } from "../models/offer";
 import { Cargo } from "../models/cargo";
+import base from './messaging_base';
 
 // Load .env variables in process.env
 dotenv.config();
 // IMPORTER SUBSCRIPTIONS
 interface Subscription {
-  setup: () => Promise<void>;
+  setup: (firstRun: boolean) => Promise<void>;
 }
 
 const subscriptions: Subscription = {
-  async setup(): Promise<void> {
+  async setup(firstRun: boolean): Promise<void> {
     const client = createMessagingClient({
       serverUrl: `${process.env.NATS_URL}:${process.env.NATS_PORT}`,
       user: process.env.NATS_NAME,
       seed: process.env.NATS_PRIVATE_KEY,
     });
 
+    // Setup connection with LSP
+    await base.setup(firstRun);
+
+    // Setup own subscriptions
     await client.connect();
-    console.log("Connected to NATS Server");
+    console.log("(Importer)Connected to NATS Server");
 
     const offerSub = client.subscribe<Cargo>('offer');
     (async () => {
@@ -36,11 +40,12 @@ const subscriptions: Subscription = {
       for await (const m of acceptSub) {
         // aanvragen escrow
         // create client connected with LSP
-        // const escrow = await client.request<I,O>('escrow', hash);
+        // const escrow = await client.request<I,O>('escrow', hash);  
+        // new client.publish()
       };
     })();
 
-    
+
     // Add new subscriptions here:
   }
 }

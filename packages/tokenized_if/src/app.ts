@@ -4,7 +4,7 @@ import apiRouter from "./routes";
 import { getLogger } from "./logging";
 
 import dotenv from "dotenv";
-import subscriptions from "./services/messaging";
+import { setup } from "./services";
 
 // Load .env variables in process.env
 dotenv.config();
@@ -26,9 +26,9 @@ app.get("/", (req, res) => {
 });
 app.use("/api", apiRouter);
 
-// Setup message subscriptions
+// Setup
 (async function() {
-  await subscriptions.setup();
+  await setup();
 })();
 
 // Start listening

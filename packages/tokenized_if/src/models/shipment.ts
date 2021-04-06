@@ -6,3 +6,9 @@ export interface Shipment {
     cargo: Cargo,
     cargo_hash: string,
 }
+
+export interface CreateShipment {
+    owner: number,
+    cargo: Cargo,
+    cargo_hash: string,
+}

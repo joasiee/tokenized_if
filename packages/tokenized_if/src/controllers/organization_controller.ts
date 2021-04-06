@@ -1,6 +1,6 @@
 import express from "express";
 import { addParticipant, getAllParticipants } from "../db/participant_queries";
-import { CreateParticipant } from "../models/participant";
+import { Participant } from "../models/participant";
 import { successMessage } from "./helpers/status";
 
 class OrganizationController {
@@ -10,7 +10,7 @@ class OrganizationController {
   }
 
   async post(req: express.Request, res: express.Response) {
-    const participant = await addParticipant(req.body as CreateParticipant)
+    const participant = await addParticipant(req.body as Participant)
     successMessage.data = participant;
     res.status(201).send(successMessage);
   }

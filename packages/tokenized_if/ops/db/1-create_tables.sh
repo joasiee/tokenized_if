@@ -5,15 +5,15 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
   \connect $APP_DB_NAME $APP_DB_USER
   BEGIN;
 	CREATE TABLE participant(
-		id SERIAL PRIMARY KEY,
-		name TEXT,
+		name TEXT PRIMARY KEY,
 		address bytea,
-		nats TEXT
+		nats TEXT,
+		role TEXT
 	);
 
 	CREATE TABLE shipment(
 		id SERIAL PRIMARY KEY,
-		owner_id integer references participant,
+		owner TEXT references participant,
 		data json,
 		data_hash bytea
 	);
@@ -21,10 +21,15 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 	CREATE TABLE offer(
 		id SERIAL PRIMARY KEY,
 		shipment_id integer references shipment,
-		financer_id integer references participant,
+		financer TEXT references participant,
 		contract_address bytea NOT NULL,
 		price numeric(12,6),
 		buyback numeric(12,6)
+	);
+
+	CREATE TABLE keyvalue(
+		key TEXT PRIMARY KEY,
+		value TEXT
 	);
   COMMIT;
 EOSQL

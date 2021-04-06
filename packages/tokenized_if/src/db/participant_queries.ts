@@ -1,28 +1,21 @@
-import { CreateParticipant, Participant } from "../models/participant";
-import pool from "./helpers/pool";
+import { Participant } from "../models/participant";
+import { query } from "./helpers/query";
 
-const mapToParticipant = function(obj: any) : Participant {
-    return {
-        id: obj.id,
-        name: obj.name,
-        address: obj.address,
-    }
-}
-
-export const getParticipant = async function name(id: number) : Promise<Participant> {
-    const { rows } = await pool.query("SELECT * FROM participant WHERE id=$1", [id]);
+export const getParticipant = async function (name: string) : Promise<Participant> {
+    const { rows } = await query("SELECT * FROM participant WHERE name=$1", [name]);
     if (rows.length > 0) {
-        return mapToParticipant(rows[0]);
+        return rows[0];
     }
+    return null;
 };
 
 export const getAllParticipants = async function () : Promise<Participant[]> {
-    const { rows } = await pool.query("SELECT * FROM participant");
-    return rows.map(mapToParticipant);
+    const { rows } = await query("SELECT * FROM participant");
+    return rows;
 };
 
-export const addParticipant = async function (dco: CreateParticipant) :Promise<Participant> {
-    const values = [dco.name, dco.address];
-    const { rows } = await pool.query("INSERT INTO participant(name, address) VALUES ($1, $2) returning *", values);
-    return mapToParticipant(rows[0]);
+export const addParticipant = async function (dco: Participant) :Promise<Participant> {
+    const values = [dco.name, dco.address, dco.nats, dco.role];
+    const { rows } = await query("INSERT INTO participant(name, address, nats, role) VALUES ($1, $2, $3, $4) returning *", values);
+    return rows[0];
 };
