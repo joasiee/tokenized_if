@@ -1,0 +1,434 @@
+{
+  "contractName": "ITitleEscrowCreator",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tokenRegistry",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "beneficiary",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "holder",
+          "type": "address"
+        }
+      ],
+      "name": "deployNewTitleEscrow",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenRegistry\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"beneficiary\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"holder\",\"type\":\"address\"}],\"name\":\"deployNewTitleEscrow\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{},\"title\":\"Title Escrow for Transferable Records\"},\"userdoc\":{\"methods\":{\"deployNewTitleEscrow(address,address,address)\":{\"notice\":\"Deploys an instance of a title escrow\"}}}},\"settings\":{\"compilationTarget\":{\"/home/joasiee/projects/tokenized_if/packages/tradetrust/contracts/ITitleEscrowCreator.sol\":\"ITitleEscrowCreator\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/joasiee/projects/tokenized_if/packages/tradetrust/contracts/ITitleEscrowCreator.sol\":{\"keccak256\":\"0xf517decde68aaf7afb02889f1ec1ef1b541f6efafc1ab15565676af0de199b76\",\"urls\":[\"bzz-raw://75a0053aaef99ddd5d406084299cb8c2575409e280eaf047e654baa913d54516\",\"dweb:/ipfs/Qma2nVm2Uv7rhKiMdQwMkUrXL8McDoHM4kq6VqnRDKu7GL\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.5.16;\n\n/// @title Title Escrow for Transferable Records\ninterface ITitleEscrowCreator {\n  /// @notice Deploys an instance of a title escrow\n  function deployNewTitleEscrow(address tokenRegistry, address beneficiary, address holder) external returns (address);\n}\n",
+  "sourcePath": "/home/joasiee/projects/tokenized_if/packages/tradetrust/contracts/ITitleEscrowCreator.sol",
+  "ast": {
+    "absolutePath": "/home/joasiee/projects/tokenized_if/packages/tradetrust/contracts/ITitleEscrowCreator.sol",
+    "exportedSymbols": {
+      "ITitleEscrowCreator": [
+        2068
+      ]
+    },
+    "id": 2069,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2056,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:2"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@title Title Escrow for Transferable Records",
+        "fullyImplemented": false,
+        "id": 2068,
+        "linearizedBaseContracts": [
+          2068
+        ],
+        "name": "ITitleEscrowCreator",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": "@notice Deploys an instance of a title escrow",
+            "id": 2067,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "deployNewTitleEscrow",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2063,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2058,
+                  "name": "tokenRegistry",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2067,
+                  "src": "191:21:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2057,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "191:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2060,
+                  "name": "beneficiary",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2067,
+                  "src": "214:19:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2059,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "214:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2062,
+                  "name": "holder",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2067,
+                  "src": "235:14:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2061,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "235:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "190:60:2"
+            },
+            "returnParameters": {
+              "id": 2066,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2065,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2067,
+                  "src": "269:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2064,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "269:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "268:9:2"
+            },
+            "scope": 2068,
+            "src": "161:117:2",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 2069,
+        "src": "75:205:2"
+      }
+    ],
+    "src": "0:281:2"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/joasiee/projects/tokenized_if/packages/tradetrust/contracts/ITitleEscrowCreator.sol",
+      "exportedSymbols": {
+        "ITitleEscrowCreator": [
+          2068
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.5",
+            ".16"
+          ]
+        },
+        "id": 2056,
+        "name": "PragmaDirective",
+        "src": "0:24:2"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "interface",
+          "documentation": "@title Title Escrow for Transferable Records",
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            2068
+          ],
+          "name": "ITitleEscrowCreator",
+          "scope": 2069
+        },
+        "children": [
+          {
+            "attributes": {
+              "body": null,
+              "documentation": "@notice Deploys an instance of a title escrow",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "deployNewTitleEscrow",
+              "scope": 2068,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "tokenRegistry",
+                      "scope": 2067,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 2057,
+                        "name": "ElementaryTypeName",
+                        "src": "191:7:2"
+                      }
+                    ],
+                    "id": 2058,
+                    "name": "VariableDeclaration",
+                    "src": "191:21:2"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "beneficiary",
+                      "scope": 2067,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 2059,
+                        "name": "ElementaryTypeName",
+                        "src": "214:7:2"
+                      }
+                    ],
+                    "id": 2060,
+                    "name": "VariableDeclaration",
+                    "src": "214:19:2"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "holder",
+                      "scope": 2067,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 2061,
+                        "name": "ElementaryTypeName",
+                        "src": "235:7:2"
+                      }
+                    ],
+                    "id": 2062,
+                    "name": "VariableDeclaration",
+                    "src": "235:14:2"
+                  }
+                ],
+                "id": 2063,
+                "name": "ParameterList",
+                "src": "190:60:2"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 2067,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 2064,
+                        "name": "ElementaryTypeName",
+                        "src": "269:7:2"
+                      }
+                    ],
+                    "id": 2065,
+                    "name": "VariableDeclaration",
+                    "src": "269:7:2"
+                  }
+                ],
+                "id": 2066,
+                "name": "ParameterList",
+                "src": "268:9:2"
+              }
+            ],
+            "id": 2067,
+            "name": "FunctionDefinition",
+            "src": "161:117:2"
+          }
+        ],
+        "id": 2068,
+        "name": "ContractDefinition",
+        "src": "75:205:2"
+      }
+    ],
+    "id": 2069,
+    "name": "SourceUnit",
+    "src": "0:281:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.4",
+  "updatedAt": "2021-04-05T14:42:18.020Z",
+  "devdoc": {
+    "methods": {},
+    "title": "Title Escrow for Transferable Records"
+  },
+  "userdoc": {
+    "methods": {
+      "deployNewTitleEscrow(address,address,address)": {
+        "notice": "Deploys an instance of a title escrow"
+      }
+    }
+  }
+}
