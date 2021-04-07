@@ -317,25 +317,29 @@ export class TokenManager {
         await lspTM.setupTokenRegistry();
         // Token Registry address needs to be shared!
         let tokenRegistryAddress = lspTM.tokenRegistry.address;
-        var escrowInstance = await lspTM.deployImporterEscrow(tokenID, importerPublicAddress);
+        let LSP_escrowInstance = await lspTM.deployImporterEscrow(tokenID, importerPublicAddress);
+        // Escrow address needs to be shared!
+        let escrowAddress = LSP_escrowInstance.address;
         console.log("Current owner of token is: " + await lspTM.ownerOfToken(tokenID));
         
        ////////////// Importer PART ///////////
         importerTM.connectTokenRegistry(tokenRegistryAddress, importerTM.signer);
-        escrowInstance = importerTM.connectEscrowInstance(escrowInstance.address, importerTM.signer);
-        console.log("token balance on contract is : " + await importerTM.getTokenBalance(escrowInstance));
+        let importer_escrowInstance = importerTM.connectEscrowInstance(escrowAddress, importerTM.signer);
+        console.log("token balance on contract is : " + await importerTM.getTokenBalance(importer_escrowInstance));
         
         // Sets a deal tokenPrice = 5ETH, buyBackPrice = 7ETH, holder will transfer to financer after payment
-        await escrowInstance.setTokenDeal(importerTM.ethToWei(5), importerTM.ethToWei(7), financerPublicAddress);
-        var deal = await importerTM.getTokenDeal(escrowInstance);
+        await importer_escrowInstance.setTokenDeal(importerTM.ethToWei(5), importerTM.ethToWei(7), financerPublicAddress);
+        let deal = await importerTM.getTokenDeal(importer_escrowInstance);
         console.log("[DEAL] price: ", deal[0], ", buyBackprice: ", deal[1], ", token transferred to: ", deal[2]);
-        console.log("Current Holder: ", await escrowInstance.holder());
+        console.log("Current Holder: ", await importer_escrowInstance.holder());
         
         
-        /*
-        this.sendEther(this.financerPublicAddress, escrowInstance.address, 5, this.financerPrivateKey);
+        ////////////// Financer PART ///////////
+        financerTM.connectTokenRegistry(tokenRegistryAddress, financerTM.signer);
+        escrowInstance = financerTM.connectEscrowInstance(es)
+        financerTM.sendEther(financerPublicAddress, escrowInstance.address, 5, financerTM.private_key);
         console.log("Current holder", await escrowInstance.holder());
-        this.sendEther(this.importerPublicAddress, escrowInstance.address, 7, this.importerPrivateKey);
+        //financer.sendEther(this.importerPublicAddress, escrowInstance.address, 7, this.importerPrivateKey);
     
         console.log("Current holder", await escrowInstance.holder());
         console.log("Beneficiary", await escrowInstance.beneficiary());
