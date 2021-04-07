@@ -27,15 +27,12 @@ export class TokenManager {
   constructor(config: TokenManagerConfig) {
     this.provider = new providers.JsonRpcProvider(config.ganacheUrl);
     this.web3 = new Web3(new Web3.providers.HttpProvider(config.ganacheUrl));
-    this.signer = new Wallet(config.privateKey, this.provider);
+    this.signer = new Wallet("0x" + config.privateKey, this.provider);
     this.private_key = config.privateKey;
   }
 
   // Variables
   tokenRegistry!: TradeTrustErc721;
-
-  // tokenId, should be the hash of the document.
-  tokenID = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
 
   // tokenRegistryFactory, used to deploy token registry.
   tokenRegistryFactory!: TradeTrustErc721Factory;
@@ -284,49 +281,72 @@ export class TokenManager {
     return this.tokenRegistry.address;
   }
 
+
+  
+}
+
   /**************** **************** **************** 
   **************** Main  *******************
         ** An example of the flow **
   **************** **************** **************** */
 
-  /** 
-  async  main() {
-    console.log("Running main");
-    try {
-      await this.setupPublicAddresses();
-      await this.setupTokenRegistry();
-      // Deploys an escrow contract as owner the importer.
-      var escrowInstance = await this.deployImporterEscrow(this.tokenID);
+  /**
+   * This is just a simple example to see if it works.
+   */
+   async  function main() {
+    // tokenId, should be the hash of the document.
+    let tokenID = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
+    //let importerSigner = await this.provider.getSigner(1);
+    //let importerPublicAddress = await this.provider.getSigner(1).getAddress();
+    //let financerPublicAddress = await this.provider.getSigner(2).getAddress();
+    let lspPrivateKey = "ff3abd8ad911f5f49b6efd3c70eb1a6a573181fc16aeb0d1ac4f97ead1910470";
+    let importerPrivateKey = "deb457fd9ead02fba320d3c8db3b14fa7df0eb8fa2401ad82531ebce3b218e8c";
+    let financerPrivateKey = "15b2027cc808d97e3c9b0be3db579fd6c3a64ee3e7ae53446f8060b46cf27f68";
+      console.log("Running main");
+      try {
+        let lspTM = createTokenManager({ganacheUrl: "http://172.30.64.1:7545", privateKey: "ff3abd8ad911f5f49b6efd3c70eb1a6a573181fc16aeb0d1ac4f97ead1910470"});
+        lspTM.setupTokenRegistry();
+
+        //let importerTM = createTokenManager({ganacheUrl: "172.30.64.1:7545", privateKey:importerPrivateKey});
+        //let financerTM = createTokenManager({ganacheUrl: "172.30.64.1:7545", privateKey:financerPrivateKey});
   
-      console.log("Current owner of token is: " + await this.ownerOfToken(this.tokenID));
-      escrowInstance = this.connectEscrowInstance(escrowInstance.address, this.importerSigner);
-      console.log("token balance on contract is : " + await this.getTokenBalance(escrowInstance));
   
-      // Sets a deal tokenPrice = 5ETH, buyBackPrice = 7ETH, holder will transfer to financer after payment
-      await escrowInstance.setTokenDeal(this.ethToWei(5), this.ethToWei(7), this.financerPublicAddress);
-      var deal = await this.getTokenDeal(escrowInstance);
-      console.log("[DEAL] price: ", deal[0], ", buyBackprice: ", deal[1], ", token transferred to: ", deal[2]);
-      console.log("Current Holder: ", await escrowInstance.holder());
-      this.sendEther(this.financerPublicAddress, escrowInstance.address, 5, this.financerPrivateKey);
-      console.log("Current holder", await escrowInstance.holder());
-      this.sendEther(this.importerPublicAddress, escrowInstance.address, 7, this.importerPrivateKey);
   
-      console.log("Current holder", await escrowInstance.holder());
-      console.log("Beneficiary", await escrowInstance.beneficiary());
-  
-      console.log("Current owner of token is: " + await this.ownerOfToken(this.tokenID));
-      await this.sendRelease(escrowInstance);
-      console.log("token balance on contract is : " + await this.getTokenBalance(escrowInstance));
-      console.log("Current owner of token is: " + await this.ownerOfToken(this.tokenID));
-  
-      // Important to connect to token registry as LSP to call burnToken!! And use await.
-      this.connectTokenRegistry(this.tokenRegistry.address, this.LSPSigner);
-      await this.burnToken(this.tokenID);
+        /*
+        await this.setupTokenRegistry();
+        // Deploys an escrow contract as owner the importer.
+        var escrowInstance = await this.deployImporterEscrow(tokenID, importerPublicAddress);
+    
+        console.log("Current owner of token is: " + await this.ownerOfToken(tokenID));
+        escrowInstance = this.connectEscrowInstance(escrowInstance.address, importerSigner);
+        console.log("token balance on contract is : " + await this.getTokenBalance(escrowInstance));
+    
+        // Sets a deal tokenPrice = 5ETH, buyBackPrice = 7ETH, holder will transfer to financer after payment
+        await escrowInstance.setTokenDeal(this.ethToWei(5), this.ethToWei(7), this.financerPublicAddress);
+        var deal = await this.getTokenDeal(escrowInstance);
+        console.log("[DEAL] price: ", deal[0], ", buyBackprice: ", deal[1], ", token transferred to: ", deal[2]);
+        console.log("Current Holder: ", await escrowInstance.holder());
+        this.sendEther(this.financerPublicAddress, escrowInstance.address, 5, this.financerPrivateKey);
+        console.log("Current holder", await escrowInstance.holder());
+        this.sendEther(this.importerPublicAddress, escrowInstance.address, 7, this.importerPrivateKey);
+    
+        console.log("Current holder", await escrowInstance.holder());
+        console.log("Beneficiary", await escrowInstance.beneficiary());
+    
+        console.log("Current owner of token is: " + await this.ownerOfToken(this.tokenID));
+        await this.sendRelease(escrowInstance);
+        console.log("token balance on contract is : " + await this.getTokenBalance(escrowInstance));
+        console.log("Current owner of token is: " + await this.ownerOfToken(this.tokenID));
+    
+        // Important to connect to token registry as LSP to call burnToken!! And use await.
+        this.connectTokenRegistry(this.tokenRegistry.address, this.LSPSigner);
+        await this.burnToken(this.tokenID);
+        */
+      }
+    
+      catch (e) {
+        console.log(e);
+      }
     }
-  
-    catch (e) {
-      console.log(e);
-    }
-  }
-  */
-}
+
+    main();
