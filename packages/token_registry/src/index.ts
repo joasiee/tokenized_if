@@ -333,12 +333,11 @@ export class TokenManager {
         console.log("[DEAL] price: ", deal[0], ", buyBackprice: ", deal[1], ", token transferred to: ", deal[2]);
         console.log("Current Holder: ", await importer_escrowInstance.holder());
         
-        
         ////////////// Financer PART ///////////
         financerTM.connectTokenRegistry(tokenRegistryAddress, financerTM.signer);
-        escrowInstance = financerTM.connectEscrowInstance(es)
-        financerTM.sendEther(financerPublicAddress, escrowInstance.address, 5, financerTM.private_key);
-        console.log("Current holder", await escrowInstance.holder());
+        let financer_escrowInstance = financerTM.connectEscrowInstance(escrowAddress, financerTM.signer);
+        financerTM.sendEther(financerPublicAddress, escrowAddress, 5, financerTM.private_key);
+        console.log("Current holder", await financer_escrowInstance.holder());
         //financer.sendEther(this.importerPublicAddress, escrowInstance.address, 7, this.importerPrivateKey);
     
         console.log("Current holder", await escrowInstance.holder());
