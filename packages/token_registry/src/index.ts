@@ -345,17 +345,14 @@ export class TokenManager {
         console.log("Current holder", await importer_escrowInstance.holder());
         console.log("Beneficiary", await importer_escrowInstance.beneficiary());
 
-        /*
-        await this.sendRelease(escrowInstance);
-        console.log("token balance on contract is : " + await this.getTokenBalance(escrowInstance));
-        console.log("Current owner of token is: " + await this.ownerOfToken(this.tokenID));
-    
-        // Important to connect to token registry as LSP to call burnToken!! And use await.
-        this.connectTokenRegistry(this.tokenRegistry.address, this.LSPSigner);
-        await this.burnToken(this.tokenID);
-        */
+        await importerTM.sendRelease(importer_escrowInstance);
+        console.log("token balance on contract is : " + await importerTM.getTokenBalance(importer_escrowInstance));
+        console.log("Current owner of token is: " + await importerTM.ownerOfToken(tokenID));
+        
+         ////////////// LSP PART ///////////
+        lspTM.connectTokenRegistry(tokenRegistryAddress, lspTM.signer);
+        await lspTM.burnToken(tokenID);
       }
-    
       catch (e) {
         console.log(e);
       }
