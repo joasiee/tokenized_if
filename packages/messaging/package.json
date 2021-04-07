@@ -1,0 +1,31 @@
+{
+  "name": "@tokenized_if/messaging",
+  "version": "1.0.0",
+  "description": "Distributed Messaging Service Provider",
+  "main": "src/index.ts",
+  "author": "Bart van Schaick",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "yarn test:startup && yarn mocha && yarn test:teardown",
+    "mocha": "NODE_ENV=test ./node_modules/.bin/mocha -r ts-node/register -r dotenv-flow/config --exit 'tests/**/*.test.ts'",
+    "test:ci": "yarn test",
+    "test:startup": "docker run -d --name nats-test -p 4222:4222 nats",
+    "test:teardown": "docker stop nats-test && docker container rm nats-test"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.15",
+    "@types/mocha": "^8.2.2",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
+    "chai": "^4.3.4",
+    "eslint": "^7.23.0",
+    "mocha": "^8.3.2",
+    "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "nats": "^2.0.1"
+  }
+}

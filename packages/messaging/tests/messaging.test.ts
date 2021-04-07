@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import "mocha";
 
-import { createMessagingClient } from "../src/message-mgr";
-import { IMessagingClient, IMessagingClientConfig } from "../src/message-mgr";
+import { createMessagingClient } from "../src";
+import { IMessagingClient, IMessagingClientConfig } from "../src";
 
 const config: IMessagingClientConfig = { serverUrl: "nats://localhost:4222" };
 
