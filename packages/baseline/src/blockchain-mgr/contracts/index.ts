@@ -71,7 +71,7 @@ export function compileContract(source: string, out: string, contractName: strin
  * @returns {@link Contract}
  */
 export async function getContract(address: string, contract: string): Promise<Contract> {
-  const filePath = path.join(config.APP_ROOT, "dist", "artifacts", contract);
+  const filePath = path.join(config.APP_ROOT, "dist", "artifacts", contract + ".json");
   try {
     if (fs.existsSync(filePath)) {
       const contract = new Contract(address, require(filePath).abi, wallet);
