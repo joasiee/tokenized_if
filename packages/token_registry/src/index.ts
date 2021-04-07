@@ -296,28 +296,28 @@ export class TokenManager {
    async  function main() {
     // tokenId, should be the hash of the document.
     let tokenID = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
-    //let importerSigner = await this.provider.getSigner(1);
-    //let importerPublicAddress = await this.provider.getSigner(1).getAddress();
-    //let financerPublicAddress = await this.provider.getSigner(2).getAddress();
     let lspPrivateKey = "ff3abd8ad911f5f49b6efd3c70eb1a6a573181fc16aeb0d1ac4f97ead1910470";
     let importerPrivateKey = "deb457fd9ead02fba320d3c8db3b14fa7df0eb8fa2401ad82531ebce3b218e8c";
     let financerPrivateKey = "15b2027cc808d97e3c9b0be3db579fd6c3a64ee3e7ae53446f8060b46cf27f68";
+    let ganacheURL = "http://172.30.64.1:7545";
       console.log("Running main");
       try {
-        let lspTM = createTokenManager({ganacheUrl: "http://172.30.64.1:7545", privateKey: "ff3abd8ad911f5f49b6efd3c70eb1a6a573181fc16aeb0d1ac4f97ead1910470"});
-        lspTM.setupTokenRegistry();
-
-        //let importerTM = createTokenManager({ganacheUrl: "172.30.64.1:7545", privateKey:importerPrivateKey});
-        //let financerTM = createTokenManager({ganacheUrl: "172.30.64.1:7545", privateKey:financerPrivateKey});
-  
-  
-  
-        /*
-        await this.setupTokenRegistry();
+        let lspTM = createTokenManager({ganacheUrl: ganacheURL, privateKey: lspPrivateKey});
+        let importerTM = createTokenManager({ganacheUrl: ganacheURL, privateKey: importerPrivateKey});
+        let financerTM = createTokenManager({ganacheUrl: ganacheURL, privateKey: financerPrivateKey});
+      
+        let importerPublicAddress = await importerTM.signer.getAddress();
+        let financerPublicAddress = await financerTM.signer.getAddress();
+        
+        // Setup token registry as LSP.
+        await lspTM.setupTokenRegistry();
         // Deploys an escrow contract as owner the importer.
-        var escrowInstance = await this.deployImporterEscrow(tokenID, importerPublicAddress);
+        var escrowInstance = await lspTM.deployImporterEscrow(tokenID, importerPublicAddress);
     
-        console.log("Current owner of token is: " + await this.ownerOfToken(tokenID));
+        console.log("Current owner of token is: " + await lspTM.ownerOfToken(tokenID));
+        
+        
+        /*
         escrowInstance = this.connectEscrowInstance(escrowInstance.address, importerSigner);
         console.log("token balance on contract is : " + await this.getTokenBalance(escrowInstance));
     
