@@ -12,7 +12,7 @@ interface Config {
 export const config: Config = {
   APP_ROOT: path.resolve(__dirname, "..", ".."),
   CONTRACTS: {
-    ORG_REGISTRY: "OrgRegistry.json",
-    ERC_1820: "ERC1820Registry.json",
-  },
+    ORG_REGISTRY: "OrgRegistry",
+    ERC_1820: "ERC1820Registry"
+  }
 };

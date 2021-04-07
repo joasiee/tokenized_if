@@ -27,27 +27,38 @@ function deserialize_zkp_Circuit(buffer_arg) {
   return zkp_pb.Circuit.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_zkp_GetCircuitRequest(arg) {
-  if (!(arg instanceof zkp_pb.GetCircuitRequest)) {
-    throw new Error('Expected argument of type zkp.GetCircuitRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_zkp_GetCircuitRequest(buffer_arg) {
-  return zkp_pb.GetCircuitRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 
 var ZKPService = exports.ZKPService = {
+  compileCircuit: {
+    path: '/zkp.ZKP/CompileCircuit',
+    requestStream: false,
+    responseStream: false,
+    requestType: zkp_pb.Circuit,
+    responseType: google_protobuf_empty_pb.Empty,
+    requestSerialize: serialize_zkp_Circuit,
+    requestDeserialize: deserialize_zkp_Circuit,
+    responseSerialize: serialize_google_protobuf_Empty,
+    responseDeserialize: deserialize_google_protobuf_Empty,
+  },
+  deployCircuit: {
+    path: '/zkp.ZKP/DeployCircuit',
+    requestStream: false,
+    responseStream: false,
+    requestType: zkp_pb.Circuit,
+    responseType: google_protobuf_empty_pb.Empty,
+    requestSerialize: serialize_zkp_Circuit,
+    requestDeserialize: deserialize_zkp_Circuit,
+    responseSerialize: serialize_google_protobuf_Empty,
+    responseDeserialize: deserialize_google_protobuf_Empty,
+  },
   getCircuit: {
     path: '/zkp.ZKP/GetCircuit',
     requestStream: false,
     responseStream: false,
-    requestType: zkp_pb.GetCircuitRequest,
+    requestType: zkp_pb.Circuit,
     responseType: zkp_pb.Circuit,
-    requestSerialize: serialize_zkp_GetCircuitRequest,
-    requestDeserialize: deserialize_zkp_GetCircuitRequest,
+    requestSerialize: serialize_zkp_Circuit,
+    requestDeserialize: deserialize_zkp_Circuit,
     responseSerialize: serialize_zkp_Circuit,
     responseDeserialize: deserialize_zkp_Circuit,
   },

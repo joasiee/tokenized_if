@@ -4,34 +4,18 @@ package zkp;
 
 import "google/protobuf/empty.proto";
 
-message GetCircuitRequest {
-  string name = 1;
-}
-
 message Circuit {
   string name = 1;
   bytes program = 2;
   string contract = 3;
   bytes pk = 4;
-  VerificationKey vk = 5;
-
-  message VerificationKey {
-    G1Affine alpha = 1;
-    G2Affine beta = 2;
-    G2Affine gamma = 3;
-    G2Affine delta = 4;
-    repeated G1Affine gamma_abc = 5;
-    
-    message G1Affine {
-      repeated string fq = 1;
-    }
-    message G2Affine {
-      repeated G1Affine fq2 = 1;
-    }
-  }
+  bool deployed = 5;
+  string address = 6;
 }
 
 service ZKP {
-  rpc GetCircuit(GetCircuitRequest) returns (Circuit);
+  rpc CompileCircuit(Circuit) returns (google.protobuf.Empty);
+  rpc DeployCircuit(Circuit) returns (google.protobuf.Empty);
+  rpc GetCircuit(Circuit) returns (Circuit);
   rpc AddCircuit(Circuit) returns (google.protobuf.Empty);
 }

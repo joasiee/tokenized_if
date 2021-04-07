@@ -5,6 +5,8 @@ logs:
 reset: stop clean start
 start: 
 	docker-compose up -d --remove-orphans
+dev:
+	docker-compose --profile development up -d --remove-orphans
 start-attached:	
 	docker-compose up --remove-orphans
 stop:

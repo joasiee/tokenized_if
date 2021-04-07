@@ -1,3 +1,1 @@
-export * from "./db";
-export * from "./service";
-export * from "./server";
+export * as org_mgr from "./server";
