@@ -277,8 +277,12 @@ export class TokenManager {
     console.log("Token burned, owner of token is: " + await this.ownerOfToken(tokenID));
   }
 
+  /**
+   * Get the token registry that is currently set.
+   * @returns token registry
+   */
   getRegistry() {
-    return this.tokenRegistry.address;
+    return this.tokenRegistry;
   }
 
 
@@ -320,7 +324,6 @@ export class TokenManager {
         importerTM.connectTokenRegistry(tokenRegistryAddress, importerTM.signer);
         escrowInstance = importerTM.connectEscrowInstance(escrowInstance.address, importerTM.signer);
         console.log("token balance on contract is : " + await importerTM.getTokenBalance(escrowInstance));
-        
         
         // Sets a deal tokenPrice = 5ETH, buyBackPrice = 7ETH, holder will transfer to financer after payment
         await escrowInstance.setTokenDeal(importerTM.ethToWei(5), importerTM.ethToWei(7), financerPublicAddress);
