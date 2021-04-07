@@ -336,14 +336,16 @@ export class TokenManager {
         ////////////// Financer PART ///////////
         financerTM.connectTokenRegistry(tokenRegistryAddress, financerTM.signer);
         let financer_escrowInstance = financerTM.connectEscrowInstance(escrowAddress, financerTM.signer);
-        financerTM.sendEther(financerPublicAddress, escrowAddress, 5, financerTM.private_key);
+        await financerTM.sendEther(financerPublicAddress, escrowAddress, 5, financerTM.private_key);
         console.log("Current holder", await financer_escrowInstance.holder());
-        //financer.sendEther(this.importerPublicAddress, escrowInstance.address, 7, this.importerPrivateKey);
-    
-        console.log("Current holder", await escrowInstance.holder());
-        console.log("Beneficiary", await escrowInstance.beneficiary());
-    
-        console.log("Current owner of token is: " + await this.ownerOfToken(this.tokenID));
+
+        ////////////// Importer PART ///////////
+        await importerTM.sendEther(importerPublicAddress, escrowAddress, 7, importerTM.private_key);
+        importer_escrowInstance = importerTM.connectEscrowInstance(escrowAddress, importerTM.signer);
+        console.log("Current holder", await importer_escrowInstance.holder());
+        console.log("Beneficiary", await importer_escrowInstance.beneficiary());
+
+        /*
         await this.sendRelease(escrowInstance);
         console.log("token balance on contract is : " + await this.getTokenBalance(escrowInstance));
         console.log("Current owner of token is: " + await this.ownerOfToken(this.tokenID));
