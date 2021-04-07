@@ -258,7 +258,6 @@ export class TokenManager {
     return this.web3.utils.fromWei(balance);
   }
 
-
   /**
    * Sends a release by sending the token back to the token registry.
    */
@@ -295,7 +294,7 @@ export class TokenManager {
 **************** **************** **************** */
 
 /**
- * This is just a simple example to see if it works.
+ * This is just a simple example to see if it works, as manual testing.
  */
 async function main() {
   // tokenId, should be the hash of the document.
@@ -358,4 +357,108 @@ async function main() {
   }
 }
 
-main();
+/**
+ * Version2 of main. 
+ * Deploying 2 title escrows, same token registry. 
+ * A more complicated order and interaction of buying and buying back. And burning both at the end.
+ */
+async function mainV2() {
+  let tokenID = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
+  let tokenID2 = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb9";
+  let lspPrivateKey = "ff3abd8ad911f5f49b6efd3c70eb1a6a573181fc16aeb0d1ac4f97ead1910470";
+  let importerPrivateKey = "deb457fd9ead02fba320d3c8db3b14fa7df0eb8fa2401ad82531ebce3b218e8c";
+  let financerPrivateKey = "15b2027cc808d97e3c9b0be3db579fd6c3a64ee3e7ae53446f8060b46cf27f68";
+  let ganacheURL = "http://172.30.64.1:7545";
+  console.log("Running main V2");
+  try {
+    let lspTM = createTokenManager({ ganacheUrl: ganacheURL, privateKey: lspPrivateKey });
+    let importerTM = createTokenManager({ ganacheUrl: ganacheURL, privateKey: importerPrivateKey });
+    let financerTM = createTokenManager({ ganacheUrl: ganacheURL, privateKey: financerPrivateKey });
+
+    let importerPublicAddress = await importerTM.signer.getAddress();
+    let financerPublicAddress = await financerTM.signer.getAddress();
+
+    ////////////// LSP PART ///////////
+    await lspTM.setupTokenRegistry();
+    // Token Registry address needs to be shared!
+    let tokenRegistryAddress = lspTM.tokenRegistry.address;
+    // Deploy two escrow instances
+    let LSP_escrowInstance = await lspTM.deployImporterEscrow(tokenID, importerPublicAddress);
+    let LSP_escrowInstance2 = await lspTM.deployImporterEscrow(tokenID2, importerPublicAddress);
+    // Escrow address needs to be shared!
+    let escrowAddress = LSP_escrowInstance.address;
+    let escrowAddress2 = LSP_escrowInstance2.address;
+
+    ////////////// Importer PART ///////////
+    importerTM.connectTokenRegistry(tokenRegistryAddress, importerTM.signer);
+    let importer_escrowInstance = importerTM.connectEscrowInstance(escrowAddress, importerTM.signer);
+    let importer_escrowInstance2 = importerTM.connectEscrowInstance(escrowAddress2, importerTM.signer);
+    console.log("token balance on contract 1 is : " + await importerTM.getTokenBalance(importer_escrowInstance));
+    console.log("token balance on contract 2 is : " + await importerTM.getTokenBalance(importer_escrowInstance2));
+
+    await importer_escrowInstance.setTokenDeal(importerTM.ethToWei(5), importerTM.ethToWei(7), financerPublicAddress);
+    await importer_escrowInstance2.setTokenDeal(importerTM.ethToWei(10), importerTM.ethToWei(15), financerPublicAddress);
+
+    let deal = await importerTM.getTokenDeal(importer_escrowInstance);
+    let deal2 = await importerTM.getTokenDeal(importer_escrowInstance2);
+    console.log("[DEAL for token 1] price: ", deal[0], ", buyBackprice: ", deal[1], ", token transferred to: ", deal[2]);
+    console.log("[DEAL for token 2] price: ", deal2[0], ", buyBackprice: ", deal2[1], ", token transferred to: ", deal2[2]);
+
+    ////////////// Financer PART ///////////
+    // financer decides to buy token2 first.
+    console.log("Financer decides to buy token2 first");
+    financerTM.connectTokenRegistry(tokenRegistryAddress, financerTM.signer);
+    let financer_escrowInstance2 = financerTM.connectEscrowInstance(escrowAddress2, financerTM.signer);
+    await financerTM.sendEther(financerPublicAddress, escrowAddress2, 10, financerTM.private_key);
+    console.log("Current holder token2 ", await financer_escrowInstance2.holder());
+
+    ////////////// Importer PART ///////////
+    // importer decides to buy token2 back.
+    console.log("importer decides to buy back token2");
+    await importerTM.sendEther(importerPublicAddress, escrowAddress2, 15, importerTM.private_key);
+    importer_escrowInstance2 = importerTM.connectEscrowInstance(escrowAddress2, importerTM.signer);
+    console.log("Current holder token2 ", await importer_escrowInstance2.holder());
+    console.log("Beneficiary token2 ", await importer_escrowInstance2.beneficiary());
+
+    ////////////// Financer PART ///////////
+    // financer decides to buy token1 now.
+    console.log("financer decides to buy token1 now");
+    let financer_escrowInstance = financerTM.connectEscrowInstance(escrowAddress, financerTM.signer);
+    await financerTM.sendEther(financerPublicAddress, escrowAddress, 5, financerTM.private_key);
+    console.log("Current holder token1 ", await financer_escrowInstance.holder());
+
+    ////////////// Importer PART ///////////
+    // importer decides to request release for token2.
+    console.log("importer decides to request release for token2");
+    importer_escrowInstance2 = importerTM.connectEscrowInstance(escrowAddress2, importerTM.signer);
+    await importerTM.sendRelease(importer_escrowInstance2);
+    console.log("token balance on contract2 is : " + await importerTM.getTokenBalance(importer_escrowInstance2));
+    console.log("Current owner of token2 is: " + await importerTM.ownerOfToken(tokenID2));
+
+    // importer decides to buy token1 back.
+    console.log("importer decides to buy token1 back");
+    await importerTM.sendEther(importerPublicAddress, escrowAddress, 7, importerTM.private_key);
+    importer_escrowInstance = importerTM.connectEscrowInstance(escrowAddress, importerTM.signer);
+    console.log("Current holder token1 ", await importer_escrowInstance.holder());
+    console.log("Beneficiary token1 ", await importer_escrowInstance.beneficiary());
+
+    // importer decides to request release for token1.
+    console.log("importer decides to request release for token1");
+    importer_escrowInstance = importerTM.connectEscrowInstance(escrowAddress, importerTM.signer);
+    await importerTM.sendRelease(importer_escrowInstance);
+    console.log("token balance on contract1 is : " + await importerTM.getTokenBalance(importer_escrowInstance));
+    console.log("Current owner of token1 is: " + await importerTM.ownerOfToken(tokenID));
+
+    ////////////// LSP PART ///////////
+    // LSP has received both release requests and confirms to burn both.
+    console.log("LSP has received both release requests and confirms to burn both.");
+    lspTM.connectTokenRegistry(tokenRegistryAddress, lspTM.signer);
+    await lspTM.burnToken(tokenID);
+    await lspTM.burnToken(tokenID2);
+  }
+  catch (e) {
+    console.log(e);
+  }
+}
+
+//mainV2();
