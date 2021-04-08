@@ -65,9 +65,10 @@ describe("Integration", function() {
     });
   });
 
-  after(function() {
+  after(async function() {
     orgMgr.shutdown();
-    commitMgr.shutdown();
+    await commitMgr.shutdown();
+    await clearDBs();
     dbClose();
   });
 });

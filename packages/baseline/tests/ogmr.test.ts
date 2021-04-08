@@ -65,7 +65,7 @@ describe("Organization Manager", function() {
     };
 
     afterEach(async function() {
-      await orgregistry.db.deleteMany(); //clear db before each test
+      await orgregistry.db.remove(); //clear db before each test
     });
 
     it("should add registry with no groups or orgs", async function() {
