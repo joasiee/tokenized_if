@@ -1,7 +1,7 @@
 import { ServerUnaryCall, sendUnaryData, status, StatusObject } from "@grpc/grpc-js";
 import { IZKPServer } from "@tokenized_if/shared/src/proto/zkp_grpc_pb";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
-import { Circuit } from "@tokenized_if/shared/src/proto/zkp_pb";
+import { Circuit, GenerateProofRequest, Proof } from "@tokenized_if/shared/src/proto/zkp_pb";
 import { ZKPService } from "../service";
 import { schema } from "../db";
 
@@ -53,5 +53,14 @@ export const ZKPServer: IZKPServer = {
     const req = call.request as Circuit;
     const res = await service.compileCircuit(req.getName());
     callback(handleError(res));
+  },
+  generateProof: async (call: ServerUnaryCall<GenerateProofRequest, Proof>, callback: sendUnaryData<Proof>) => {
+    const req = call.request as GenerateProofRequest;
+    const res = await service.generateProof(req.getName(), req.getArgsList());
+    if (res instanceof Error) {
+      return callback(handleError(res));
+    } else {
+      return callback(null, res);
+    }
   }
 };

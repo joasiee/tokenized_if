@@ -1,11 +1,11 @@
 import { dbClose, dbConnect, getLogger } from "@tokenized_if/shared";
-import { initialize, ZoKratesProvider } from "zokrates-js";
+import { CompilationArtifacts, initialize, ZoKratesProvider } from "zokrates-js";
 import { existsSync, readFileSync } from "fs";
 import path from "path";
 import { compileContract, deployContract } from "../../blockchain-mgr";
 import { schema } from "../db";
 import { config } from "../../config";
-import { Circuit } from "@tokenized_if/shared/src/proto/zkp_pb";
+import { Circuit, Proof } from "@tokenized_if/shared/src/proto/zkp_pb";
 import { DBSync } from "./dbsync";
 
 const logger = getLogger("zkp-mgr");
@@ -79,6 +79,32 @@ export class ZKPService {
       }
     }
     return Error(`Circuit ${name} does not exist in db`);
+  }
+
+  /**
+   * Generates proof for circuit and inputs.
+   * First computes witness, then uses that to generate proof.
+   * @param name name of local circuit, has to be compiled and stored in registry
+   * @param args circuit input args
+   * @returns protobuf compatible proof
+   */
+  async generateProof(name: string, args: any[]): Promise<Proof | Error> {
+    if (await schema.db.exists({ name: name })) {
+      const circuit = await schema.db.findOne({ name: name });
+      const artifacts: CompilationArtifacts = {
+        program: circuit.artifacts.program as Uint8Array,
+        abi: circuit.artifacts.abi
+      };
+      try {
+        const witness = this.zok.computeWitness(artifacts, args);
+        const proof = this.zok.generateProof(artifacts.program, witness.witness, circuit.pk as Uint8Array);
+        return schema.zokToProtoProof(proof);
+      } catch (error) {
+        return Error(error);
+      }
+    } else {
+      return Error(`Circuit ${name} does not exist in db`);
+    }
   }
 
   /**

@@ -4,6 +4,7 @@
 var grpc = require('@grpc/grpc-js');
 var zkp_pb = require('./zkp_pb.js');
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
+var google_protobuf_any_pb = require('google-protobuf/google/protobuf/any_pb.js');
 
 function serialize_google_protobuf_Empty(arg) {
   if (!(arg instanceof google_protobuf_empty_pb.Empty)) {
@@ -25,6 +26,28 @@ function serialize_zkp_Circuit(arg) {
 
 function deserialize_zkp_Circuit(buffer_arg) {
   return zkp_pb.Circuit.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_zkp_GenerateProofRequest(arg) {
+  if (!(arg instanceof zkp_pb.GenerateProofRequest)) {
+    throw new Error('Expected argument of type zkp.GenerateProofRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_zkp_GenerateProofRequest(buffer_arg) {
+  return zkp_pb.GenerateProofRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_zkp_Proof(arg) {
+  if (!(arg instanceof zkp_pb.Proof)) {
+    throw new Error('Expected argument of type zkp.Proof');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_zkp_Proof(buffer_arg) {
+  return zkp_pb.Proof.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
@@ -72,6 +95,17 @@ var ZKPService = exports.ZKPService = {
     requestDeserialize: deserialize_zkp_Circuit,
     responseSerialize: serialize_google_protobuf_Empty,
     responseDeserialize: deserialize_google_protobuf_Empty,
+  },
+  generateProof: {
+    path: '/zkp.ZKP/GenerateProof',
+    requestStream: false,
+    responseStream: false,
+    requestType: zkp_pb.GenerateProofRequest,
+    responseType: zkp_pb.Proof,
+    requestSerialize: serialize_zkp_GenerateProofRequest,
+    requestDeserialize: deserialize_zkp_GenerateProofRequest,
+    responseSerialize: serialize_zkp_Proof,
+    responseDeserialize: deserialize_zkp_Proof,
   },
 };
 

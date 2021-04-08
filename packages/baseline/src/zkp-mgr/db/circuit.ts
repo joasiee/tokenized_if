@@ -1,6 +1,6 @@
 import { Document, Schema, model } from "mongoose";
-import { Circuit } from "@tokenized_if/shared/src/proto/zkp_pb";
-import { CompilationArtifacts, SetupKeypair } from "zokrates-js";
+import { Circuit, Proof } from "@tokenized_if/shared/src/proto/zkp_pb";
+import { CompilationArtifacts, SetupKeypair, Proof as zokProof } from "zokrates-js";
 
 const artifactFields: Record<keyof Circuit.Artifacts.AsObject, any> = {
   program: { type: Buffer, required: true },
@@ -41,6 +41,15 @@ export function zokToModel(
     deployed: false,
     address: ""
   };
+}
+
+export function zokToProtoProof(proof: zokProof): Proof {
+  const points = new Proof.ProofPoints()
+    .setAList(proof.proof.a)
+    .setB1List(proof.proof.b[0])
+    .setB2List(proof.proof.b[1])
+    .setCList(proof.proof.c);
+  return new Proof().setProof(points).setInputsList(proof.inputs);
 }
 
 export function modelToProto(model: ICircuit): Circuit {

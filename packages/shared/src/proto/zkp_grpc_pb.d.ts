@@ -8,12 +8,14 @@ import * as grpc from "@grpc/grpc-js";
 import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";
 import * as zkp_pb from "./zkp_pb";
 import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
+import * as google_protobuf_any_pb from "google-protobuf/google/protobuf/any_pb";
 
 interface IZKPService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     compileCircuit: IZKPService_ICompileCircuit;
     deployCircuit: IZKPService_IDeployCircuit;
     getCircuit: IZKPService_IGetCircuit;
     addCircuit: IZKPService_IAddCircuit;
+    generateProof: IZKPService_IGenerateProof;
 }
 
 interface IZKPService_ICompileCircuit extends grpc.MethodDefinition<zkp_pb.Circuit, google_protobuf_empty_pb.Empty> {
@@ -52,6 +54,15 @@ interface IZKPService_IAddCircuit extends grpc.MethodDefinition<zkp_pb.Circuit, 
     responseSerialize: grpc.serialize<google_protobuf_empty_pb.Empty>;
     responseDeserialize: grpc.deserialize<google_protobuf_empty_pb.Empty>;
 }
+interface IZKPService_IGenerateProof extends grpc.MethodDefinition<zkp_pb.GenerateProofRequest, zkp_pb.Proof> {
+    path: "/zkp.ZKP/GenerateProof";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<zkp_pb.GenerateProofRequest>;
+    requestDeserialize: grpc.deserialize<zkp_pb.GenerateProofRequest>;
+    responseSerialize: grpc.serialize<zkp_pb.Proof>;
+    responseDeserialize: grpc.deserialize<zkp_pb.Proof>;
+}
 
 export const ZKPService: IZKPService;
 
@@ -60,6 +71,7 @@ export interface IZKPServer extends grpc.UntypedServiceImplementation {
     deployCircuit: grpc.handleUnaryCall<zkp_pb.Circuit, google_protobuf_empty_pb.Empty>;
     getCircuit: grpc.handleUnaryCall<zkp_pb.Circuit, zkp_pb.Circuit>;
     addCircuit: grpc.handleUnaryCall<zkp_pb.Circuit, google_protobuf_empty_pb.Empty>;
+    generateProof: grpc.handleUnaryCall<zkp_pb.GenerateProofRequest, zkp_pb.Proof>;
 }
 
 export interface IZKPClient {
@@ -75,6 +87,9 @@ export interface IZKPClient {
     addCircuit(request: zkp_pb.Circuit, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
     addCircuit(request: zkp_pb.Circuit, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
     addCircuit(request: zkp_pb.Circuit, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    generateProof(request: zkp_pb.GenerateProofRequest, callback: (error: grpc.ServiceError | null, response: zkp_pb.Proof) => void): grpc.ClientUnaryCall;
+    generateProof(request: zkp_pb.GenerateProofRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: zkp_pb.Proof) => void): grpc.ClientUnaryCall;
+    generateProof(request: zkp_pb.GenerateProofRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: zkp_pb.Proof) => void): grpc.ClientUnaryCall;
 }
 
 export class ZKPClient extends grpc.Client implements IZKPClient {
@@ -91,4 +106,7 @@ export class ZKPClient extends grpc.Client implements IZKPClient {
     public addCircuit(request: zkp_pb.Circuit, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
     public addCircuit(request: zkp_pb.Circuit, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
     public addCircuit(request: zkp_pb.Circuit, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    public generateProof(request: zkp_pb.GenerateProofRequest, callback: (error: grpc.ServiceError | null, response: zkp_pb.Proof) => void): grpc.ClientUnaryCall;
+    public generateProof(request: zkp_pb.GenerateProofRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: zkp_pb.Proof) => void): grpc.ClientUnaryCall;
+    public generateProof(request: zkp_pb.GenerateProofRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: zkp_pb.Proof) => void): grpc.ClientUnaryCall;
 }
