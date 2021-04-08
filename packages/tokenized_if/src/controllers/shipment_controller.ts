@@ -1,12 +1,12 @@
 import express from "express";
 import { addShipment, getAllShipments, getShipmentById } from "../db/shipment_queries";
 import { CreateShipmentObject, Shipment } from "../models/shipment";
-import { successMessage } from "./helpers/status";
+import { errorMessage, successMessage } from "./helpers/status";
 import web3 from "web3";
 import { createMessagingClient } from "messaging";
 import { CreateOfferDao, Offer } from "../models/offer";
 import { tm } from "../services/token";
-import { getAllFinancers, getParticipant } from "../db/participant_queries";
+import { getAllFinancers, getLsp, getParticipant } from "../db/participant_queries";
 import { Participant } from "../models/participant";
 import { createOffer } from "../db/offer_queries";
 
@@ -57,6 +57,29 @@ class ShipmentController {
     res.send(successMessage);
   }
 
+  async release(req: express.Request, res: express.Response) {
+    const { shipmentId } = req.params;
+    const shipmentIdInt = parseInt(shipmentId);
+    const shipment = await getShipmentById(shipmentIdInt);
+
+    const escrow = tm.connectEscrowInstance(shipment.escrow_address, tm.signer);
+    const beneficiary = await escrow.beneficiary();
+    const holder = await escrow.holder();
+    // Check if we have right of release
+    if (beneficiary === holder) {
+      await tm.sendRelease(escrow);
+      console.log("Token succesfully released");
+      
+      // Notify LSP of release
+      notifyLspRelease(shipment.cargo_hash);
+
+      res.send(successMessage);
+    } else {
+      console.log("Could not release token: You are not the holder");
+      res.send(errorMessage);
+    }
+  }
+
 }
 
 // Helper functions
@@ -82,6 +105,16 @@ async function notifyFinancersOffers(offer: Offer) : Promise<void> {
     console.log(`(Importer) Offer published to financer: ${financer.name}`);
     await financerClient.disconnect();
   }
+}
+
+async function notifyLspRelease(shipmentHash: string) : Promise<void> {
+  const lsp = await getLsp();
+  const lspClient = createMessagingClient({
+    serverUrl: lsp.nats,
+  })
+  await lspClient.connect();
+  await lspClient.publish<string>(shipmentHash, 'release');
+  await lspClient.disconnect();
 }
 
 export default new ShipmentController();

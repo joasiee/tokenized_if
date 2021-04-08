@@ -1,12 +1,9 @@
 import { IMessagingClient, createMessagingClient } from "messaging";
 
 import dotenv from "dotenv";
-import { AcceptOffer, Offer } from "../models/offer";
-import { Shipment } from "../models/shipment";
-import { Cargo } from "../models/cargo";
-import { Participant } from "../models/participant";
-import { addParticipant, getAllParticipants } from "../db/participant_queries";
 import { getRegistry } from "../db/registry_queries";
+import { tm } from "./token";
+import { getShipmentByHash } from "../db/shipment_queries";
 
 // Load .env variables in process.env
 dotenv.config();
@@ -31,6 +28,17 @@ const subscriptions: Subscription = {
     (async () => {
       for await (const m of registryRep) {
         await m.respond(await getRegistry());
+      }
+    })();
+
+    const releaseSub = client.subscribe<string>('release');
+    (async () => {
+      for await (const m of releaseSub) {
+        const shipment = await getShipmentByHash(m.payload);
+        if (shipment && tm.tokenRegistry.address === await tm.ownerOfToken(shipment.cargo_hash)) {
+          await tm.burnToken(shipment.cargo_hash);
+          console.log(`(LSP) Burned token: ${shipment.cargo_hash}`);
+        }
       }
     })();
 
