@@ -27,12 +27,6 @@ services:
     ports:
       - 27017:27017
 
-  nats:
-    container_name: nats
-    image: nats
-    ports:
-      - 4222:4222
-
   mongo-express:
     image: mongo-express
     container_name: mongo-express

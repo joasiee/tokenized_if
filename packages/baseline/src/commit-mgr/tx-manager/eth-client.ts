@@ -1,8 +1,10 @@
 import { ethers } from "ethers";
 import { ITxManager } from ".";
-import { logger } from "../logger";
+import { getLogger } from "@tokenized_if/shared";
 import { jsonrpc, shieldContract } from "../blockchain";
 import { HDWallet } from "../../blockchain-mgr";
+
+const logger = getLogger("commit-mgr");
 
 export class EthClient implements ITxManager {
   constructor(private readonly config: any) {
@@ -25,7 +27,7 @@ export class EthClient implements ITxManager {
       nonce,
       chainId: parseInt(process.env.ETH_CHAIN_ID, 10),
       gasLimit: 0,
-      gasPrice: gasPriceSet,
+      gasPrice: gasPriceSet
     };
 
     const gasEstimate = await wallet.estimateGas(unsignedTx);
@@ -45,7 +47,7 @@ export class EthClient implements ITxManager {
       const txData = shieldInterface.encodeFunctionData("verifyAndPush(uint256[],uint256[],bytes32)", [
         proof,
         publicInputs,
-        newCommitment,
+        newCommitment
       ]);
       const signedTx = await this.signTx(toAddress, fromAddress, txData);
       logger.debug(`signedTx: ${signedTx}`);

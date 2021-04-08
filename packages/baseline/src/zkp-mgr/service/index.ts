@@ -3,7 +3,7 @@ import { CompilationArtifacts, initialize, ZoKratesProvider } from "zokrates-js"
 import { existsSync, readFileSync } from "fs";
 import path from "path";
 import { compileContract, deployContract } from "../../blockchain-mgr";
-import { schema } from "../db";
+import { circuit } from "../db";
 import { config } from "../../config";
 import { Circuit, Proof } from "@tokenized_if/shared/src/proto/zkp_pb";
 import { DBSync } from "./dbsync";
@@ -41,7 +41,7 @@ export class ZKPService {
         const keys = this.zok.setup(artifacts.program);
         const verifier = this.zok.exportSolidityVerifier(keys.vk, "v2");
         if (compileContract(verifier, outputPath, "Verifier")) {
-          await schema.db.create(schema.zokToModel(name, artifacts, keys, verifier));
+          await circuit.db.create(circuit.zokToModel(name, artifacts, keys, verifier));
           return null;
         }
         return Error("Could not compile circuit contract using solc");
@@ -60,8 +60,8 @@ export class ZKPService {
    * @returns
    */
   async deployCircuit(name: string): Promise<null | Error> {
-    if (await schema.db.exists({ name: name })) {
-      const model = await schema.db.findOne({ name: name });
+    if (await circuit.db.exists({ name: name })) {
+      const model = await circuit.db.findOne({ name: name });
       if (!model.deployed) {
         const address = (await deployContract(name)).address;
         logger.debug(`Deployed circuit verifier contract at: ${address}`);
@@ -84,18 +84,18 @@ export class ZKPService {
    * @returns protobuf compatible proof
    */
   async generateProof(name: string, args: any[]): Promise<Proof | Error> {
-    if (await schema.db.exists({ name: name })) {
-      const circuit = await schema.db.findOne({ name: name });
+    if (await circuit.db.exists({ name: name })) {
+      const model = await circuit.db.findOne({ name: name });
       logger.debug(`Generating proof for: ${name} with inputs: ${args}`);
       const artifacts: CompilationArtifacts = {
-        program: circuit.artifacts.program as Uint8Array,
-        abi: circuit.artifacts.abi
+        program: model.artifacts.program as Uint8Array,
+        abi: model.artifacts.abi
       };
       try {
         const witness = this.zok.computeWitness(artifacts, args);
-        const proof = this.zok.generateProof(artifacts.program, witness.witness, circuit.pk as Uint8Array);
+        const proof = this.zok.generateProof(artifacts.program, witness.witness, model.pk as Uint8Array);
         logger.debug(`Proof successfully generated for ${name}`);
-        return schema.zokToProtoProof(proof);
+        return circuit.zokToProtoProof(proof);
       } catch (error) {
         return Error(error);
       }
@@ -109,9 +109,9 @@ export class ZKPService {
    * @param name
    * @returns
    */
-  async getCircuit(name: string): Promise<schema.ICircuit | null> {
-    if (await schema.db.exists({ name: name })) {
-      return await schema.db.findOne({ name: name });
+  async getCircuit(name: string): Promise<circuit.ICircuit | null> {
+    if (await circuit.db.exists({ name: name })) {
+      return await circuit.db.findOne({ name: name });
     }
     return null;
   }
@@ -121,12 +121,12 @@ export class ZKPService {
    * @param circuit
    * @returns
    */
-  async addCircuit(circuit: Circuit): Promise<Error | null> {
-    if (!(await schema.db.exists({ name: circuit.getName() }))) {
-      logger.debug(`Adding circuit from protobuf object: ${JSON.stringify(circuit.toObject())}`);
-      await schema.db.create(circuit.toObject());
+  async addCircuit(proto: Circuit): Promise<Error | null> {
+    if (!(await circuit.db.exists({ name: proto.getName() }))) {
+      logger.debug(`Adding circuit from protobuf object: ${JSON.stringify(proto.toObject())}`);
+      await circuit.db.create(proto.toObject());
       return null;
     }
-    return Error(`Circuit ${circuit.getName()} already in db`);
+    return Error(`Circuit ${proto.getName()} already in db`);
   }
 }

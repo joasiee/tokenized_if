@@ -1,6 +1,6 @@
 import { getLogger } from "@tokenized_if/shared";
 import { isDeployed } from "../../blockchain-mgr";
-import { schema } from "../db";
+import { circuit } from "../db";
 
 const logger = getLogger("zkp-mgr");
 
@@ -9,7 +9,7 @@ const logger = getLogger("zkp-mgr");
  */
 export class DBSync {
   async updateDB() {
-    const circuits = await schema.db.find();
+    const circuits = await circuit.db.find();
     for (const circuit of circuits) {
       await this.updateCircuit(circuit);
     }
@@ -20,7 +20,7 @@ export class DBSync {
    * If not update local db entry.
    * @param circuit
    */
-  private async updateCircuit(circuit: schema.ICircuit) {
+  private async updateCircuit(circuit: circuit.ICircuit) {
     if (circuit.deployed && !(await isDeployed(circuit.address))) {
       circuit.deployed = false;
       circuit.address = "";

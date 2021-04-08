@@ -23,6 +23,10 @@ export class CommitService {
     await restartSubscriptions(); // Enable event listeners for active MerkleTrees
   }
 
+  async shutdown() {
+    get_ws_provider().destroy();
+  }
+
   async getCommit(req: Request.Commit): Promise<Commitment> {
     const result = await getLeafByLeafIndex(req.getAddress(), req.getIndex());
     return modelToCommitment(result);

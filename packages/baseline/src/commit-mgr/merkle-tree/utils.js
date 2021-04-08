@@ -5,11 +5,11 @@
 
 import dotenv from "dotenv";
 import { config } from "./config";
-import { logger } from "../logger";
+import { getLogger } from "@tokenized_if/shared";
 import { concatenateThenHash } from "./hash";
 import { merkleTrees } from "../db/models/MerkleTree";
 
-dotenv.config();
+const logger = getLogger("commit-mgr");
 
 function rightShift(integer, shift) {
   return Math.floor(integer / 2 ** shift);

@@ -1,1 +1,1 @@
-export * as schema from "./circuit";
+export * as circuit from "./circuit";

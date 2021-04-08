@@ -1,6 +1,8 @@
-import { logger } from "../logger";
+import { getLogger } from "@tokenized_if/shared";
 import { merkleTrees } from "../db/models/MerkleTree";
 import { leafIndexToNodeIndex, calculateBucket } from "./utils";
+
+const logger = getLogger("commit-mgr");
 
 /**
  * Insert a new leaf into the merkle tree

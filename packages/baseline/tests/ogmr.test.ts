@@ -1,5 +1,6 @@
 import chai, { expect } from "chai";
 import chaiExclude from "chai-exclude";
+import chaiMatch from "chai-match";
 import { after, describe, it } from "mocha";
 import { OrgRegistry, Organization, Workgroup } from "@tokenized_if/shared/src/proto/organizations_pb";
 import { orgregistry } from "../src/organization-mgr/db";
@@ -7,6 +8,7 @@ import { OrganizationsService } from "../src/organization-mgr/service";
 import { dbConnect, dbClose } from "@tokenized_if/shared";
 
 chai.use(chaiExclude);
+chai.use(chaiMatch);
 const ethAddress = "0xfe36dee625234eaedbade27c15405eb482b81f1d";
 
 // helper functions
@@ -97,9 +99,7 @@ describe("Organization Manager", function() {
 
     it("should deploy registry", async function() {
       const registry = await service.deployRegistry(req);
-      expect(registry.getAddress()).to.not.eq("");
-      expect(registry.getAddress()).to.not.eq(undefined);
-      expect(registry.getAddress()).to.not.eq(null);
+      expect(registry.getAddress()).to.match(/^0x[a-fA-F0-9]{40}$/);
     });
 
     it("should add organization to deployed registry", async function() {

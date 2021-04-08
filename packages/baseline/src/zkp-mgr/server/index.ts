@@ -3,7 +3,7 @@ import { IZKPServer } from "@tokenized_if/shared/src/proto/zkp_grpc_pb";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
 import { Circuit, GenerateProofRequest, Proof } from "@tokenized_if/shared/src/proto/zkp_pb";
 import { ZKPService } from "../service";
-import { schema } from "../db";
+import { circuit } from "../db";
 
 let service: ZKPService;
 
@@ -36,7 +36,7 @@ export const ZKPServer: IZKPServer = {
         details: `Circuit ${req.getName()} could not be found`
       });
     } else {
-      callback(null, schema.modelToProto(res));
+      callback(null, circuit.modelToProto(res));
     }
   },
   addCircuit: async (call: ServerUnaryCall<Circuit, Empty>, callback: sendUnaryData<Empty>) => {
