@@ -1,13 +1,15 @@
 import * as grpc from "@grpc/grpc-js";
-import { getLogger } from "@tokenized_if/shared";
+import { dbConnect, getLogger } from "@tokenized_if/shared";
 import { OrganizationsService } from "@tokenized_if/shared/src/proto/organizations_grpc_pb";
 import { ZKPService } from "@tokenized_if/shared/src/proto/zkp_grpc_pb";
+import { commitMgrStart } from "./commit-mgr";
 import { org_mgr } from "./organization-mgr";
 import { zkp_mgr } from "./zkp-mgr";
 
 const main = async function() {
   const logger = getLogger("baseline-main");
   const server = new grpc.Server();
+  await dbConnect(process.env.MONGO_DB_NAME);
   await org_mgr.initServer();
   await zkp_mgr.initServer();
   server.addService(OrganizationsService, org_mgr.OrganizationsServer);
@@ -19,6 +21,7 @@ const main = async function() {
     logger.info(`Listening on ${port}`);
     server.start();
   });
+  await commitMgrStart();
 };
 
 main();

@@ -4,7 +4,6 @@ import cors from "cors";
 
 import { rpcServer } from "./rpc-server";
 import { logger, reqLogger, reqErrorLogger } from "./logger";
-import { dbConnect } from "@tokenized_if/shared";
 import { get_ws_provider, restartSubscriptions } from "./blockchain";
 
 export const commitMgrStart = async () => {
@@ -14,7 +13,6 @@ export const commitMgrStart = async () => {
 
   logger.debug(`Attempting to connect to db: ${process.env.MONGO_HOST}/${process.env.CMGR_DATABASE_NAME}`);
 
-  await dbConnect(process.env.CMGR_DATABASE_NAME);
   await get_ws_provider(); // Establish websocket connection
   await restartSubscriptions(); // Enable event listeners for active MerkleTrees
 

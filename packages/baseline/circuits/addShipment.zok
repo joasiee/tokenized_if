@@ -1,11 +1,11 @@
 import "hashes/sha256/512bitPacked" as sha
 
 // inputs:
-// commitHash: public input hash that is inserted into on chain merkle tree
-// pkLSP: public key of lsp
-// skLSP: private key of lsp
-// pkImporter: public key of importer
-// billHash: sha256 hash of bill of lading (merkle root obtained from open attestation could also be used)
+// commitHash: public input hash that is inserted into on chain merkle tree (public)
+// pkLSP: public key of lsp (public)
+// skLSP: private key of lsp (private)
+// pkImporter: public key of importer (private)
+// billHash: sha256 hash of bill of lading (merkle root obtained from open attestation could also be used) (private)
 //
 // proof:
 // - proof generator owns private key belonging to public key (simple hash for now)

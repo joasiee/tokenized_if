@@ -4,6 +4,7 @@ import { after, describe, it } from "mocha";
 import { OrgRegistry, Organization, Workgroup } from "@tokenized_if/shared/src/proto/organizations_pb";
 import { orgregistry } from "../src/organization-mgr/db";
 import { OrganizationsService } from "../src/organization-mgr/service";
+import { dbConnect, dbClose } from "@tokenized_if/shared";
 
 chai.use(chaiExclude);
 const ethAddress = "0xfe36dee625234eaedbade27c15405eb482b81f1d";
@@ -48,6 +49,7 @@ const getDefaultRegistry = function() {
 describe("Organization Manager", function() {
   let service: OrganizationsService;
   before(async function() {
+    await dbConnect(process.env.MONGO_DB_NAME);
     service = new OrganizationsService();
     await service.init();
   });
@@ -132,5 +134,6 @@ describe("Organization Manager", function() {
 
   after(async function() {
     service.shutdown();
+    dbClose();
   });
 });

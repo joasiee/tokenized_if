@@ -8,8 +8,6 @@ import { merkleTrees } from "../db/models/MerkleTree";
 import { shieldContract } from "./shield-contract";
 import { newLeafEvent, subscribeMerkleEvents } from "./events";
 
-dotenv.config();
-
 let ws_provider;
 
 export const http_provider = new ethers.providers.JsonRpcProvider(process.env.ETH_CLIENT_HTTP);

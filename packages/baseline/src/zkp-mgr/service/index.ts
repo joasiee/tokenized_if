@@ -1,4 +1,4 @@
-import { dbClose, dbConnect, getLogger } from "@tokenized_if/shared";
+import { getLogger } from "@tokenized_if/shared";
 import { CompilationArtifacts, initialize, ZoKratesProvider } from "zokrates-js";
 import { existsSync, readFileSync } from "fs";
 import path from "path";
@@ -21,14 +21,9 @@ export class ZKPService {
 
   async init() {
     logger.debug("Initializing ZKP service..");
-    await dbConnect(process.env.ZMGR_DATABASE_NAME);
     await this.dbSync.updateDB();
     this.zok = await initialize();
     logger.debug("Initialized!");
-  }
-
-  shutdown() {
-    dbClose();
   }
 
   /**

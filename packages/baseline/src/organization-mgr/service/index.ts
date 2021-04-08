@@ -1,6 +1,6 @@
 import { Contract, utils } from "ethers";
 import { OrgRegistry, Organization, Workgroup } from "@tokenized_if/shared/src/proto/organizations_pb";
-import { dbConnect, getLogger, dbClose } from "@tokenized_if/shared";
+import { getLogger } from "@tokenized_if/shared";
 import { deployContract, getContract } from "../../blockchain-mgr";
 import { orgregistry } from "../db";
 import { DBSync } from "./dbsync";
@@ -19,7 +19,6 @@ export class OrganizationsService {
    * Connect to local mongodb, update previously stored registries.
    */
   async init() {
-    await dbConnect(process.env.OMGR_DATABASE_NAME);
     await this.dbsync.updateDB();
   }
 
@@ -28,7 +27,6 @@ export class OrganizationsService {
    */
   shutdown() {
     this.dbsync.shutdown();
-    dbClose();
   }
 
   /**
