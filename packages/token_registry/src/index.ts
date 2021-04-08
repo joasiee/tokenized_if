@@ -299,10 +299,10 @@ export class TokenManager {
 async function main() {
   // tokenId, should be the hash of the document.
   let tokenID = "0x624d0d7ae6f44d41d368d8280856dbaac6aa29fb3b35f45b80a7c1c90032eeb3";
-  let lspPrivateKey = "ff3abd8ad911f5f49b6efd3c70eb1a6a573181fc16aeb0d1ac4f97ead1910470";
-  let importerPrivateKey = "deb457fd9ead02fba320d3c8db3b14fa7df0eb8fa2401ad82531ebce3b218e8c";
-  let financerPrivateKey = "15b2027cc808d97e3c9b0be3db579fd6c3a64ee3e7ae53446f8060b46cf27f68";
-  let ganacheURL = "http://172.30.64.1:7545";
+  let lspPrivateKey = "92cb1c44a8f73871ccaab89b049359e4d06f43ad7c71ccf983c61b14d8836562";
+  let importerPrivateKey = "859c199d05f8fbbe8092f79e99e6792303664a013777c115c2842bbb96e61ce6";
+  let financerPrivateKey = "ddea9ab7e47e56672451e5833a2a8bffa6c4696706681017d91e4749821fb792";
+  let ganacheURL = "http://127.0.0.1:7545";
   console.log("Running main");
   try {
     let lspTM = createTokenManager({ ganacheUrl: ganacheURL, privateKey: lspPrivateKey });
@@ -461,4 +461,4 @@ async function mainV2() {
   }
 }
 
-//mainV2();
+//main();

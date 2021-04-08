@@ -6,6 +6,7 @@ import { Shipment } from "../models/shipment";
 import { Cargo } from "../models/cargo";
 import { Participant } from "../models/participant";
 import { addParticipant, getAllParticipants } from "../db/participant_queries";
+import { getRegistry } from "../db/registry_queries";
 
 // Load .env variables in process.env
 dotenv.config();
@@ -26,30 +27,37 @@ const subscriptions: Subscription = {
     await client.connect();
     console.log("(LSP)Connected to NATS Server");
 
-    // Subscribe for clients wanting to join
-    const admitSub = client.reply<Participant, Participant[]>('admittance');
+    const registryRep = client.reply<undefined, string>('token_registry');
     (async () => {
-      for await (const m of admitSub) {
-        // Respond with all currently known participants
-        const participants = await getAllParticipants(); 
-        await m.respond(participants);
-
-        // Add the new participant and notify subscribers
-        await addParticipant(m.payload);
-        await client.publish<Participant>('participants', m.payload);
+      for await (const m of registryRep) {
+        await m.respond(await getRegistry());
       }
     })();
 
-    // Subscribe for clients wanting to deploy their escrow
-    const acceptSub = client.reply<AcceptOffer, EscrowAddress>('escrow');
-    (async () => {
-      for await (const m of acceptSub) {
-        m.payload.cargoHash;
-        // const address = Maak escrow aan
-        const escrow: EscrowAddress = { address: "" };
-        await m.respond(escrow);
-      };
-    })();
+    // // Subscribe for clients wanting to join
+    // const admitSub = client.reply<Participant, Participant[]>('admittance');
+    // (async () => {
+    //   for await (const m of admitSub) {
+    //     // Respond with all currently known participants
+    //     const participants = await getAllParticipants(); 
+    //     await m.respond(participants);
+
+    //     // Add the new participant and notify subscribers
+    //     await addParticipant(m.payload);
+    //     await client.publish<Participant>('participants', m.payload);
+    //   }
+    // })();
+
+    // // Subscribe for clients wanting to deploy their escrow
+    // const acceptSub = client.reply<AcceptOffer, EscrowAddress>('escrow');
+    // (async () => {
+    //   for await (const m of acceptSub) {
+    //     m.payload.cargoHash;
+    //     // const address = Maak escrow aan
+    //     const escrow: EscrowAddress = { address: "" };
+    //     await m.respond(escrow);
+    //   };
+    // })();
 
     // Add new subscriptions here:
   }

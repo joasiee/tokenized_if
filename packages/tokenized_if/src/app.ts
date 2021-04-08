@@ -26,6 +26,8 @@ app.get("/", (req, res) => {
 });
 app.use("/api", apiRouter);
 
+console.log(process.env.GANACHE_URL);
+
 // Setup
 (async function() {
   await setup();

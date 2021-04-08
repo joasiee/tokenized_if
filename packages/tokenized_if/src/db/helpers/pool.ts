@@ -11,7 +11,7 @@ const pool = new Pool({
     database: process.env.APP_DB_NAME,
     host: 'postgres',
     port: parseInt(process.env.POSTGRES_PORT),
-    connectionString: `postgres://root:password@localhost:5432/${process.env.APP_DB_NAME}`
+    connectionString: `postgres://root:password@localhost:${process.env.POSTGRES_PORT}/${process.env.APP_DB_NAME}`
 });
 
 export default pool;

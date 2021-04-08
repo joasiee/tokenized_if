@@ -5,6 +5,7 @@ import financer from './messaging_financer';
 import lsp from './messaging_lsp';
 import { addParticipant, getParticipant } from '../db/participant_queries';
 import { getRegistry, setRegistry } from '../db/registry_queries';
+import { tm, tokenSetup } from './token';
 
 dotenv.config();
 
@@ -23,17 +24,12 @@ export async function setup() {
     case 'lsp':
     default:
       await lsp.setup();
-      if (firstRun) {
-        const address = "" // setup token registry
-        await setRegistry(address);
-      } else {
-        const address = await getRegistry();
-        // setup registry with this address
-      }
   }
-  
+
+  await tokenSetup(await getRegistry());
+
   if (firstRun) {
-    const pubAddress = "" // signer.getAddress();
+    const pubAddress = tm.signer.address;
     const natsEndpoint = `${process.env.NATS_URL}:${process.env.NATS_PORT}`;
     await addParticipant({
       name: process.env.NAME,
@@ -41,14 +37,5 @@ export async function setup() {
       nats: natsEndpoint,
       role: process.env.ROLE,
     });
-    if (role !== 'lsp') {
-      //retrieve token registry form lsp
-    }
   }
-
-  // retrieve token registry location from lsp
-  if (role !== 'lsp') {
-    
-  }
-
 };

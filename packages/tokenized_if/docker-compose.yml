@@ -2,7 +2,6 @@ version: "3.8"
 services:
   postgres:
     image: postgres
-    container_name: postgres
     restart: always
     environment:
       POSTGRES_USER: root
@@ -16,13 +15,12 @@ services:
       interval: 10s
       retries: 10
     ports:
-      - 5432:5432
+      - "${POSTGRES_PORT}:5432"
     volumes:
       - ./ops/db:/docker-entrypoint-initdb.d/
       - pgdata:/var/lib/postgresql/data/
   nats:
     image: nats
-    container_name: nats
     ports:
       - "${NATS_PORT}:${NATS_PORT}"
 volumes:
