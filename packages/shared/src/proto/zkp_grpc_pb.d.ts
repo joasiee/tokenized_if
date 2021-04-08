@@ -8,7 +8,6 @@ import * as grpc from "@grpc/grpc-js";
 import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";
 import * as zkp_pb from "./zkp_pb";
 import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
-import * as google_protobuf_any_pb from "google-protobuf/google/protobuf/any_pb";
 
 interface IZKPService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     compileCircuit: IZKPService_ICompileCircuit;

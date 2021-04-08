@@ -19,6 +19,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.cache/yarn
+            - ~/repo/node_modules
           key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Build all packages
