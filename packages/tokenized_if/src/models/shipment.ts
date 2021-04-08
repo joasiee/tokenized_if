@@ -4,6 +4,7 @@ export interface Shipment {
     owner: string,
     cargo: Cargo,
     cargo_hash: string,
+    escrow_address: string,
 }
 
 export interface CreateShipmentObject {
@@ -15,4 +16,5 @@ export interface CreateShipmentDao {
     owner: string,
     cargo: string,
     cargo_hash: string,
+    escrow_address: string,
 }

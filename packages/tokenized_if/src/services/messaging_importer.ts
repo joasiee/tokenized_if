@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import { AcceptOffer } from "../models/offer";
 import { Cargo } from "../models/cargo";
 import base from './messaging_base';
+import { CreateShipmentDao, Shipment } from "../models/shipment";
+import { addShipment } from "../db/shipment_queries";
 
 // Load .env variables in process.env
 dotenv.config();
@@ -22,6 +24,23 @@ const subscriptions: Subscription = {
 
     // Setup connection with LSP
     await base.setup(firstRun);
+
+    await client.connect();
+    
+    // Setup subscription new shipments
+    const shipmentSub = client.subscribe<Shipment>('shipment');
+    (async () => {
+      for await(const m of shipmentSub) {
+        console.log(`(Importer) Subscription (shipment) received: \nShipment hash: ${m.payload?.cargo_hash}\nEscrow address: ${m.payload.escrow_address}`)
+        const shipment: CreateShipmentDao = {
+          owner: m.payload.owner,
+          cargo: JSON.stringify(m.payload.cargo),
+          cargo_hash: m.payload.cargo_hash,
+          escrow_address: m.payload.escrow_address,
+        };
+        await addShipment(shipment);
+      }
+    })();
 
     // // Setup own subscriptions
     // await client.connect();

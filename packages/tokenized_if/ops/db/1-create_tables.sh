@@ -14,15 +14,15 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 	CREATE TABLE shipment(
 		id SERIAL PRIMARY KEY,
 		cargo_hash TEXT,
+		escrow_address TEXT,
 		owner TEXT references participant,
 		cargo json
 	);
 
 	CREATE TABLE offer(
 		id SERIAL PRIMARY KEY,
-		shipment_id integer references shipment,
+		Shipment_id integer references shipment,
 		financer TEXT,
-		contract_address TEXT,
 		price numeric(12,6),
 		buyback numeric(12,6)
 	);

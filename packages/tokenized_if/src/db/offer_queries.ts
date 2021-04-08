@@ -17,7 +17,7 @@ from offer o
     join participant p on p.name = s.owner;`
 
 export const createOffer = async function (shipment_hash: string) : Promise<Offer> {
-    const { rows } = await query("INSERT INTO offer(shipment_hash) VALUES($1) returning *;", [shipment_hash]);
+    const { rows } = await query("INSERT INTO offer(shipmentHash) VALUES($1) returning *;", [shipment_hash]);
     return rows[0];
 }
 

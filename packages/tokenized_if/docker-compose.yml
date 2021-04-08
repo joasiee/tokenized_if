@@ -22,6 +22,6 @@ services:
   nats:
     image: nats
     ports:
-      - "${NATS_PORT}:${NATS_PORT}"
+      - "${NATS_PORT}:4222"
 volumes:
   pgdata:
