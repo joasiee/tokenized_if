@@ -1,7 +1,7 @@
 import { IMessagingClient, createMessagingClient } from "messaging";
 
 import dotenv from "dotenv";
-import { AcceptOffer, EscrowAddress, Offer } from "../models/offer";
+import { AcceptOffer, Offer } from "../models/offer";
 import { Shipment } from "../models/shipment";
 import { Cargo } from "../models/cargo";
 import { Participant } from "../models/participant";

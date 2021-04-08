@@ -4,7 +4,7 @@ import importer from './messaging_importer';
 import financer from './messaging_financer';
 import lsp from './messaging_lsp';
 import { addParticipant, getParticipant } from '../db/participant_queries';
-import { getRegistry, setRegistry } from '../db/registry_queries';
+import { getRegistry } from '../db/registry_queries';
 import { tm, tokenSetup } from './token';
 
 dotenv.config();
@@ -12,7 +12,7 @@ dotenv.config();
 export async function setup() {
   const role = process.env.ROLE;
   const user = await getParticipant(process.env.NAME);
-  const firstRun = user === null;
+  const firstRun = !user;
 
   switch (role) {
     case 'importer':

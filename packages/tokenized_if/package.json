@@ -7,8 +7,14 @@
   "scripts": {
     "start": "ts-node src/app.ts",
     "start:lsp": "NODE_ENV=lsp ts-node -r dotenv-flow/config src/app.ts",
+    "up:lsp": "docker-compose -p lsp --env-file .env.lsp up",
+    "down:lsp": "docker-compose -p lsp --env-file .env.lsp down",
     "start:importer": "NODE_ENV=importer ts-node -r dotenv-flow/config src/app.ts",
+    "up:importer": "docker-compose -p importer --env-file .env.importer up",
+    "down:importer": "docker-compose -p importer --env-file .env.importer down",
     "start:financer": "NODE_ENV=financer ts-node -r dotenv-flow/config src/app.ts",
+    "up:financer": "docker-compose -p financer --env-file .env.financer up",
+    "down:financer": "docker-compose -p financer --env-file .env.financer down",
     "build": "tsc --build",
     "clean": "tsc --build --clean",
     "test": "echo \"Error: no test specified\" && exit 1"

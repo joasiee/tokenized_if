@@ -7,6 +7,10 @@ export interface Shipment {
     escrow_address: string,
 }
 
+export interface ShipmentDao extends Shipment {
+    id: number;
+}
+
 export interface CreateShipmentObject {
     owner: string,
     cargo: Cargo,

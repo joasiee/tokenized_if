@@ -28,7 +28,7 @@ const subscriptions: Subscription = {
     if (firstRun) {
       const registryAddress = await lspClient.request<undefined, string>('token_registry');
       await setRegistry(registryAddress);
-      console.log("Token registry set in DB");
+      console.log("Token registry set in DB by request from LSP");
 
       // // REPLACE BY BASELINE
       // const participants = await lspClient.request<Participant, Participant[]>('admittance');

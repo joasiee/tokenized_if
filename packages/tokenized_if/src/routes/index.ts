@@ -17,6 +17,6 @@ apiRouter.put("/shipments/:shipmentId", ShipmentController.offer);
 
 // Offer Routes
 apiRouter.get("/offers", OfferController.getAll);
-apiRouter.post("/offers", OfferController.acceptOffer);
+apiRouter.put("/offers/:offerId", OfferController.acceptOffer);
 
 export default apiRouter;

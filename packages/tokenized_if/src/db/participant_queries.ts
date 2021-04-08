@@ -6,13 +6,26 @@ export const getParticipant = async function (name: string) : Promise<Participan
     if (rows.length > 0) {
         return rows[0];
     }
-    return null;
+    return undefined;
+};
+
+export const getParticipantById = async function (id: number) : Promise<Participant> {
+    const { rows } = await query("SELECT * FROM participant WHERE id=$1", [id]);
+    if (rows.length > 0) {
+        return rows[0];
+    }
+    return undefined;
 };
 
 export const getAllParticipants = async function () : Promise<Participant[]> {
     const { rows } = await query("SELECT * FROM participant");
     return rows;
 };
+
+export const getAllFinancers = async function () : Promise<Participant[]> {
+    const { rows } = await query("SELECT * FROM participant WHERE role='financer'");
+    return rows;
+}
 
 export const addParticipant = async function (dco: Participant) :Promise<Participant> {
     const values = [dco.name, dco.address, dco.nats, dco.role];

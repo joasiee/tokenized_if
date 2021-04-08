@@ -1,8 +1,11 @@
 import { createMessagingClient } from "messaging";
 
 import dotenv from "dotenv";
-import { AcceptOffer } from "../models/offer";
+import { CreateOfferDao, Offer } from "../models/offer";
 import base from './messaging_base';
+import { CreateShipmentDao } from "../models/shipment";
+import { createOffer } from "../db/offer_queries";
+import { addShipment } from "../db/shipment_queries";
 
 // Load .env variables in process.env
 dotenv.config();
@@ -23,16 +26,28 @@ const subscriptions: Subscription = {
     // Setup connection with LSP
     await base.setup(firstRun);
 
-    // await client.connect();
-    // console.log("(Financer)Connected to NATS Server");
+    await client.connect();
+    console.log("(Financer)Connected to NATS Server");
 
-    // const acceptSub = client.subscribe<AcceptOffer>('accept');
-    // (async () => {
-    //   for await (const m of acceptSub) {
-
-    //     console.log(m.payload.cargoHash);
-    //   };
-    // })();
+    const offerSub = client.subscribe<Offer>('offer');
+    (async () => {
+      for await (const m of offerSub) {
+        console.log(`(Financer) new offer received:\nShipment hash: ${m.payload?.shipment.cargo_hash}\nPrice: ${m.payload?.price}\nBuyback: ${m.payload?.buyback}`);
+        const shipmentDao : CreateShipmentDao = {
+          owner: m.payload.shipment.owner,
+          cargo: JSON.stringify(m.payload.shipment.cargo),
+          cargo_hash: m.payload.shipment.cargo_hash,
+          escrow_address: m.payload.shipment.escrow_address,
+        }
+        const shipment = await addShipment(shipmentDao);
+        const createOfferDao : CreateOfferDao = {
+          shipment_id: shipment.id,
+          price: m.payload.price,
+          buyback: m.payload.buyback,
+        };
+        await createOffer(createOfferDao);
+      };
+    })();
 
     // Add new subscriptions here:
   }
