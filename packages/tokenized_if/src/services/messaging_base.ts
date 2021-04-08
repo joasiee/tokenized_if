@@ -25,6 +25,7 @@ const subscriptions: Subscription = {
     await lspClient.connect();
     console.log('Connected to NATS Server LSP');
 
+    // If first run, it will request the token registry address from the LSP and set it in the database.
     if (firstRun) {
       const registryAddress = await lspClient.request<undefined, string>('token_registry');
       await setTokenRegistry(registryAddress);

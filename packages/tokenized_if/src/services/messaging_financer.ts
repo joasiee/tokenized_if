@@ -1,4 +1,5 @@
 import { createMessagingClient } from "messaging";
+
 import dotenv from "dotenv";
 import { CreateOfferDao, Offer } from "../models/offer";
 import base from './messaging_base';
@@ -28,6 +29,10 @@ const subscriptions: Subscription = {
     await client.connect();
     console.log("(Financer)Connected to NATS Server");
 
+    /**
+     * Subscription to offer subject. 
+     * It will add shipments and offers to the database.
+     */
     const offerSub = client.subscribe<Offer>('offer');
     (async () => {
       for await (const m of offerSub) {

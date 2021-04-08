@@ -15,6 +15,9 @@ interface Subscription {
   setup: (firstRun: boolean) => Promise<void>;
 }
 
+/**
+ * Code for handling messages for importer.
+ */
 const subscriptions: Subscription = {
   async setup(firstRun: boolean): Promise<void> {
     const client = createMessagingClient({
@@ -33,6 +36,7 @@ const subscriptions: Subscription = {
     (async () => {
       for await(const m of shipmentSub) {
         console.log(`(Importer) Subscription (shipment) received: \nShipment hash: ${m.payload?.cargo_hash}\nEscrow address: ${m.payload.escrow_address}`);
+        // Creating a shipment to be added to the database.
         const shipment: CreateShipmentDao = {
           owner: m.payload.owner,
           cargo: JSON.stringify(m.payload.cargo),
