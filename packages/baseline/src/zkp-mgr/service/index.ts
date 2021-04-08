@@ -23,7 +23,6 @@ export class ZKPService {
     logger.debug("Initializing ZKP service..");
     await this.dbSync.updateDB();
     this.zok = await initialize();
-    logger.debug("Initialized!");
   }
 
   /**

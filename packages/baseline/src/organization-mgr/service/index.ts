@@ -19,6 +19,7 @@ export class OrganizationsService {
    * Connect to local mongodb, update previously stored registries.
    */
   async init() {
+    logger.debug("Initializing Org service..");
     await this.dbsync.updateDB();
   }
 
