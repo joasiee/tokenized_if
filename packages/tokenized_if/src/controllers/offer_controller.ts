@@ -14,7 +14,10 @@ class OfferController {
     res.status(200).send(offers);
   }
 
-  /** Should run when financer accepts an offer */
+  /**
+   * Runs when financer accepts an offer.
+   * When a financer accepts the offer, he will pay the price that was sent before as offer.
+   */
   async acceptOffer(req: express.Request, res: express.Response) {
     const { offerId } = req.params;
     const offerIdInt = parseInt(offerId);
@@ -40,6 +43,9 @@ class OfferController {
     }
   }
 
+  /**
+   * The importer that will buy the token back from the financer.
+   */
   async repay(req: express.Request, res: express.Response) {
     const { offerId } = req.params;
     const offerIdInt = parseInt(offerId);
