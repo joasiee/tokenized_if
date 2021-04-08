@@ -70,6 +70,7 @@ export class ZKPService {
       const model = await schema.db.findOne({ name: name });
       if (!model.deployed) {
         const address = (await deployContract(name)).address;
+        logger.debug(`Deployed circuit verifier contract at: ${address}`);
         model.deployed = true;
         model.address = address;
         await model.save();
@@ -91,6 +92,7 @@ export class ZKPService {
   async generateProof(name: string, args: any[]): Promise<Proof | Error> {
     if (await schema.db.exists({ name: name })) {
       const circuit = await schema.db.findOne({ name: name });
+      logger.debug(`Generating proof for: ${name} with inputs: ${args}`);
       const artifacts: CompilationArtifacts = {
         program: circuit.artifacts.program as Uint8Array,
         abi: circuit.artifacts.abi
@@ -98,6 +100,7 @@ export class ZKPService {
       try {
         const witness = this.zok.computeWitness(artifacts, args);
         const proof = this.zok.generateProof(artifacts.program, witness.witness, circuit.pk as Uint8Array);
+        logger.debug(`Proof successfully generated for ${name}`);
         return schema.zokToProtoProof(proof);
       } catch (error) {
         return Error(error);
@@ -126,6 +129,7 @@ export class ZKPService {
    */
   async addCircuit(circuit: Circuit): Promise<Error | null> {
     if (!(await schema.db.exists({ name: circuit.getName() }))) {
+      logger.debug(`Adding circuit from protobuf object: ${JSON.stringify(circuit.toObject())}`);
       await schema.db.create(circuit.toObject());
       return null;
     }
