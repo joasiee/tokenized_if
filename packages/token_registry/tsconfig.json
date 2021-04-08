@@ -1,8 +1,0 @@
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "dist/ts",
-    "rootDir": "src"
-  },
-  "exclude": ["dist", "jest", "migrations", "scripts", "types"]
-}

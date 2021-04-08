@@ -8,6 +8,7 @@ import * as grpc from "@grpc/grpc-js";
 import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";
 import * as commit_pb from "./commit_pb";
 import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
+import * as zkp_pb from "./zkp_pb";
 
 interface ICommitService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     getCommit: ICommitService_IGetCommit;

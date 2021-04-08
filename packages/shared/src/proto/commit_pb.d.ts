@@ -6,6 +6,7 @@
 
 import * as jspb from "google-protobuf";
 import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
+import * as zkp_pb from "./zkp_pb";
 
 export class Request extends jspb.Message { 
 
@@ -195,14 +196,11 @@ export namespace Request {
         setSender(value: string): VerifyAndPush;
         getAddress(): string;
         setAddress(value: string): VerifyAndPush;
-        clearProofList(): void;
-        getProofList(): Array<number>;
-        setProofList(value: Array<number>): VerifyAndPush;
-        addProof(value: number, index?: number): number;
-        clearPublicinputsList(): void;
-        getPublicinputsList(): Array<string>;
-        setPublicinputsList(value: Array<string>): VerifyAndPush;
-        addPublicinputs(value: string, index?: number): string;
+
+        hasProof(): boolean;
+        clearProof(): void;
+        getProof(): zkp_pb.Proof | undefined;
+        setProof(value?: zkp_pb.Proof): VerifyAndPush;
         getValue(): string;
         setValue(value: string): VerifyAndPush;
 
@@ -220,8 +218,7 @@ export namespace Request {
         export type AsObject = {
             sender: string,
             address: string,
-            proofList: Array<number>,
-            publicinputsList: Array<string>,
+            proof?: zkp_pb.Proof.AsObject,
             value: string,
         }
     }

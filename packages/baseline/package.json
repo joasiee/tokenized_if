@@ -2,7 +2,7 @@
   "name": "@tokenized_if/baseline",
   "version": "1.0.0",
   "description": "baseline personal reference implementation",
-  "main": "dist/index.js",
+  "main": "dist/ts/index.js",
   "license": "ISC",
   "scripts": {
     "start": "make start && NODE_ENV=development ts-node -r dotenv-flow/config src/index.ts",

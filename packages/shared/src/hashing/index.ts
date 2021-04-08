@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-function sha256(preimage: Buffer): string {
+export function sha256(preimage: Buffer): string {
   return crypto
     .createHash("sha256")
     .update(preimage)

@@ -3,6 +3,7 @@ syntax = "proto3";
 package commit;
 
 import "google/protobuf/empty.proto";
+import "zkp.proto";
 
 message Request {
   message Commit {
@@ -37,9 +38,8 @@ message Request {
   message VerifyAndPush {
     string sender = 1;
     string address = 2;
-    repeated int32 proof = 3;
-    repeated string publicInputs = 4;
-    string value = 5;
+    zkp.Proof proof = 3;
+    string value = 4;
   }
 }
 

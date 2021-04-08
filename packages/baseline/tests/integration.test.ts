@@ -1,4 +1,4 @@
-import { dbClose, dbConnect } from "@tokenized_if/shared";
+import { concatThenHash, dbClose, dbConnect } from "@tokenized_if/shared";
 import { OrgRegistry, Workgroup } from "@tokenized_if/shared/src/proto/organizations_pb";
 import { existsSync } from "fs";
 import path from "path";
@@ -10,6 +10,10 @@ import { OrganizationsService } from "../src/organization-mgr/service";
 import { ZKPService } from "../src/zkp-mgr/service";
 import { clearDBs } from "./util";
 import { config } from "../src/config";
+import { sha256 } from "@tokenized_if/shared";
+import { Proof } from "@tokenized_if/shared/src/proto/zkp_pb";
+import { Request } from "@tokenized_if/shared/src/proto/commit_pb";
+import { HDWallet } from "../src/blockchain-mgr";
 
 chai.use(chaiMatch);
 
@@ -17,6 +21,10 @@ describe("Integration", function() {
   let commitMgr: CommitService;
   let orgMgr: OrganizationsService;
   let zkpMgr: ZKPService;
+
+  const registry = new OrgRegistry().setName("IF Financing");
+  const noopCircuit = "noopTest";
+  const workgroupName = "Shipments WMS";
 
   before(async function() {
     await dbConnect(process.env.MONGO_DB_NAME);
@@ -31,9 +39,6 @@ describe("Integration", function() {
 
   describe("Setting up workgroup", function() {
     let verifierAddress: string;
-    const registry = new OrgRegistry().setName("IF Financing");
-    const noopCircuit = "noopTest";
-    const workgroupName = "Shipments WMS";
 
     it("should deploy orgregistry", async function() {
       const result = await orgMgr.deployRegistry(registry);
@@ -62,6 +67,29 @@ describe("Integration", function() {
         .setTokenaddress(verifierAddress);
       const res = await orgMgr.addWorkgroup(registry, req);
       expect(res.getGroupsList().length).to.eq(1);
+    });
+  });
+
+  describe("Inserting proof to onchain merkle tree", function() {
+    let proof: Proof;
+    let shieldAddress: string;
+    before(async function() {
+      const result = await orgMgr.getRegistry(registry);
+      shieldAddress = result.getGroupsList()[0].getShieldaddress();
+    });
+
+    it("zkp service should generate proof", async function() {
+      const result = await zkpMgr.generateProof(noopCircuit, ["5"]);
+      expect(result instanceof Error).to.be.false;
+      proof = result as Proof;
+    });
+
+    it("should push proof to shield contract", async function() {
+      const sender = await HDWallet.getInstance()
+        .getWallet()
+        .getAddress();
+      // const req = new Request.VerifyAndPush().setSender(sender).setAddress(shieldAddress).setProofList(proof.getProof())
+      // const result = await commitMgr.verifyAndPush()
     });
   });
 

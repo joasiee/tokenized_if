@@ -17,6 +17,8 @@ var global = Function('return this')();
 
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
 goog.object.extend(proto, google_protobuf_empty_pb);
+var zkp_pb = require('./zkp_pb.js');
+goog.object.extend(proto, zkp_pb);
 goog.exportSymbol('proto.commit.Commitment', null, global);
 goog.exportSymbol('proto.commit.Request', null, global);
 goog.exportSymbol('proto.commit.Request.Commit', null, global);
@@ -212,7 +214,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.commit.Request.VerifyAndPush = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.commit.Request.VerifyAndPush.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.commit.Request.VerifyAndPush, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -1651,13 +1653,6 @@ proto.commit.Request.Verify.prototype.clearSiblingpathList = function() {
 
 
 
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.commit.Request.VerifyAndPush.repeatedFields_ = [3,4];
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -1691,9 +1686,8 @@ proto.commit.Request.VerifyAndPush.toObject = function(includeInstance, msg) {
   var f, obj = {
     sender: jspb.Message.getFieldWithDefault(msg, 1, ""),
     address: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    proofList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
-    publicinputsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
-    value: jspb.Message.getFieldWithDefault(msg, 5, "")
+    proof: (f = msg.getProof()) && zkp_pb.Proof.toObject(includeInstance, f),
+    value: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -1739,16 +1733,11 @@ proto.commit.Request.VerifyAndPush.deserializeBinaryFromReader = function(msg, r
       msg.setAddress(value);
       break;
     case 3:
-      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedInt32() : [reader.readInt32()]);
-      for (var i = 0; i < values.length; i++) {
-        msg.addProof(values[i]);
-      }
+      var value = new zkp_pb.Proof;
+      reader.readMessage(value,zkp_pb.Proof.deserializeBinaryFromReader);
+      msg.setProof(value);
       break;
     case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.addPublicinputs(value);
-      break;
-    case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setValue(value);
       break;
@@ -1795,24 +1784,18 @@ proto.commit.Request.VerifyAndPush.serializeBinaryToWriter = function(message, w
       f
     );
   }
-  f = message.getProofList();
-  if (f.length > 0) {
-    writer.writePackedInt32(
+  f = message.getProof();
+  if (f != null) {
+    writer.writeMessage(
       3,
-      f
-    );
-  }
-  f = message.getPublicinputsList();
-  if (f.length > 0) {
-    writer.writeRepeatedString(
-      4,
-      f
+      f,
+      zkp_pb.Proof.serializeBinaryToWriter
     );
   }
   f = message.getValue();
   if (f.length > 0) {
     writer.writeString(
-      5,
+      4,
       f
     );
   }
@@ -1856,85 +1839,48 @@ proto.commit.Request.VerifyAndPush.prototype.setAddress = function(value) {
 
 
 /**
- * repeated int32 proof = 3;
- * @return {!Array<number>}
+ * optional zkp.Proof proof = 3;
+ * @return {?proto.zkp.Proof}
  */
-proto.commit.Request.VerifyAndPush.prototype.getProofList = function() {
-  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 3));
+proto.commit.Request.VerifyAndPush.prototype.getProof = function() {
+  return /** @type{?proto.zkp.Proof} */ (
+    jspb.Message.getWrapperField(this, zkp_pb.Proof, 3));
 };
 
 
 /**
- * @param {!Array<number>} value
+ * @param {?proto.zkp.Proof|undefined} value
+ * @return {!proto.commit.Request.VerifyAndPush} returns this
+*/
+proto.commit.Request.VerifyAndPush.prototype.setProof = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
  * @return {!proto.commit.Request.VerifyAndPush} returns this
  */
-proto.commit.Request.VerifyAndPush.prototype.setProofList = function(value) {
-  return jspb.Message.setField(this, 3, value || []);
+proto.commit.Request.VerifyAndPush.prototype.clearProof = function() {
+  return this.setProof(undefined);
 };
 
 
 /**
- * @param {number} value
- * @param {number=} opt_index
- * @return {!proto.commit.Request.VerifyAndPush} returns this
+ * Returns whether this field is set.
+ * @return {boolean}
  */
-proto.commit.Request.VerifyAndPush.prototype.addProof = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 3, value, opt_index);
+proto.commit.Request.VerifyAndPush.prototype.hasProof = function() {
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
 /**
- * Clears the list making it empty but non-null.
- * @return {!proto.commit.Request.VerifyAndPush} returns this
- */
-proto.commit.Request.VerifyAndPush.prototype.clearProofList = function() {
-  return this.setProofList([]);
-};
-
-
-/**
- * repeated string publicInputs = 4;
- * @return {!Array<string>}
- */
-proto.commit.Request.VerifyAndPush.prototype.getPublicinputsList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
-};
-
-
-/**
- * @param {!Array<string>} value
- * @return {!proto.commit.Request.VerifyAndPush} returns this
- */
-proto.commit.Request.VerifyAndPush.prototype.setPublicinputsList = function(value) {
-  return jspb.Message.setField(this, 4, value || []);
-};
-
-
-/**
- * @param {string} value
- * @param {number=} opt_index
- * @return {!proto.commit.Request.VerifyAndPush} returns this
- */
-proto.commit.Request.VerifyAndPush.prototype.addPublicinputs = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 4, value, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
- * @return {!proto.commit.Request.VerifyAndPush} returns this
- */
-proto.commit.Request.VerifyAndPush.prototype.clearPublicinputsList = function() {
-  return this.setPublicinputsList([]);
-};
-
-
-/**
- * optional string value = 5;
+ * optional string value = 4;
  * @return {string}
  */
 proto.commit.Request.VerifyAndPush.prototype.getValue = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
@@ -1943,7 +1889,7 @@ proto.commit.Request.VerifyAndPush.prototype.getValue = function() {
  * @return {!proto.commit.Request.VerifyAndPush} returns this
  */
 proto.commit.Request.VerifyAndPush.prototype.setValue = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 

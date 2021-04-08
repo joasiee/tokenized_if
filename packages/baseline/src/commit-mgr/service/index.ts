@@ -1,5 +1,6 @@
 import { getLogger } from "@tokenized_if/shared";
 import { Request, Response, Commitment } from "@tokenized_if/shared/src/proto/commit_pb";
+import { Proof } from "@tokenized_if/shared/src/proto/zkp_pb";
 import {
   checkChainLogs,
   get_ws_provider,
@@ -89,8 +90,8 @@ export class CommitService {
       const result = await txManager.insertLeaf(
         req.getAddress(),
         req.getSender(),
-        req.getProofList(),
-        req.getPublicinputsList(),
+        joinProofPoints(req.getProof().getProof()),
+        req.getProof().getInputsList(),
         req.getValue()
       );
       return new Response.PushCommitment().setTxhash(result.txHash);
@@ -184,4 +185,8 @@ export class CommitService {
 
 function modelToCommitment(model) {
   return new Commitment().setNumber(model.leafIndex).setValue(model.hash);
+}
+
+function joinProofPoints(proof: Proof.ProofPoints) {
+  return [proof.getAList(), [proof.getB1List(), proof.getB2List()], proof.getCList()];
 }

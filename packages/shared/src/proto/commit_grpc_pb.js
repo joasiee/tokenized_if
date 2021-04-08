@@ -4,6 +4,7 @@
 var grpc = require('@grpc/grpc-js');
 var commit_pb = require('./commit_pb.js');
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
+var zkp_pb = require('./zkp_pb.js');
 
 function serialize_commit_Commitment(arg) {
   if (!(arg instanceof commit_pb.Commitment)) {
