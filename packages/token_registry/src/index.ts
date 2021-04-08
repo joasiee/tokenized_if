@@ -10,15 +10,26 @@ import { Wallet, providers, getDefaultProvider, ethers, Contract } from "ethers"
 import { TitleEscrow } from "./contracts/TitleEscrow";
 import Web3 from "web3";
 
+/**
+ * Config interface for TokenManager creation.
+ */
 export interface TokenManagerConfig {
   ganacheUrl: string,
   privateKey: string,
 }
 
+/**
+ * Creates a new TokenManager object.
+ * @param config The config consists of the ganacheURL and the private key of the person.
+ * @returns 
+ */
 export function createTokenManager(config: TokenManagerConfig) {
   return new TokenManager(config);
 }
 
+/**
+ * TokenManager class to handle token deployment and other token functions.
+ */
 export class TokenManager {
   provider: providers.JsonRpcProvider;
   web3: Web3;
@@ -31,10 +42,14 @@ export class TokenManager {
     this.private_key = config.privateKey;
   }
 
-  // Variables
+  /**
+   * The Token Registry that is used to access the token registry contract.
+   */
   tokenRegistry!: TradeTrustErc721;
 
-  // tokenRegistryFactory, used to deploy token registry.
+  /**
+   * tokenRegistryFactory, used to deploy token registry.
+   */
   tokenRegistryFactory!: TradeTrustErc721Factory;
 
 
@@ -92,8 +107,11 @@ export class TokenManager {
   }
 
   /**
-  * Deploys the title escrow contract on the blockchain with a given beneficiary and holder.
-  */
+   * Deploys the title escrow contract on the blockchain with a given beneficiary and holder.
+   * @param beneficiary The beneficiary of the title escrow contract.
+   * @param holder The holder of the title escrow contract.
+   * @returns It returns the a TitleEscrow instance.
+   */
   async deployTitleEscrow(beneficiary: string, holder: string) {
     var instance;
     try {
@@ -111,6 +129,9 @@ export class TokenManager {
   /**
   * The LSP deploys the importer escrow contract on the blockchain with importer as owner.
   * A token will de made from the tokenID and placed in this contract.
+  * @param tokenID The ID of the token.
+  * @param importerPublicAddress The public address of an importer.
+  * @returns It returns an escrow instance, with beneficiary and holder as importer. The contract also  contains the token.
   */
   async deployImporterEscrow(tokenID: ethers.BigNumberish, importerPublicAddress: string): Promise<TitleEscrow> {
     var escrowInstance;
@@ -131,6 +152,8 @@ export class TokenManager {
 
   /**
   * Returns the owner of a token, given a tokenID.
+  * @param tokenID A token ID.
+  * @returns It returns an address of the owner of the given token.
   */
   async ownerOfToken(tokenID: ethers.BigNumberish) {
     var result;
@@ -145,6 +168,8 @@ export class TokenManager {
 
   /**
   * Sleep helper function. Not used at the moment, leaving it just in case.
+  * @param ms Time in ms to sleep.
+  * @returns A promise. You can simply call the function to sleep.
   */
   sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -153,6 +178,9 @@ export class TokenManager {
   /**
   * Use this function to connect to an existing titleEscrow on the blockchain.
   * connectEscrowInstance("0x....", importerSigner).
+  * @param address An address of a title escrow on the blockchain.
+  * @param signerOrProvider Use a signer (wallet) or a provider in order to make the connection.
+  * @returns 
   */
   connectEscrowInstance(address: string, signerOrProvider: ethers.Signer | providers.Provider): TitleEscrow {
     var escrowInstance;
@@ -162,6 +190,9 @@ export class TokenManager {
 
   /**
   * Use this function to connect to an existing TokenRegistry on the blockchain.
+  * @param address The address where the token registry is located.
+  * @param signerOrProvider Use a signer (wallet) or a provider in order to make the connection.
+  * @returns An instance of the token registry.
   */
   connectTokenRegistry(address: string, signerOrProvider: ethers.Signer | providers.Provider) {
     this.tokenRegistry = TradeTrustErc721Factory.connect(address, signerOrProvider);
@@ -170,6 +201,8 @@ export class TokenManager {
 
   /**
   * Gets the token balance from a given TitleEscrow.
+  * @param escrowInstance An instance of a title escrow.
+  * @returns Returns the amount of tokens on the given title escrow.
   */
   async getTokenBalance(escrowInstance: TitleEscrow) {
     var result;
@@ -179,6 +212,8 @@ export class TokenManager {
 
   /**
   * Convert ether to wei.
+  * @param eth The amount of ethers. Can be given as string or number.
+  * @returns Returns wei as string.
   */
   ethToWei(eth: string | number): string {
     eth = eth.toString()
@@ -187,6 +222,10 @@ export class TokenManager {
 
   /**
   * Sends ether from an address to another address.
+  * @param from_address "from", a public address.
+  * @param to_address  "to", also a public address.
+  * @param amount_ether The amount of ethers to send.
+  * @param priv_key The private key of the sender.
   */
   async sendEther(from_address: string, to_address: string, amount_ether: string | number, priv_key: string) {
     const nonce = await this.web3.eth.getTransactionCount(from_address, 'latest');
@@ -210,6 +249,8 @@ export class TokenManager {
 
   /**
   * Used to parse BigNumber, and hex to numberString.
+  * @param number a bignumber of the type ethers.BigNumber
+  * @returns returns a string representation of the big number.
   */
   parseBigNumber(number: ethers.BigNumber) {
     return this.web3.utils.hexToNumberString(number._hex);
@@ -217,6 +258,8 @@ export class TokenManager {
 
   /**
   * Retrieves tokenPrice and converts to ether amount.
+  * @param escrowInstance An escrow instance, which is a title escrow.
+  * @returns returns the price that was set for the token.
   */
   async getTokenPrice(escrowInstance: TitleEscrow): Promise<string> {
     var price = await escrowInstance.getTokenPrice();
@@ -225,6 +268,8 @@ export class TokenManager {
 
   /**
   * Retrieves buyBackPrice and converts to ether amount.
+  * @param escrowInstance An escrow instance, which is a title escrow.
+  * @returns returns the buy back price that was set for the token.
   */
   async getTokenBuyBackPrice(escrowInstance: TitleEscrow): Promise<string> {
     var buyBackPrice = await escrowInstance.getBuyBackPrice();
@@ -233,6 +278,8 @@ export class TokenManager {
 
   /**
   * Retrieves the contract destination address. This is the address where the token transfers to, after payment.
+  * @param escrowInstance An escrow instance, which is a title escrow.
+  * @returns returns a string which is the contract destination. The address to which the holder will change to after payment.
   */
   async getContractDest(escrowInstance: TitleEscrow): Promise<string> {
     return await escrowInstance.getcontractDest();
@@ -241,6 +288,8 @@ export class TokenManager {
   /**
   * Gets the deal which includes price, buyBackPrice and the contract destination.
   * It returns an array which contains the three variables.
+  * @param escrowInstance An escrow instance, which is a title escrow.
+  * @returns Returns an array [Price, buyBackPrice and to_addr].
   */
   async getTokenDeal(escrowInstance: TitleEscrow) {
     var deal = await escrowInstance.getTokenDeal();
@@ -252,6 +301,8 @@ export class TokenManager {
 
   /**
   *  Returns the ether balance stored in a TitleEscrow.
+  * @param escrowInstance An escrow instance, which is a title escrow.
+  * @returns returns a string which is the amount of ethers stored on the title escrow.
   */
   async getETHBalance(escrowInstance: TitleEscrow) {
     var balance = (await escrowInstance.getBalance())._hex;
@@ -260,6 +311,8 @@ export class TokenManager {
 
   /**
    * Sends a release by sending the token back to the token registry.
+   * It will print a console log after sending release.
+   * @param escrowInstance An escrow instance, which is a title escrow.
    */
   async sendRelease(escrowInstance: TitleEscrow) {
     await escrowInstance.transferTo(this.tokenRegistry.address);
@@ -269,6 +322,7 @@ export class TokenManager {
   /**
    * Calls the destroy Token function from the token registry contract.
    * New owner will be 0x000000000000000000000000000000000000dEaD.
+   * It will also print a console log after destroying the token.
    * @param tokenID The token ID to burn
    */
   async burnToken(tokenID: ethers.BigNumberish) {
@@ -283,9 +337,6 @@ export class TokenManager {
   getRegistry() {
     return this.tokenRegistry;
   }
-
-
-
 }
 
 /**************** **************** **************** 
