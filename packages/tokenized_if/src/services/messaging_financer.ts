@@ -1,5 +1,4 @@
 import { createMessagingClient } from "messaging";
-
 import dotenv from "dotenv";
 import { CreateOfferDao, Offer } from "../models/offer";
 import base from './messaging_base';

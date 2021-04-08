@@ -13,6 +13,9 @@ interface Subscription {
   setup: () => Promise<void>;
 }
 
+/**
+ * Code for handling messaging of the LSP.
+ */
 const subscriptions: Subscription = {
   async setup(): Promise<void> {
     const client = createMessagingClient({
@@ -24,6 +27,7 @@ const subscriptions: Subscription = {
     await client.connect();
     console.log("(LSP)Connected to NATS Server");
 
+    // Sends the address of the token registry to clients.
     const registryRep = client.reply<undefined, string>('token_registry');
     (async () => {
       for await (const m of registryRep) {
@@ -31,6 +35,7 @@ const subscriptions: Subscription = {
       }
     })();
 
+    // Does a check whether the token registry is the owner of the token related to a shipment, and if true proceeds to burn the token.
     const releaseSub = client.subscribe<string>('release');
     (async () => {
       for await (const m of releaseSub) {
