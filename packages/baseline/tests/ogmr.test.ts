@@ -111,7 +111,9 @@ describe("Organization Manager", function() {
       group = getWorkgroup("Group", [ethAddress, ethAddress, ethAddress]);
       const registry = await service.addWorkgroup(req, group);
       expect(registry.getGroupsList().length).to.eq(1);
-      expect(registry.getGroupsList()[0].toObject()).to.deep.eq(group.toObject());
+      expect(registry.getGroupsList()[0].toObject())
+        .excludingEvery("shieldaddress")
+        .to.deep.eq(group.toObject());
     });
 
     it("should refresh from on chain data correctly", async function() {
@@ -122,7 +124,9 @@ describe("Organization Manager", function() {
       expect(registry.getOrgsList().length).to.eq(1);
       expect(registry.getOrgsList()[0].toObject()).to.deep.eq(org.toObject());
       expect(registry.getGroupsList().length).to.eq(1);
-      expect(registry.getGroupsList()[0].toObject()).to.deep.eq(group.toObject());
+      expect(registry.getGroupsList()[0].toObject())
+        .excludingEvery("shieldaddress")
+        .to.deep.eq(group.toObject());
     });
   });
 

@@ -1,0 +1,14 @@
+import "hashes/sha256/512bitPacked" as sha
+
+// inputs:
+// commitHash: public input hash that is inserted into on chain merkle tree
+// pkLSP: public key of lsp
+// skLSP: private key of lsp
+// pkImporter: public key of importer
+// billHash: sha256 hash of bill of lading (merkle root obtained from open attestation could also be used)
+//
+// proof:
+// - proof generator owns private key belonging to public key (simple hash for now)
+// - hash of (pkImporter || billHash) is equal to the public commitment hash
+def main(field[2] commitHash, field[2] pkLSP, private field[4] skLSP, private field[2] pkImporter, private field[2] billHash) -> (bool):
+    return sha(sk) == pk && sha([...pkImporter, ...billHash]) == commitHash
