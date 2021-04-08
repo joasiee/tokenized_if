@@ -31,7 +31,10 @@ const subscriptions: Subscription = {
 
     await client.connect();
     
-    // Setup subscription new shipments
+    /**
+     * Setup subscription for new shipments. 
+     * It will add the shipments to the database.
+     */
     const shipmentSub = client.subscribe<Shipment>('shipment');
     (async () => {
       for await(const m of shipmentSub) {
@@ -59,13 +62,16 @@ const subscriptions: Subscription = {
     // })();
     // console.log("Setup subscription for offers");
 
+    /**
+     * Handling accept offers.
+     */
     const acceptRep = client.reply<AcceptOffer, boolean>('accept');
     (async () => {
       for await (const m of acceptRep) {
         console.log(`(Importer) Subscription (accept) received: \nShipment hash: ${m.payload?.cargo_hash}\nFinancer address: ${m.payload.financer_address}`);
         const offer = await getOfferByHash(m.payload.cargo_hash);
         console.log(`Escrow address: ${offer.shipment.escrow_address}`);
-        // Check if offer is already accepted
+        // Check if offer is already accepted, by checking if we have a financer.
         if (offer.financer) {
           m.respond(false);
         } else {

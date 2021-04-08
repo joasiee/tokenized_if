@@ -16,7 +16,10 @@ class ShipmentController {
     res.status(200).send(shipments);
   }
 
-  // Only to be called as LSP
+  /**
+   * Only to be called as LSP. 
+   * We create a new shipment here, and we add this to the database. The title escrow is also deployed.
+   */
   async post(req: express.Request, res: express.Response) {
     const create = req.body as CreateShipmentObject;
     const cargoString = JSON.stringify(create.cargo);
@@ -33,11 +36,13 @@ class ShipmentController {
 
     // Notify importer of shipment arrival
     await notifyImporterShipment(owner, shipment);
-
     successMessage.data = shipment;
     res.status(201).send(successMessage);
   }
 
+  /**
+   * Importer can create offers and send them to financer.
+   */
   async offer(req: express.Request, res: express.Response) {
     const { shipmentId } = req.params;
     const shipmentIdInt = parseInt(shipmentId);
@@ -48,6 +53,8 @@ class ShipmentController {
       price: price,
       buyback: buyback,
     };
+
+    // add offer to the database
     const offer = await createOffer(createOfferDao);
 
     // Notify financers of new offer
@@ -57,6 +64,11 @@ class ShipmentController {
     res.send(successMessage);
   }
 
+  /**
+   * Importer can decide to issue a release request.
+   * The release request will be made and token will be sent to the token registry.
+   * The LSP will also be notified so they can burn the token.
+   */
   async release(req: express.Request, res: express.Response) {
     const { shipmentId } = req.params;
     const shipmentIdInt = parseInt(shipmentId);
