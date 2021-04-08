@@ -113,7 +113,7 @@ async function notifyLspRelease(shipmentHash: string) : Promise<void> {
     serverUrl: lsp.nats,
   })
   await lspClient.connect();
-  await lspClient.publish<string>(shipmentHash, 'release');
+  await lspClient.publish<string>('release', shipmentHash);
   await lspClient.disconnect();
 }
 

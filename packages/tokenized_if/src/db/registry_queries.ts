@@ -1,9 +1,9 @@
 import { queryValue, setKey } from "./helpers/query";
 
-export const setRegistry = async function (address: string) {
-    await setKey('registry', address);
+export const setTokenRegistry = async function (address: string) {
+    await setKey('token_registry', address);
 };
 
-export const getRegistry = async function () : Promise<string> {
-    return await queryValue('registry');
+export const getTokenRegistry = async function () : Promise<string> {
+    return await queryValue('token_registry');
 };

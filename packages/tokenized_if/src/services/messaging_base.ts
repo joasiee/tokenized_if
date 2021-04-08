@@ -3,7 +3,7 @@ import { createMessagingClient } from "messaging";
 import dotenv from "dotenv";
 import { Participant } from "../models/participant";
 import { addParticipant } from "../db/participant_queries";
-import { setRegistry } from "../db/registry_queries";
+import { setTokenRegistry } from "../db/registry_queries";
 
 // Load .env variables in process.env
 dotenv.config();
@@ -27,7 +27,7 @@ const subscriptions: Subscription = {
 
     if (firstRun) {
       const registryAddress = await lspClient.request<undefined, string>('token_registry');
-      await setRegistry(registryAddress);
+      await setTokenRegistry(registryAddress);
       console.log("Token registry set in DB by request from LSP");
 
       // // REPLACE BY BASELINE

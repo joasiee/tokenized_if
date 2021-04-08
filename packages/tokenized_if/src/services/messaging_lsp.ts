@@ -1,7 +1,7 @@
 import { IMessagingClient, createMessagingClient } from "messaging";
 
 import dotenv from "dotenv";
-import { getRegistry } from "../db/registry_queries";
+import { getTokenRegistry } from "../db/registry_queries";
 import { tm } from "./token";
 import { getShipmentByHash } from "../db/shipment_queries";
 
@@ -27,7 +27,7 @@ const subscriptions: Subscription = {
     const registryRep = client.reply<undefined, string>('token_registry');
     (async () => {
       for await (const m of registryRep) {
-        await m.respond(await getRegistry());
+        await m.respond(await getTokenRegistry());
       }
     })();
 

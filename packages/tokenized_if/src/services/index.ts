@@ -4,7 +4,7 @@ import importer from './messaging_importer';
 import financer from './messaging_financer';
 import lsp from './messaging_lsp';
 import { addParticipant, getParticipant } from '../db/participant_queries';
-import { getRegistry } from '../db/registry_queries';
+import { getTokenRegistry } from '../db/registry_queries';
 import { tm, tokenSetup } from './token';
 
 dotenv.config();
@@ -26,7 +26,7 @@ export async function setup() {
       await lsp.setup();
   }
 
-  await tokenSetup(await getRegistry());
+  await tokenSetup(await getTokenRegistry());
 
   if (firstRun) {
     const pubAddress = tm.signer.address;

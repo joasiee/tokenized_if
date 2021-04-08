@@ -4,6 +4,7 @@ import { getParticipantByAddress } from "./participant_queries";
 
 function mapDaoToOffer(dao : OfferShipmentDao) : Offer {
     return {
+        id: dao.id,
         financer: dao.financer,
         price: dao.price,
         buyback: dao.buyback,

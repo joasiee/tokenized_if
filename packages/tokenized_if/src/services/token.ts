@@ -1,6 +1,6 @@
 import { createTokenManager } from "../../../token_registry/"
 import dotenv from "dotenv";
-import { setRegistry } from "../db/registry_queries";
+import { setTokenRegistry } from "../db/registry_queries";
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ export async function tokenSetup(registryAddress?: string) {
     await tm.setupTokenRegistry();
     console.log("Token registry setup executed");
     registryAddress = tm.tokenRegistry.address;
-    await setRegistry(registryAddress);
+    await setTokenRegistry(registryAddress);
     console.log("Token registry set in DB");
   } else {
     tm.connectTokenRegistry(registryAddress, tm.signer);

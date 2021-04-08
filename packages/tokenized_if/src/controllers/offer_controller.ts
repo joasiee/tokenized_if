@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllOffers, getOfferById } from "../db/offer_queries";
+import { getAllOffers, getOfferById, setFinancer } from "../db/offer_queries";
 import { getParticipant, getParticipantById } from "../db/participant_queries";
 import { Participant } from "../models/participant";
 import { createMessagingClient } from "messaging";
@@ -26,12 +26,15 @@ class OfferController {
     };
     const accepted = await notifyImporterAccept(importer, accept);
     if (accepted) {
+      // Update offer
+      await setFinancer(offerIdInt, tm.signer.address);
       console.log("Offer acceptd; You can now obtain the token");
       const escrow = tm.connectEscrowInstance(offer.shipment.escrow_address, tm.signer);
       await tm.sendEther(tm.signer.address, escrow.address, offer.price, tm.private_key);
       console.log("Token bought; Current Holder: ", await escrow.holder());
       res.send(successMessage);
     } else {
+      // TODO: Delete offer
       console.log("Offer was already accepted");
       res.send(errorMessage);
     }

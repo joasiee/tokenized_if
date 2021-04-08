@@ -5,7 +5,7 @@ import base from './messaging_base';
 import { CreateShipmentDao, Shipment } from "../models/shipment";
 import { addShipment, getShipmentByHash } from "../db/shipment_queries";
 import { tm } from "./token";
-import { getOfferByHash } from "../db/offer_queries";
+import { getOfferByHash, setFinancer } from "../db/offer_queries";
 import { AcceptOffer } from "../models/offer";
 
 // Load .env variables in process.env
@@ -68,6 +68,9 @@ const subscriptions: Subscription = {
           // if not, assign deal to financer
           const escrow = tm.connectEscrowInstance(offer.shipment.escrow_address, tm.signer);
           await escrow.setTokenDeal(tm.ethToWei(offer.price), tm.ethToWei(offer.buyback), m.payload.financer_address);
+          // Update financer of offer
+          await setFinancer(offer.id, m.payload.financer_address);
+          // Get deal from chain
           const deal = await tm.getTokenDeal(escrow);
           console.log("[DEAL] price: ", deal[0], ", buyBackprice: ", deal[1], ", token transferred to: ", deal[2]);
           console.log("Current Holder: ", await escrow.holder());

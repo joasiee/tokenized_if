@@ -1,7 +1,8 @@
 import { Cargo } from "./cargo";
-import { Shipment, ShipmentDao } from "./shipment";
+import { Shipment } from "./shipment";
 
 export interface Offer {
+    id?: number,
     shipment: Shipment,
     financer?: string,
     price: number,

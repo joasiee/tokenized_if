@@ -14,7 +14,7 @@ apiRouter.get("/workflows", WorkflowController.getAll);
 apiRouter.get("/shipments", ShipmentController.getAll);
 apiRouter.post("/shipments", ShipmentController.post);
 apiRouter.put("/shipments/:shipmentId", ShipmentController.offer);
-
+apiRouter.delete("/shipments/:shipmentId", ShipmentController.release);
 // Offer Routes
 apiRouter.get("/offers", OfferController.getAll);
 apiRouter.put("/offers/:offerId/accept", OfferController.acceptOffer);
