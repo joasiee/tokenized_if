@@ -6,11 +6,16 @@ import "google/protobuf/empty.proto";
 
 message Circuit {
   string name = 1;
-  bytes program = 2;
+  Artifacts artifacts = 2;
   string contract = 3;
   bytes pk = 4;
   bool deployed = 5;
   string address = 6;
+
+  message Artifacts {
+    bytes program = 1;
+    string abi = 2;
+  }
 }
 
 service ZKP {
