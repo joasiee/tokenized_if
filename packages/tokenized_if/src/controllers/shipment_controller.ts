@@ -22,6 +22,7 @@ class ShipmentController {
    */
   async post(req: express.Request, res: express.Response) {
     const create = req.body as CreateShipmentObject;
+    console.log(req.body);
     const cargoString = JSON.stringify(create.cargo);
     // Replace by baseline hash
     const cargoHash = web3.utils.sha3(cargoString);
@@ -81,7 +82,7 @@ class ShipmentController {
     if (beneficiary === holder) {
       await tm.sendRelease(escrow);
       console.log("Token succesfully released");
-      
+
       // Notify LSP of release
       notifyLspRelease(shipment.cargo_hash);
 
@@ -105,7 +106,7 @@ async function notifyImporterShipment(importer: Participant, shipment: Shipment)
   await importerClient.disconnect();
 }
 
-async function notifyFinancersOffers(offer: Offer) : Promise<void> {
+async function notifyFinancersOffers(offer: Offer): Promise<void> {
   const financers = await getAllFinancers();
 
   for (const financer of financers) {
@@ -119,7 +120,7 @@ async function notifyFinancersOffers(offer: Offer) : Promise<void> {
   }
 }
 
-async function notifyLspRelease(shipmentHash: string) : Promise<void> {
+async function notifyLspRelease(shipmentHash: string): Promise<void> {
   const lsp = await getLsp();
   const lspClient = createMessagingClient({
     serverUrl: lsp.nats,
