@@ -1,11 +1,11 @@
 import { createMessagingClient } from "@tokenized_if/messaging";
 
 import dotenv from "dotenv";
-import { CreateOfferDao, Offer } from "../models/offer";
+import { CreateOfferDao, Offer } from "../../models/offer";
 import base from './messaging_base';
-import { CreateShipmentDao } from "../models/shipment";
-import { createOffer } from "../db/offer_queries";
-import { addShipment } from "../db/shipment_queries";
+import { CreateShipmentDao } from "../../models/shipment";
+import { createOffer } from "../../db/offer_queries";
+import { addShipment } from "../../db/shipment_queries";
 
 // Load .env variables in process.env
 dotenv.config();

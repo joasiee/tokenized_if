@@ -1,9 +1,9 @@
 import { IMessagingClient, createMessagingClient } from "@tokenized_if/messaging";
 
 import dotenv from "dotenv";
-import { getTokenRegistry } from "../db/registry_queries";
-import { tm } from "./token";
-import { getShipmentByHash } from "../db/shipment_queries";
+import { getTokenRegistry } from "../../db/registry_queries";
+import { tm } from "../token";
+import { getShipmentByHash } from "../../db/shipment_queries";
 
 // Load .env variables in process.env
 dotenv.config();

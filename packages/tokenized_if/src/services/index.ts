@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
-import importer from './messaging_importer';
-import financer from './messaging_financer';
-import lsp from './messaging_lsp';
+import importer from './messaging/messaging_importer';
+import financer from './messaging/messaging_financer';
+import lsp from './messaging/messaging_lsp';
 import { addParticipant, getParticipant } from '../db/participant_queries';
 import { getTokenRegistry } from '../db/registry_queries';
 import { tm, tokenSetup } from './token';

@@ -1,7 +1,7 @@
 import { createMessagingClient } from "@tokenized_if/messaging";
 
 import dotenv from "dotenv";
-import { setTokenRegistry } from "../db/registry_queries";
+import { setTokenRegistry } from "../../db/registry_queries";
 
 // Load .env variables in process.env
 dotenv.config();
