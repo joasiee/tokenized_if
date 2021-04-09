@@ -1,7 +1,5 @@
-import { ethers } from "ethers";
 import { ITxManager } from ".";
 import { getLogger } from "@tokenized_if/shared";
-import { jsonrpc, shieldContract } from "../blockchain";
 import { getContract, HDWallet } from "../../blockchain-mgr";
 import { Shield } from "../../../dist/typechain/Shield";
 
@@ -40,14 +38,15 @@ export class EthClient implements ITxManager {
     return signedTx;
   }
 
-  async insertLeaf(toAddress: string, fromAddress: string, proof: any[8], publicInputs: any[], newCommitment: string) {
+  async insertLeaf(toAddress: string, fromAddress: string, proof: any[8], publicInputs: any[1], newCommitment: string) {
     let error = null;
-    let txHash: string;
+    let txHash: string = "";
     try {
       const shieldContract: Shield = (await getContract(toAddress, "Shield")) as Shield;
       const options = { gasLimit: 1000000 };
       const result = await shieldContract.verifyAndPush(proof, publicInputs, "0x" + newCommitment, options);
       txHash = result.hash;
+      await result.wait(1);
     } catch (err) {
       logger.error(`[baseline_verifyAndPush]: ${err}`);
     }
