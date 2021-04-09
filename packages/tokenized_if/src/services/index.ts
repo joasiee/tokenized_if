@@ -5,6 +5,8 @@ import lsp from './messaging/messaging_lsp';
 import { addParticipant, getParticipant } from '../db/participant_queries';
 import { getTokenRegistry } from '../db/registry_queries';
 import { tm, tokenSetup } from './token';
+import { Participant } from '../models/participant';
+import { createMessagingClient } from '@tokenized_if/messaging';
 
 // Load in the .env file
 dotenv.config();
@@ -37,11 +39,24 @@ export async function setup() {
   if (firstRun) {
     const pubAddress = tm.signer.address;
     const natsEndpoint = `${process.env.NATS_URL}:${process.env.NATS_PORT}`;
-    await addParticipant({
+    const participant : Participant = {
       name: process.env.NAME,
       address: pubAddress,
       nats: natsEndpoint,
-      role: process.env.ROLE,
-    });
+      nats_key: '0x1234', // Replace by environment
+      zkp_key: '0x9876', // Replace by environment
+      role: role,
+    }
+
+    await addParticipant(participant);
+
+    // Request admittance from LSP to the Org Registry
+    if (role !== 'lsp') {
+      const lspClient = createMessagingClient({
+        serverUrl: process.env.LSP_NATS,
+        user: process.env.NAME,
+      });
+      await lspClient.publish<Participant>('admittance', participant);
+    }
   }
 }

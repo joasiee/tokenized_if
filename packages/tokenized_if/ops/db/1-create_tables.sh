@@ -8,6 +8,8 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 		name TEXT PRIMARY KEY,
 		address TEXT,
 		nats TEXT,
+		nats_key TEXT,
+		zkp_key TEXT,
 		role TEXT
 	);
 
