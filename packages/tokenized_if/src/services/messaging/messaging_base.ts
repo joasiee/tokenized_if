@@ -3,6 +3,8 @@ import { createMessagingClient } from "@tokenized_if/messaging";
 import dotenv from "dotenv";
 import { setTokenRegistry } from "../../db/registry_queries";
 import { Participant } from "../../models/participant";
+import { OrgRegistryReply } from "../../models/registry";
+import { getOrgRegistry } from "../baseline/organizations";
 
 // Load .env variables in process.env
 dotenv.config();
@@ -29,15 +31,14 @@ const subscriptions: Subscription = {
       const registryAddress = await lspClient.request<undefined, string>('token_registry');
       await setTokenRegistry(registryAddress);
       console.log("Token registry set in DB by request from LSP");
-    }
 
-    // // REPLACE BY BASELINE
-    // const participantsSub = lspClient.subscribe<Participant>('participants');
-    // (async () => {
-    //   for await (const m of participantsSub) {
-    //     await addParticipant(m.payload);
-    //   };
-    // })();
+      // Furthermore request org registries
+      ['importer', 'financer'].forEach(async role => {
+        const reply = await lspClient.request<string, OrgRegistryReply>('org_registry', role);
+        getOrgRegistry(reply.name, reply.address);
+        console.log(`Org Registry ${reply.name} added`);
+      });
+    }
 
     // Add new subscriptions here:
   }

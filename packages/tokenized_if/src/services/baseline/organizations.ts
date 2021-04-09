@@ -8,10 +8,11 @@ const client = new OrganizationsClient(
   grpc.credentials.createInsecure(),
 );
 
-export async function getOrgRegistry(name: string): Promise<OrgRegistry> {
+export async function getOrgRegistry(name: string, address?: string): Promise<OrgRegistry> {
   return new Promise<OrgRegistry>((resolve, reject) => {
     const registry = new OrgRegistry();
     registry.setName(name);
+    registry.setAddress(address);
     client.getOrgRegistry(registry, (err, registry) => {
       if (err) {
         return reject(err);
@@ -71,5 +72,5 @@ export function addWorkgroup(verifierAddress: string, tokenRegistryAddress: stri
       }
       return resolve(registry);
     });
-  })
-}
+  });
+};
