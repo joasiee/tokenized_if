@@ -9,6 +9,12 @@
     },
     {
       "path": "packages/shared"
+    },
+    {
+      "path": "packages/token_registry"
+    },
+    {
+      "path": "packages/tokenized_if"
     }
   ],
   "exclude": [

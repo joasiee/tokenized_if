@@ -1,0 +1,5 @@
+node_modules
+npm-debug.log
+fake_api
+src copy
+package-lock.json

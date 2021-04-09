@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "exclude": [
+    "dist"
+  ],
+  "references": [
+    {
+      "path": "../messaging"
+    },
+    {
+      "path": "../shared"
+    },
+    {
+      "path": "../token_registry"
+    }
+  ]
+}
