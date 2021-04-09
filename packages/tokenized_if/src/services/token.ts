@@ -1,4 +1,4 @@
-import { createTokenManager } from "../../../token_registry/"
+import { createTokenManager } from "@tokenized_if/token-registry"
 import dotenv from "dotenv";
 import { setTokenRegistry } from "../db/registry_queries";
 

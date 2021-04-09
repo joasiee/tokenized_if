@@ -1,6 +1,7 @@
 import { getLogger } from "@tokenized_if/shared";
 import { CompilationArtifacts, initialize, ZoKratesProvider } from "zokrates-js";
 import { existsSync, readFileSync } from "fs";
+import { outputFileSync } from "fs-extra";
 import path from "path";
 import { compileContract, deployContract } from "../../blockchain-mgr";
 import { circuit } from "../db";
@@ -9,6 +10,7 @@ import { Circuit, Proof } from "@tokenized_if/shared/src/proto/zkp_pb";
 import { DBSync } from "./dbsync";
 
 const logger = getLogger("zkp-mgr");
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
  * ZKP service using Zokrates.
@@ -31,6 +33,10 @@ export class ZKPService {
    * @returns Mongoose circuit model if success, else null
    */
   async compileCircuit(name: string): Promise<null | Error> {
+    if (await circuit.db.exists({ name: name })) {
+      logger.debug(`Circuit ${name} already compiled.`);
+      return null;
+    }
     const filePath = path.join(config.APP_ROOT, "circuits", name + ".zok");
     logger.debug(`Compiling circuit at ${filePath}`);
     const outputPath = path.join(config.APP_ROOT, "dist", "artifacts", name + ".json");
@@ -41,7 +47,11 @@ export class ZKPService {
         const keys = this.zok.setup(artifacts.program);
         const verifier = this.zok.exportSolidityVerifier(keys.vk, "v1");
         if (compileContract(verifier, outputPath, "Verifier")) {
-          await circuit.db.create(circuit.zokToModel(name, artifacts, keys, verifier));
+          const programOutputPath = path.join(config.APP_ROOT, "dist", "circuits", name + ".program");
+          const pkOutputPath = path.join(config.APP_ROOT, "dist", "circuits", name + ".pk");
+          outputFileSync(programOutputPath, artifacts.program);
+          outputFileSync(pkOutputPath, keys.pk);
+          await circuit.db.create(circuit.zokToModel(name, [programOutputPath, artifacts.abi], pkOutputPath, verifier));
           return null;
         }
         return Error("Could not compile circuit contract using solc");
@@ -50,6 +60,7 @@ export class ZKPService {
         return Error(`Circuit does not exist at ${filePath}`);
       }
     } catch (error) {
+      logger.error(error);
       return Error(error);
     }
   }
@@ -88,12 +99,13 @@ export class ZKPService {
       const model = await circuit.db.findOne({ name: name });
       logger.debug(`Generating proof for: ${name} with inputs: ${args}`);
       const artifacts: CompilationArtifacts = {
-        program: model.artifacts.program as Uint8Array,
-        abi: model.artifacts.abi
+        program: readFileSync(model.artifacts[0]) as Uint8Array,
+        abi: model.artifacts[1]
       };
       try {
         const witness = this.zok.computeWitness(artifacts, args);
-        const proof = this.zok.generateProof(artifacts.program, witness.witness, model.pk as Uint8Array);
+        const pk = readFileSync(model.pk);
+        const proof = this.zok.generateProof(artifacts.program, witness.witness, pk as Uint8Array);
         logger.debug(`Proof successfully generated for ${name}`);
         return circuit.zokToProtoProof(proof);
       } catch (error) {

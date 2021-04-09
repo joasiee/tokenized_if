@@ -1,43 +1,39 @@
 import { Document, Schema, model } from "mongoose";
 import { Circuit, Proof } from "@tokenized_if/shared/src/proto/zkp_pb";
-import { CompilationArtifacts, SetupKeypair, Proof as zokProof } from "zokrates-js";
+import { Proof as zokProof } from "zokrates-js";
+import { readFileSync } from "fs";
 
-const artifactFields: Record<keyof Circuit.Artifacts.AsObject, any> = {
-  program: { type: Buffer, required: true },
-  abi: { type: String, required: true }
-};
+type Modify<T, R> = Omit<T, keyof R> & R;
 
-const Artifacts = new Schema(artifactFields);
+type Circuit_ = Modify<
+  Circuit.AsObject,
+  {
+    artifacts: string[];
+    pk: string;
+  }
+>;
 
 // Enforces Mongoose schema fields to protobuf schema.
-const schemaFields: Record<keyof Circuit.AsObject, any> = {
+const schemaFields: Record<keyof Circuit_, any> = {
   name: { type: String, required: true, unique: true },
-  artifacts: { type: Artifacts, required: true },
+  artifacts: { type: [String], required: true },
   contract: { type: String, required: true },
-  pk: { type: Buffer, required: true },
+  pk: { type: String, required: true },
   deployed: { type: Boolean, default: false },
   address: { type: String, default: "" }
 };
 
 // instantiate schema, interface and model
 export const schema = new Schema(schemaFields);
-export interface ICircuit extends Circuit.AsObject, Document {}
+export interface ICircuit extends Circuit_, Document {}
 export const db = model<ICircuit>("circuits", schema);
 
-export function zokToModel(
-  name: string,
-  artifacts: CompilationArtifacts,
-  keys: SetupKeypair,
-  contract: string
-): Circuit.AsObject {
+export function zokToModel(name: string, artifacts: string[], pk: string, contract: string): Circuit_ {
   return {
     name: name,
-    artifacts: {
-      program: Buffer.from(artifacts.program),
-      abi: artifacts.abi
-    },
+    artifacts: artifacts,
     contract: contract,
-    pk: Buffer.from(keys.pk),
+    pk: pk,
     deployed: false,
     address: ""
   };
@@ -53,11 +49,13 @@ export function zokToProtoProof(proof: zokProof): Proof {
 }
 
 export function modelToProto(model: ICircuit): Circuit {
+  const program = readFileSync(model.artifacts[0]);
+  const pk = readFileSync(model.artifacts[1]);
   return new Circuit()
     .setName(model.name)
-    .setArtifacts(new Circuit.Artifacts().setProgram(model.artifacts.program).setAbi(model.artifacts.abi))
+    .setArtifacts(new Circuit.Artifacts().setProgram(program).setAbi(model.artifacts[1]))
     .setContract(model.contract)
-    .setPk(model.pk)
+    .setPk(pk)
     .setDeployed(model.deployed)
     .setAddress(model.address);
 }

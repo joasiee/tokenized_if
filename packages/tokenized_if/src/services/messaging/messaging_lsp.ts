@@ -1,9 +1,13 @@
 import { IMessagingClient, createMessagingClient } from "@tokenized_if/messaging";
 
 import dotenv from "dotenv";
-import { getTokenRegistry } from "../db/registry_queries";
-import { tm } from "./token";
-import { getShipmentByHash } from "../db/shipment_queries";
+import { getTokenRegistry } from "../../db/registry_queries";
+import { tm } from "../token";
+import { getShipmentByHash } from "../../db/shipment_queries";
+import { OrgRegistryReply } from "../../models/registry";
+import { OrgRegistry } from "@tokenized_if/shared/src/proto/organizations_pb";
+import { addOrganization, getOrgRegistry } from "../baseline/organizations";
+import { Participant } from "../../models/participant";
 
 // Load .env variables in process.env
 dotenv.config();
@@ -47,19 +51,34 @@ const subscriptions: Subscription = {
       }
     })();
 
-    // // Subscribe for clients wanting to join
-    // const admitSub = client.reply<Participant, Participant[]>('admittance');
-    // (async () => {
-    //   for await (const m of admitSub) {
-    //     // Respond with all currently known participants
-    //     const participants = await getAllParticipants(); 
-    //     await m.respond(participants);
+    // Setup reply object for org registry requests
+    const orgRegistryRep = client.reply<string, OrgRegistryReply>('org_registry');
+    (async () => {
+      for await (const m of orgRegistryRep) {
+        let registry : OrgRegistry;
+        switch (m.payload) {
+          case 'financer':
+            registry = await getOrgRegistry('financer-registry');
+            await m.respond({ name: registry.getName(), address: registry.getAddress() })
+            break;
+          case 'importer':
+            registry = await getOrgRegistry('importer-registry');
+            await m.respond({ name: registry.getName(), address: registry.getAddress() })
+            break;
+          default:
+            break;
+        }
+      }
+    })();
 
-    //     // Add the new participant and notify subscribers
-    //     await addParticipant(m.payload);
-    //     await client.publish<Participant>('participants', m.payload);
-    //   }
-    // })();
+    // Subscribe for clients wanting to join
+    const admitSub = client.subscribe<Participant>('admittance');
+    (async () => {
+      for await (const m of admitSub) {
+        // Add participant to org registry
+        await addOrganization(m.payload);
+      }
+    })();
 
     // // Subscribe for clients wanting to deploy their escrow
     // const acceptSub = client.reply<AcceptOffer, EscrowAddress>('escrow');
