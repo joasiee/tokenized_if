@@ -6,15 +6,16 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/app.ts",
-    "start:lsp": "NODE_ENV=lsp ts-node -r dotenv-flow/config src/app.ts",
-    "up:lsp": "docker-compose -p lsp --env-file .env.lsp up",
+    "start:lsp": "unset NAME && NODE_ENV=lsp ts-node -r dotenv-flow/config src/app.ts",
+    "up:lsp": "docker-compose -p lsp --env-file .env.lsp up -d",
     "down:lsp": "docker-compose -p lsp --env-file .env.lsp down",
-    "start:importer": "NODE_ENV=importer ts-node -r dotenv-flow/config src/app.ts",
-    "up:importer": "docker-compose -p importer --env-file .env.importer up",
-    "down:importer": "docker-compose -p importer --env-file .env.importer down",
-    "start:financer": "NODE_ENV=financer ts-node -r dotenv-flow/config src/app.ts",
-    "up:financer": "docker-compose -p financer --env-file .env.financer up",
+    "start:importer": "unset NAME && NODE_ENV=importer ts-node -r dotenv-flow/config src/app.ts",
+    "up:importer": "docker-compose -p importer --env-file .env.importer up -d",
+    "down:importer": "docker-compose  -p importer --env-file .env.importer down",
+    "start:financer": "unset NAME && NODE_ENV=financer ts-node -r dotenv-flow/config src/app.ts",
+    "up:financer": "docker-compose -p financer --env-file .env.financer up -d",
     "down:financer": "docker-compose -p financer --env-file .env.financer down",
+    "start:all": "yarn run up:lsp && yarn run up:importer && yarn run up:financer && sleep 15 && yarn run start:lsp & yarn run start:importer & yarn run start:financer &",
     "build": "tsc --build",
     "clean": "tsc --build --clean"
   },
@@ -28,6 +29,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "@grpc/grpc-js": "^1.2.12",
     "@tokenized_if/messaging": "^1.0.0",
     "@tokenized_if/shared": "^1.0.0",

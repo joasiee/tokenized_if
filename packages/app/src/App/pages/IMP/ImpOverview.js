@@ -1,24 +1,41 @@
 import React from 'react';
-import { Row, Col, Card, Table } from 'react-bootstrap';
+import { Row, Col, Card, Table, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown } from 'react-bootstrap';
 
 import Aux from "../../../hoc/_Aux";
 
-class listofgoods extends React.Component {
+class overviewitems extends React.Component {
     constructor(props) {
         super(props);
+        this.state = { value: '', jsondata: [], requestedShipment: '' };
 
-        this.state = {
-            data: [],
-        };
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-        fetch('http://localhost:8084/shipments.json')
+        fetch('http://localhost:3001/api/shipments')
             .then(response => response.json())
-            .then(data => this.setState({ data: data }));
+            .then(data => this.setState({ jsondata: data }));
     }
+    handleSubmit(event) {
+        event.preventDefault();
+        console.log(event);
+        const { name, value } = event.target;
+        console.log(this.state.requestedShipment);
+        if (name === 'repay') {
+            fetch(`http://localhost:3001/api/offers/${this.state.requestedShipment}/repay`, {
+                method: 'PUT',
+            });
+        }
+        if (name === 'release') {
+            // fetch(`http://localhost:3001/api/shipments/${this.state.requestedShipment}`, {
+            //     method: 'PUT',
+            //     body: this.state.requestedShipment,
+            // }
+            // )
+            ;
+        }
 
+    }
     render() {
-        const { data } = this.state;
         return (
 
             < Aux >
@@ -33,16 +50,16 @@ class listofgoods extends React.Component {
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th>Location</th>
-                                            <th>Tokenized</th>
-                                            <th>Financed</th>
+                                            <th>Description</th>
+                                            <th>Amount</th>
+                                            <th>Repay</th>
+                                            <th>Ask for release</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        {console.log(data)}
-                                        {data.map(shipment => {
+                                        {console.log(this.state.jsondata)}
+                                        {this.state.jsondata.map(shipment => {
                                             console.log(shipment)
                                             return (
                                                 shipment.cargo.items.map(items => {
@@ -51,7 +68,8 @@ class listofgoods extends React.Component {
                                                             <th scope="row">{shipment.id}</th>
                                                             <td>{items.description}</td>
                                                             <td>{items.amount}</td>
-                                                            <td>{shipment.owner}</td>
+                                                            <td>< Button type="submit" name="repay" onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Repay</Button></td>
+                                                            <td>< Button type="submit" name="release" onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Release</Button></td>
                                                         </tr>
                                                     )
                                                 }
@@ -71,4 +89,4 @@ class listofgoods extends React.Component {
     }
 }
 
-export default listofgoods;
+export default overviewitems;

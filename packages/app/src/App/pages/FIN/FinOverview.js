@@ -12,13 +12,12 @@ class finoverview extends React.Component {
         };
     }
     componentDidMount() {
-        fetch('http://localhost:8084/shipments.json')
+        fetch('http://127.0.0.1:3002/api/offers')
             .then(response => response.json())
             .then(data => this.setState({ data: data }));
     }
 
     render() {
-        const { data } = this.state;
         return (
 
             < Aux >
@@ -32,33 +31,30 @@ class finoverview extends React.Component {
                                 <Table responsive hover striped>
                                     <thead>
                                         <tr>
-                                            <th>#</th>
                                             <th>Deal</th>
                                             <th>Importer</th>
-                                            <th>Value</th>
-                                            <th>Due date</th>
+                                            <th>Price</th>
+                                            <th>Buyback</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        {console.log(data)}
-                                        {data.map(shipment => {
-                                            console.log(shipment)
+                                        {console.log(this.state.data)}
+                                        {this.state.data.map(offer => {
+                                            console.log(offer)
+                                            // if (!offer.financer === '1') {
                                             return (
-                                                shipment.cargo.items.map(items => {
-                                                    return (
-                                                        <tr>
-                                                            <th scope="row">{shipment.id}</th>
-                                                            <td>{items.description}</td>
-                                                            <td>{items.amount}</td>
-                                                            <td>{shipment.owner}</td>
-                                                        </tr>
-                                                    )
-                                                }
-                                                )
-                                            )
-                                        }
 
+                                                <tr>
+                                                    <th scope="row">{offer.id}</th>
+                                                    <td>{offer.financer}</td>
+                                                    <td>{offer.price}</td>
+                                                    <td>{offer.buyback}</td>
+                                                </tr>
+                                            )
+                                            // }
+
+                                        }
                                         )}
                                     </tbody>
                                 </Table>

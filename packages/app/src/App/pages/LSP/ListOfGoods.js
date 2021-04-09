@@ -12,7 +12,7 @@ class listofgoods extends React.Component {
         };
     }
     componentDidMount() {
-        fetch('http://localhost:8084/shipments.json')
+        fetch('http://localhost:3000/api/shipments')
             .then(response => response.json())
             .then(data => this.setState({ data: data }));
     }
@@ -35,7 +35,7 @@ class listofgoods extends React.Component {
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Importer</th>
-                                            <th>Tokenized</th>
+                                            <th>Items</th>
                                             <th>Released</th>
                                         </tr>
                                     </thead>
@@ -45,12 +45,13 @@ class listofgoods extends React.Component {
                                         {data.map(shipment => {
                                             console.log(shipment)
                                             return (
-                                                shipment.cargo.items.map(items => {
+                                                shipment.cargo.items.map(item => {
                                                     return (
                                                         <tr>
                                                             <th scope="row">{shipment.id}</th>
-                                                            <td>{items.description}</td>
-                                                            <td>{items.amount}</td>
+                                                            <td>{item.description}</td>
+                                                            <td>{item.amount}</td>
+
                                                             <td>{shipment.owner}</td>
                                                         </tr>
                                                     )

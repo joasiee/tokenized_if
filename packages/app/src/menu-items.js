@@ -38,6 +38,14 @@ export default {
                     icon: 'feather icon-help-circle',
                     url: '/lsp/releaserequests'
                 },
+                {
+                    id: 'addshipment',
+                    title: 'Add shipments',
+                    type: 'item',
+                    role: 'lsp',
+                    icon: 'feather icon-help-circle',
+                    url: '/lsp/addshipment'
+                }
 
             ]
         },
@@ -58,19 +66,11 @@ export default {
                 },
                 {
                     id: 'tokenize',
-                    title: 'Announce goods',
+                    title: 'Offer deal',
                     role: 'imp',
                     type: 'item',
                     icon: 'feather icon-volume-2',
-                    url: '/imp/announce'
-                },
-                {
-                    id: 'impwallet',
-                    title: 'Wallet of importer',
-                    role: 'imp',
-                    type: 'item',
-                    icon: 'feather icon-book',
-                    url: '/imp/wallet'
+                    url: '/imp/offer'
                 },
 
             ]
@@ -90,23 +90,14 @@ export default {
                     icon: 'feather icon-shopping-bag',
                     url: '/fin/overview'
                 },
-                {
-                    id: 'fintokens',
-                    title: 'Possesed tokens',
-                    role: 'fin',
-                    type: 'item',
-                    icon: 'feather icon-key',
-                    url: '/fin/tokens'
-                },
-                {
-                    id: 'finwallet',
-                    role: 'fin',
-                    title: 'Wallet of financier',
-                    type: 'item',
-                    icon: 'feather icon-book',
-                    url: '/fin/wallet',
-                    classes: "nav-item"
-                },
+                // {
+                //     id: 'fintokens',
+                //     title: 'Possesed tokens',
+                //     role: 'fin',
+                //     type: 'item',
+                //     icon: 'feather icon-key',
+                //     url: '/fin/tokens'
+                // }
 
             ]
         },

@@ -11,15 +11,15 @@ class releaserequests extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-        fetch('http://localhost:8084/release.json')
+        fetch('http://localhost:3000/api/shipments')
             .then(response => response.json())
             .then(data => this.setState({ jsondata: data }));
     }
     handleSubmit(event) {
         event.preventDefault();
         console.log(this.state.requestedShipment);
-        fetch('http://localhost:9181', {
-            method: 'POST',
+        fetch(`http://localhost:3000/api/shipments/${this.state.requestedShipment}`, {
+            method: 'DELETE',
             body: this.state.requestedShipment,
         });
     }
@@ -59,7 +59,7 @@ class releaserequests extends React.Component {
                                                                 <td>{items.amount}</td>
                                                                 <td>{shipment.owner}</td>
                                                                 {/* <td>< Button type="submit" onClick={() => this.state.requestedShipment = shipment.id.toString() + ' ' + items.amount.toString()} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Release</Button></td> */}
-                                                                <td>< Button type="submit" onClick={() => this.setState({ requestedShipment: shipment.id.toString() + ' ' + items.amount.toString() })} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Release</Button></td>
+                                                                <td>< Button type="submit" onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Release</Button></td>
 
 
                                                             </tr>
