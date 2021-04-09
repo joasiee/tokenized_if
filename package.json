@@ -3,6 +3,7 @@
   "private": true,
   "workspaces": [
     "packages/tokenized_if",
+    "packages/shared",
     "packages/messaging",
     "packages/baseline",
     "packages/token_registry"

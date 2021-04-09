@@ -9,6 +9,9 @@
       "path": "packages/tokenized_if"
     },
     {
+      "path": "packages/shared"
+    },
+    {
       "path": "packages/messaging"
     },
     {
