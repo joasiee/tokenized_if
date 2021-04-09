@@ -1,4 +1,4 @@
-import { IMessagingClient, createMessagingClient } from "messaging";
+import { IMessagingClient, createMessagingClient } from "@tokenized_if/messaging";
 
 import dotenv from "dotenv";
 import { getTokenRegistry } from "../db/registry_queries";

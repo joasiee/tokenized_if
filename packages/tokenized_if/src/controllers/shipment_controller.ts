@@ -3,7 +3,7 @@ import { addShipment, getAllShipments, getShipmentById } from "../db/shipment_qu
 import { CreateShipmentObject, Shipment } from "../models/shipment";
 import { errorMessage, successMessage } from "./helpers/status";
 import web3 from "web3";
-import { createMessagingClient } from "messaging";
+import { createMessagingClient } from "@tokenized_if/messaging";
 import { CreateOfferDao, Offer } from "../models/offer";
 import { tm } from "../services/token";
 import { getAllFinancers, getLsp, getParticipant } from "../db/participant_queries";

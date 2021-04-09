@@ -1,8 +1,6 @@
-import { createMessagingClient } from "messaging";
+import { createMessagingClient } from "@tokenized_if/messaging";
 
 import dotenv from "dotenv";
-import { Participant } from "../models/participant";
-import { addParticipant } from "../db/participant_queries";
 import { setTokenRegistry } from "../db/registry_queries";
 
 // Load .env variables in process.env

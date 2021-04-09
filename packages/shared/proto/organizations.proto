@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package organizations;
+
+message OrgRegistry {
+    string address = 1;
+    string name = 2;
+    repeated Organization orgs = 3;
+    repeated Workgroup groups = 4;
+}
+
+message Organization {
+    string name = 1;
+    string address = 2;
+    string msgUrl = 3;
+    string msgKey = 4;
+    string zkpKey = 5;
+}
+
+message Workgroup {
+    string name = 1;
+    string tokenAddress = 2;
+    string shieldAddress = 3;
+    string verifierAddress = 4;
+    int32 workStep = 5;
+}
+
+message AddOrgRequest {
+    OrgRegistry registry = 1;
+    Organization organization = 2;
+}
+
+message AddGroupRequest {
+    OrgRegistry registry = 1;
+    Workgroup workgroup = 2;
+}
+
+service Organizations {
+    rpc GetOrgRegistry(OrgRegistry) returns (OrgRegistry);
+    rpc DeployOrgRegistry(OrgRegistry) returns (OrgRegistry);
+    rpc AddOrganization(AddOrgRequest) returns (OrgRegistry);
+    rpc AddWorkgroup(AddGroupRequest) returns (OrgRegistry);
+}

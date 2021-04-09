@@ -1,4 +1,4 @@
-import { createMessagingClient } from "messaging";
+import { createMessagingClient } from "@tokenized_if/messaging";
 
 import dotenv from "dotenv";
 import { CreateOfferDao, Offer } from "../models/offer";

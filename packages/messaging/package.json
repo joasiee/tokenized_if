@@ -1,20 +1,17 @@
 {
-  "name": "messaging",
+  "name": "@tokenized_if/messaging",
   "version": "1.0.0",
   "description": "Distributed Messaging Service Provider",
   "main": "src/index.ts",
   "author": "Bart van Schaick",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
     "start": "ts-node src/index.ts",
-    "test": "npm run test:startup && npm run mocha ; npm run test:teardown",
-    "mocha": "mocha -r ts-node/register --exit test/integration.ts",
-    "test:ci": "npm test",
+    "test": "yarn test:startup && yarn mocha && yarn test:teardown",
+    "mocha": "NODE_ENV=test ./node_modules/.bin/mocha -r ts-node/register -r dotenv-flow/config --exit 'tests/**/*.test.ts'",
+    "test:ci": "yarn test",
     "test:startup": "docker run -d --name nats-test -p 4222:4222 nats",
-    "test:teardown": "docker stop nats-test && docker container rm nats-test",
-    "lint": "eslint . --ext .ts --fix",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' 'test/**/*.ts' --write"
+    "test:teardown": "docker stop nats-test && docker container rm nats-test"
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",
@@ -22,6 +19,7 @@
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "chai": "^4.3.4",
+    "dotenv-flow": "^3.2.0",
     "eslint": "^7.23.0",
     "mocha": "^8.3.2",
     "prettier": "^2.2.1",

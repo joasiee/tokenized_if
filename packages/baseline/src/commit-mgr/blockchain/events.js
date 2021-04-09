@@ -1,22 +1,20 @@
-import dotenv from "dotenv";
-import { ethers } from 'ethers';
+import { ethers } from "ethers";
 
-import { logger } from "../logger";
 import { insertLeaf } from "../merkle-tree/leaves";
 import { get_ws_provider } from "./utils";
 import { shieldContract } from "./shield-contract";
-
-dotenv.config();
+import { getLogger } from "@tokenized_if/shared";
 
 export const newLeafEvent = ethers.utils.id("NewLeaf(uint256,bytes32,bytes32)");
+const logger = getLogger("commit-mgr");
 
 export const subscribeMerkleEvents = (contractAddress) => {
   logger.info(`Creating event listeners for contract: ${contractAddress}`);
 
   const singleLeafFilter = {
     address: contractAddress,
-    topics: [newLeafEvent]
-  }
+    topics: [newLeafEvent],
+  };
 
   const contractInterface = new ethers.utils.Interface(shieldContract.abi);
   const provider = get_ws_provider();
@@ -24,7 +22,7 @@ export const subscribeMerkleEvents = (contractAddress) => {
     error = {
       code: -32603,
       message: `WEBSOCKET: could not establish connection`,
-      data: `Attempted endpoint: ${process.env.CMGR_ETH_CLIENT_WS}`
+      data: `Attempted endpoint: ${process.env.ETH_CLIENT_WS}`,
     };
     return error;
   }
@@ -42,19 +40,19 @@ export const subscribeMerkleEvents = (contractAddress) => {
       hash: leafValue,
       leafIndex: leafIndex,
       txHash: result.transactionHash,
-      blockNumber: result.blockNumber
-    }
+      blockNumber: result.blockNumber,
+    };
     await insertLeaf(contractAddress, leaf);
   });
-}
+};
 
 export const unsubscribeMerkleEvents = (contractAddress) => {
   logger.info(`Removing event listeners for contract: ${contractAddress}`);
   const singleLeafFilter = {
     address: contractAddress,
-    topics: [newLeafEvent]
-  }
+    topics: [newLeafEvent],
+  };
 
   const provider = get_ws_provider();
   provider.off(singleLeafFilter);
-}
+};

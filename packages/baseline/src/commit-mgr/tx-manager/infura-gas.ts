@@ -1,10 +1,10 @@
-import dotenv from "dotenv";
-import { Wallet, ethers } from "ethers";
+import { ethers } from "ethers";
 import { ITxManager } from ".";
-import { logger } from "../logger";
-import { http_provider, jsonrpc, shieldContract } from "../blockchain";
+import { getLogger } from "@tokenized_if/shared";
+import { jsonrpc, shieldContract } from "../blockchain";
+import { HDWallet } from "../../blockchain-mgr";
 
-dotenv.config();
+const logger = getLogger("commit-mgr");
 
 export class InfuraGas implements ITxManager {
   constructor(private readonly config: any) {
@@ -12,10 +12,7 @@ export class InfuraGas implements ITxManager {
   }
 
   async signTx(toAddress: string, fromAddress: string, txData: string) {
-    const wallet = new Wallet(
-      process.env.CMGR_WALLET_PRIVATE_KEY,
-      http_provider
-    );
+    const wallet = HDWallet.getInstance().getWallet();
     const nonce = await wallet.getTransactionCount();
     logger.debug(`nonce: ${nonce}`);
 
@@ -23,9 +20,9 @@ export class InfuraGas implements ITxManager {
       to: toAddress,
       from: fromAddress,
       data: txData,
-      chainId: parseInt(process.env.CMGR_CHAIN_ID, 10),
+      chainId: parseInt(process.env.ETH_CHAIN_ID, 10),
       gasLimit: 0,
-      nonce,
+      nonce
     };
 
     const gasEstimate = await wallet.estimateGas(unsignedTx);
@@ -36,47 +33,33 @@ export class InfuraGas implements ITxManager {
     const relayTransactionHash = ethers.utils.keccak256(
       ethers.utils.defaultAbiCoder.encode(
         ["address", "bytes", "uint", "uint"],
-        [toAddress, txData, gasLimit, process.env.CMGR_CHAIN_ID] // Rinkeby chainId is 4
+        [toAddress, txData, gasLimit, process.env.ETH_CHAIN_ID] // Rinkeby chainId is 4
       )
     );
 
-    const signature = await wallet.signMessage(
-      ethers.utils.arrayify(relayTransactionHash)
-    );
+    const signature = await wallet.signMessage(ethers.utils.arrayify(relayTransactionHash));
     return { signature, gasLimit };
   }
 
-  async insertLeaf(
-    toAddress: string,
-    fromAddress: string,
-    proof: any[],
-    publicInputs: any[],
-    newCommitment: string
-  ) {
+  async insertLeaf(toAddress: string, fromAddress: string, proof: any[], publicInputs: any[], newCommitment: string) {
     let error = null;
     let txHash: string;
     try {
       const shieldInterface = new ethers.utils.Interface(shieldContract.abi);
-      const txData = shieldInterface.encodeFunctionData(
-        "verifyAndPush(uint256[],uint256[],bytes32)",
-        [proof, publicInputs, newCommitment]
-      );
-      const { signature, gasLimit } = await this.signTx(
-        toAddress,
-        fromAddress,
-        txData
-      );
+      const txData = shieldInterface.encodeFunctionData("verifyAndPush(uint256[],uint256[],bytes32)", [
+        proof,
+        publicInputs,
+        newCommitment
+      ]);
+      const { signature, gasLimit } = await this.signTx(toAddress, fromAddress, txData);
       logger.debug(`Signature for relay: ${signature}`);
       logger.debug(`txData: ${txData}`);
       const transaction = {
         to: toAddress,
         data: txData,
-        gas: `${gasLimit}`,
+        gas: `${gasLimit}`
       };
-      const res = await jsonrpc("relay_sendTransaction", [
-        transaction,
-        signature,
-      ]);
+      const res = await jsonrpc("relay_sendTransaction", [transaction, signature]);
       logger.debug(`relay_sendTransaction response: %o`, res);
       txHash = res.result;
     } catch (err) {

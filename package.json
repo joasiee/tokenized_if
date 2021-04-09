@@ -1,22 +1,25 @@
 {
+  "name": "tokenized_if",
   "private": true,
   "workspaces": [
-    "packages/tokenized_if/*",
-    "packages/messaging/*",
-    "packages/baseline/*"
+    "packages/tokenized_if",
+    "packages/messaging",
+    "packages/baseline",
+    "packages/token_registry"
   ],
   "scripts": {
     "ts:build": "tsc --build",
     "ts:clean": "tsc --build --clean",
-    "build": "yarn ts:clean && yarn ts:build",
-    "start:main": "yarn workspace tokenized_if start",
-    "start:baseline": "yarn workspace baseline start",
+    "ts:watch": "tsc --build --watch",
+    "dev": "yarn ts:clean && yarn ts:watch",
+    "build": "yarn lerna run build && yarn ts:clean && yarn ts:build",
+    "start:api": "yarn workspace @tokenized_if/backend start",
+    "start:baseline": "yarn workspace @tokenized_if/baseline start",
     "postinstall": "update-ts-references"
   },
   "devDependencies": {
     "lerna": "^4.0.0",
     "typescript": "^4.2.3",
     "update-ts-references": "^2.0.0"
-  },
-  "name": "tokenized_if"
+  }
 }

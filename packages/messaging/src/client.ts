@@ -13,6 +13,7 @@ import {
   nkeyAuthenticator,
   Subscription,
 } from "nats";
+import { getLogger } from "@tokenized_if/shared";
 
 /**
  * Returns a new {@link MessagingClient}
@@ -32,6 +33,7 @@ export class MessagingClient implements IMessagingClient {
   private readonly seed?: Uint8Array;
   private readonly username: string;
   private readonly headers? : MsgHdrs;
+  private logger = getLogger("messaging");
 
   private nc: NatsConnection;
   private subscriptions = new Map<string, Subscription>();
@@ -59,26 +61,26 @@ export class MessagingClient implements IMessagingClient {
     try {
       this.nc = await connect({
         servers: this.url,
-        ...(this.seed && { authenticator: nkeyAuthenticator(this.seed) }),
+        ...(this.seed && { authenticator: nkeyAuthenticator(this.seed) })
       });
-      console.log(`NATS client succesfully connected with ${this.url}`);
+      this.logger.info(`NATS client succesfully connected with ${this.url}`);
       return true;
     } catch {
-      console.log("Could not connect to NATS server");
+      this.logger.error("Could not connect to NATS server");
       return false;
     }
   }
 
   async disconnect(): Promise<boolean> {
     if (!this.nc) {
-      console.log(`No NatsConnection to disconnect from`);
+      this.logger.debug(`No NatsConnection to disconnect from`);
       return true;
     }
     const done = this.nc.closed();
     await this.nc.close();
     const err = await done;
     if (err) {
-      console.log(`An Error while closing the NATS connection: ${err.message}`);
+      this.logger.error(`An Error while closing the NATS connection: ${err.message}`);
       return false;
     }
     return true;
@@ -107,7 +109,7 @@ export class MessagingClient implements IMessagingClient {
         ...(m.data.length && { payload: jc.decode(m.data) }),
       };
     }
-    console.log(`subscription closed: ${subject}`);
+    this.logger.info(`subscription closed: ${subject}`);
   }
 
   async publish<T>(subject: string, payload?: T): Promise<void> {
@@ -120,11 +122,7 @@ export class MessagingClient implements IMessagingClient {
     await this.nc.flush();
   }
 
-  async request<I, O>(
-    subject: string,
-    payload?: I,
-    timeout = 2000
-  ): Promise<O> {
+  async request<I, O>(subject: string, payload?: I, timeout = 2000): Promise<O> {
     const jci = JSONCodec<I>();
     const jco = JSONCodec<O>();
     let result: O;
@@ -136,16 +134,12 @@ export class MessagingClient implements IMessagingClient {
       );
       return jco.decode(reply.data);
     } catch (err) {
-      console.log(
-        `An error occurred requesting subject: ${subject}, with payload: ${payload} \n\t ${err}`
-      );
+      this.logger.error(`An error occurred requesting subject: ${subject}, with payload: ${payload} \n\t ${err}`);
     }
     return result;
   }
 
-  async *reply<I, O>(
-    subject: string
-  ): AsyncGenerator<RequestResponseObject<I, O>> {
+  async *reply<I, O>(subject: string): AsyncGenerator<RequestResponseObject<I, O>> {
     if (this.subscriptions.has(subject)) {
       this.subscriptions.get(subject).unsubscribe();
     }
@@ -169,7 +163,7 @@ export class MessagingClient implements IMessagingClient {
             }
             return Promise.resolve();
           };
-        })(),
+        })()
       };
     }
   }

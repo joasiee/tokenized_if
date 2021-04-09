@@ -1,7 +1,21 @@
 {
-  "files": [],
   "exclude": [
-    "legacy/**/*",
-    "ops/**/*"
+    "legacy",
+    "ops",
+    "node_modules"
+  ],
+  "references": [
+    {
+      "path": "packages/tokenized_if"
+    },
+    {
+      "path": "packages/messaging"
+    },
+    {
+      "path": "packages/baseline"
+    },
+    {
+      "path": "packages/token_registry"
+    }
   ]
 }

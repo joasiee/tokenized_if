@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import { createMessagingClient } from "messaging";
 import importer from './messaging_importer';
 import financer from './messaging_financer';
 import lsp from './messaging_lsp';

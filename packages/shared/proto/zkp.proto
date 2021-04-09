@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package zkp;
+
+import "google/protobuf/empty.proto";
+
+message Circuit {
+  string name = 1;
+  Artifacts artifacts = 2;
+  string contract = 3;
+  bytes pk = 4;
+  bool deployed = 5;
+  string address = 6;
+
+  message Artifacts {
+    bytes program = 1;
+    string abi = 2;
+  }
+}
+
+message GenerateProofRequest {
+  string name = 1;
+  repeated string args = 2;
+}
+
+message Proof {
+  ProofPoints proof = 1;
+  repeated string inputs = 2;
+
+  message ProofPoints {
+    repeated string a = 1;
+    repeated string b1 = 2;
+    repeated string b2 = 3;
+    repeated string c = 4;
+  }
+}
+
+service ZKP {
+  rpc CompileCircuit(Circuit) returns (google.protobuf.Empty);
+  rpc DeployCircuit(Circuit) returns (google.protobuf.Empty);
+  rpc GetCircuit(Circuit) returns (Circuit);
+  rpc AddCircuit(Circuit) returns (google.protobuf.Empty);
+  rpc GenerateProof(GenerateProofRequest) returns (Proof);
+}

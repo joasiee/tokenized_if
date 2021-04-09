@@ -2,7 +2,7 @@ import express from "express";
 import { getAllOffers, getOfferById, setFinancer } from "../db/offer_queries";
 import { getParticipant, getParticipantById } from "../db/participant_queries";
 import { Participant } from "../models/participant";
-import { createMessagingClient } from "messaging";
+import { createMessagingClient } from "@tokenized_if/messaging";
 import { AcceptOffer } from "../models/offer";
 import { tm } from "../services/token";
 import { errorMessage, successMessage } from "./helpers/status";
