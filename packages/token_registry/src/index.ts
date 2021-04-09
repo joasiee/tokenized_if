@@ -1,12 +1,7 @@
-export { TitleEscrowFactory } from "./contracts/TitleEscrowFactory";
-export { TradeTrustErc721Factory } from "./contracts/TradeTrustErc721Factory";
-export { TitleEscrowCreatorFactory } from "./contracts/TitleEscrowCreatorFactory";
-export { getTitleEscrowCreatorAddress } from "./config";
-
 import { TradeTrustERC721 } from "../dist/typechain/TradeTrustERC721";
-import { TitleEscrowFactory, TradeTrustErc721Factory } from "./index";
 import { Wallet, providers, ethers } from "ethers";
 import { TitleEscrow } from "../dist/typechain/TitleEscrow";
+import { TradeTrustErc721Factory, TitleEscrowFactory } from "./contracts";
 import Web3 from "web3";
 
 /**

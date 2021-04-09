@@ -1,5 +1,5 @@
 import { providers } from "ethers";
-import { TitleEscrowFactory, TradeTrustErc721Factory, TitleEscrowCreatorFactory } from "./index";
+import { TitleEscrowFactory, TradeTrustErc721Factory, TitleEscrowCreatorFactory } from "./contracts";
 import { TradeTrustERC721 } from "../dist/typechain/TradeTrustERC721";
 import { TitleEscrowCreator } from "../dist/typechain/TitleEscrowCreator";
 
