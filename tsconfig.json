@@ -5,6 +5,9 @@
       "path": "packages/baseline"
     },
     {
+      "path": "packages/messaging"
+    },
+    {
       "path": "packages/shared"
     },
     {
@@ -15,8 +18,8 @@
     }
   ],
   "exclude": [
-    "legacy/**/*",
-    "ops/**/*",
-    "node_modules/**/*"
+    "legacy",
+    "ops",
+    "node_modules"
   ]
 }

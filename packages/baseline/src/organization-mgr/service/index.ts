@@ -1,6 +1,6 @@
-import { utils } from "ethers";
+import { Contract, utils } from "ethers";
 import { OrgRegistry, Organization, Workgroup } from "@tokenized_if/shared/src/proto/organizations_pb";
-import { dbConnect, getLogger, dbClose } from "@tokenized_if/shared";
+import { getLogger } from "@tokenized_if/shared";
 import { deployContract, getContract } from "../../blockchain-mgr";
 import { orgregistry } from "../db";
 import { DBSync } from "./dbsync";
@@ -19,7 +19,7 @@ export class OrganizationsService {
    * Connect to local mongodb, update previously stored registries.
    */
   async init() {
-    await dbConnect(process.env.OMGR_DATABASE_USER, process.env.OMGR_DATABASE_PASSWORD, process.env.OMGR_DATABASE_NAME);
+    logger.debug("Initializing Org service..");
     await this.dbsync.updateDB();
   }
 
@@ -28,11 +28,10 @@ export class OrganizationsService {
    */
   shutdown() {
     this.dbsync.shutdown();
-    dbClose();
   }
 
   /**
-   * GetS a registry.
+   * Gets a registry.
    * First checks if it is available in local db, if not checks on chain at address.
    * @param registry
    * @returns
@@ -85,7 +84,7 @@ export class OrganizationsService {
         config.CONTRACTS.ORG_REGISTRY
       )) as OrgRegistryContract;
       // do not add if org is already added locally.
-      if (model.orgsList.some((x) => x.name === org.getName())) {
+      if (model.orgsList.some(x => x.name === org.getName())) {
         const msg = `Registry already contains org: ${org.getName()}`;
         logger.debug(msg);
         return;
@@ -124,11 +123,15 @@ export class OrganizationsService {
         registry.getAddress(),
         config.CONTRACTS.ORG_REGISTRY
       )) as OrgRegistryContract;
-      if (model.groupsList.some((x) => x.name === workgroup.getName())) {
+      if (model.groupsList.some(x => x.name === workgroup.getName())) {
         const msg = `Registry already contains group: ${workgroup.getName()}`;
         logger.debug(msg);
-        return;
+        return Promise.reject(msg);
       }
+      // TODO: deploying the shield contract from within this function is a bit of a hack.
+      // Calling it here means we have to exclude the shieldaddress field from the test cases in omgr.test.js
+      const shieldContract = await this.deployShield(workgroup.getVerifieraddress(), config.TREE_HEIGHT);
+      workgroup.setShieldaddress(shieldContract.address);
       await contract.registerInterfaces(
         utils.formatBytes32String(workgroup.getName()),
         workgroup.getTokenaddress(),
@@ -140,6 +143,21 @@ export class OrganizationsService {
       await model.save();
       logger.debug(`Successfully added group ${workgroup.getName()} to registry.`);
       return registry;
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  }
+
+  /**
+   * Deploys shield contract.
+   * @param verifierAddress deployed verifier contract address
+   * @param treeHeight merkle tree height
+   */
+  async deployShield(verifierAddress: string, treeHeight: number): Promise<Contract> {
+    logger.debug(`Trying to deploy shield contract with verifier: ${verifierAddress} and tree height: ${treeHeight}`);
+    try {
+      const contract = await deployContract(config.CONTRACTS.SHIELD, [verifierAddress, treeHeight]);
+      return contract;
     } catch (err) {
       return Promise.reject(err);
     }

@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package commit;
+
+import "google/protobuf/empty.proto";
+import "zkp.proto";
+
+message Request {
+  message Commit {
+    string address = 1;
+    uint32 index = 2;
+  }
+  message Commits {
+    string address = 1;
+    uint32 startIndex = 2;
+    uint32 count = 3;
+  }
+  message Root {
+    string address = 1;
+  }
+  message Proof {
+    string address = 1;
+    uint32 leafIndex = 2;
+  }
+  message Track {
+    string address = 1;
+  }
+  message Untrack {
+    string address = 1;
+    bool prune = 2;
+  }
+  message Verify {
+    string address = 1;
+    string root = 2;
+    string commit = 3;
+    repeated Commitment siblingPath = 4;
+  }
+  message VerifyAndPush {
+    string sender = 1;
+    string address = 2;
+    zkp.Proof proof = 3;
+    string value = 4;
+  }
+}
+
+message Response {
+  message PushCommitment {
+    Commitment commitment = 1;
+    string txHash = 2;
+  }
+  message Commitments {
+    repeated Commitment commitments = 1;
+  }
+  message Root {
+    string root = 1;
+  }
+  message Tracked {
+    repeated string tracked = 1;
+  }
+  message Bool {
+    bool value = 1;
+  }
+}
+
+message Commitment {
+  uint32 number = 1;
+  string value = 2;
+}
+
+service Commit {
+  rpc GetCommit(Request.Commit) returns (Commitment);
+  rpc GetCommits(Request.Commits) returns (Response.Commitments);
+  rpc GetRoot(Request.Root) returns (Response.Root);
+  rpc GetProof(Request.Proof) returns (Response.Commitments);
+  rpc GetTracked(google.protobuf.Empty) returns (Response.Tracked);
+  rpc Track(Request.Track) returns (Response.Bool);
+  rpc Untrack(Request.Untrack) returns (Response.Bool);
+  rpc Verify(Request.Verify) returns (Response.Bool);
+  rpc VerifyAndPush(Request.VerifyAndPush) returns (Response.PushCommitment);
+}

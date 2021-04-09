@@ -1,7 +1,9 @@
 import crypto from "crypto";
 import { Buffer } from "safe-buffer";
-import { logger } from "../logger";
+import { getLogger } from "@tokenized_if/shared";
 import { config } from "./config";
+
+const logger = getLogger("commit-mgr");
 
 /**
  * utility function to remove a leading 0x on a string representing a hex number.

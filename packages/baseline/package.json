@@ -2,11 +2,11 @@
   "name": "@tokenized_if/baseline",
   "version": "1.0.0",
   "description": "baseline personal reference implementation",
-  "main": "dist/index.js",
+  "main": "dist/ts/index.js",
   "license": "ISC",
   "scripts": {
-    "start": "make start && NODE_ENV=development ts-node -r dotenv-flow/config src/index.ts",
-    "test": "make reset && sleep 5 && NODE_ENV=test ./node_modules/.bin/mocha -r dotenv-flow/config -r ts-node/register 'tests/**/*.test.ts' --timeout 30000 && make stop"
+    "start": "node -r esm -r dotenv-flow/config dist/ts/index.js",
+    "test": "make reset && sleep 5 && NODE_ENV=test ./node_modules/.bin/mocha -r esm -r dotenv-flow/config -r ts-node/register 'tests/**/*.test.ts' --timeout 200000 && make stop"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.2.12",
@@ -20,6 +20,7 @@
     "ethers": "^5.0.32",
     "express": "^4.17.1",
     "express-winston": "^4.0.5",
+    "fs-extra": "^9.1.0",
     "jayson": "^3.3.3",
     "keccak": "^3.0.1",
     "mongoose": "^5.12.2",
@@ -27,9 +28,11 @@
     "os": "^0.1.1",
     "path": "^0.12.7",
     "rlp": "^2.2.6",
+    "solc": "^0.6.1",
     "uuid": "^8.3.2",
     "winston": "^3.3.3",
-    "nats": "^2.0.1"
+    "zokrates-js": "^1.0.28",
+    "esm": "^3.2.25"
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",
@@ -39,12 +42,12 @@
     "@types/jest": "^26.0.9",
     "@types/mocha": "^8.2.2",
     "@types/mongoose": "^5.10.4",
-    "@types/node": "^14.0.27",
+    "@types/node": "^14.14.37",
     "@types/pg": "^7.14.4",
     "@types/shelljs": "^0.8.8",
     "chai": "^4.3.4",
     "chai-exclude": "^2.0.2",
-    "fs-extra": "^9.0.1",
+    "chai-match": "^1.1.1",
     "jest": "^26.3.0",
     "mocha": "^8.3.2",
     "nodemon": "^2.0.4",

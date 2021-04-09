@@ -1,8 +1,10 @@
 import { config } from "./config";
 import { getLeavesByLeafIndexRange } from "./leaves";
 import { merkleTrees } from "../db/models/MerkleTree";
-import { logger } from "../logger";
+import { getLogger } from "@tokenized_if/shared";
 import * as utils from "./utils";
+
+const logger = getLogger("commit-mgr");
 
 /**
  * Calculate the path (each parent up the tree) from a given leaf to the root.

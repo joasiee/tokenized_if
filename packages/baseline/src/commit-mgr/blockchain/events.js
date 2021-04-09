@@ -1,11 +1,12 @@
 import { ethers } from "ethers";
 
-import { logger } from "../logger";
 import { insertLeaf } from "../merkle-tree/leaves";
 import { get_ws_provider } from "./utils";
 import { shieldContract } from "./shield-contract";
+import { getLogger } from "@tokenized_if/shared";
 
 export const newLeafEvent = ethers.utils.id("NewLeaf(uint256,bytes32,bytes32)");
+const logger = getLogger("commit-mgr");
 
 export const subscribeMerkleEvents = (contractAddress) => {
   logger.info(`Creating event listeners for contract: ${contractAddress}`);

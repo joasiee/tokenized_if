@@ -5,10 +5,11 @@
     "baseUrl": ".",
     "moduleResolution": "node",
     "noImplicitAny": false,
-    "outDir": "dist",
+    "outDir": "dist/ts",
     "rootDir": "src",
     "resolveJsonModule": true,
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["node"]
   },
   "exclude": ["dist", "truffle", "tests", "ops"],
   "references": [

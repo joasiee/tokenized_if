@@ -4,7 +4,6 @@ yarn-error.log
 .env
 *.iml
 .idea
-/src/contracts
-/dist
-/build
-/types
+dist
+build
+types

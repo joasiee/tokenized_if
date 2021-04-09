@@ -1,15 +1,4 @@
 version: "3.8"
 services:
   ganache:
-    command: ganache-cli -m "elephant season wise pyramid jaguar number away trap skirt guilt capital reveal" --networkId 101010 --allowUnlimitedContractSize --noVMErrorsOnRPCResponse
-    env_file:
-      - .env
-      - .env.development
-  mongo:
-    env_file:
-      - .env
-      - .env.development
-  mongo-express:
-    env_file:
-      - .env
-      - .env.development
+    command: ganache-cli -m "elephant season wise pyramid jaguar number away trap skirt guilt capital reveal" --networkId 101010 --gasLimit 10000000 --allowUnlimitedContractSize --noVMErrorsOnRPCResponse

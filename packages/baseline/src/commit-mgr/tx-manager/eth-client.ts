@@ -1,8 +1,9 @@
-import { ethers } from "ethers";
 import { ITxManager } from ".";
-import { logger } from "../logger";
-import { jsonrpc, shieldContract } from "../blockchain";
-import { HDWallet } from "../../blockchain-mgr";
+import { getLogger } from "@tokenized_if/shared";
+import { getContract, HDWallet } from "../../blockchain-mgr";
+import { Shield } from "../../../dist/typechain/Shield";
+
+const logger = getLogger("commit-mgr");
 
 export class EthClient implements ITxManager {
   constructor(private readonly config: any) {
@@ -25,7 +26,7 @@ export class EthClient implements ITxManager {
       nonce,
       chainId: parseInt(process.env.ETH_CHAIN_ID, 10),
       gasLimit: 0,
-      gasPrice: gasPriceSet,
+      gasPrice: gasPriceSet
     };
 
     const gasEstimate = await wallet.estimateGas(unsignedTx);
@@ -37,28 +38,16 @@ export class EthClient implements ITxManager {
     return signedTx;
   }
 
-  async insertLeaf(toAddress: string, fromAddress: string, proof: any[], publicInputs: any[], newCommitment: string) {
+  async insertLeaf(toAddress: string, fromAddress: string, proof: any[8], publicInputs: any[1], newCommitment: string) {
     let error = null;
-    let txHash: string;
+    let txHash: string = "";
     try {
-      const shieldInterface = new ethers.utils.Interface(shieldContract.abi);
-      const txData = shieldInterface.encodeFunctionData("verifyAndPush(uint256[],uint256[],bytes32)", [
-        proof,
-        publicInputs,
-        newCommitment,
-      ]);
-      const signedTx = await this.signTx(toAddress, fromAddress, txData);
-      logger.debug(`signedTx: ${signedTx}`);
-      const res = await jsonrpc("eth_sendRawTransaction", [signedTx]);
-      logger.debug("eth_sendRawTransaction result:", res);
-      txHash = res.result;
+      const shieldContract: Shield = (await getContract(toAddress, "Shield")) as Shield;
+      const options = { gasLimit: 1000000 };
+      const result = await shieldContract.verifyAndPush(proof, publicInputs, "0x" + newCommitment, options);
+      txHash = (await result.wait(1)).transactionHash;
     } catch (err) {
-      logger.error("[baseline_verifyAndPush]:", err);
-      if (err.error) {
-        error = { data: err.error.message };
-      } else {
-        error = { data: err };
-      }
+      logger.error(`[baseline_verifyAndPush]: ${err}`);
     }
     return { error, txHash };
   }

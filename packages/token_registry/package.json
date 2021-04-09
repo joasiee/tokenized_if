@@ -1,5 +1,5 @@
 {
-  "name": "@govtechsg/token-registry",
+  "name": "@tokenized_if/token-registry",
   "version": "1.0.0",
   "files": [
     "dist",
@@ -8,7 +8,7 @@
     "types",
     "truffle-config.js"
   ],
-  "main": "dist/index.js",
+  "main": "dist/ts/index.js",
   "types": "dist/ts/index.d.ts",
   "repository": "git@github.com:Open-Attestation/token-registry.git",
   "author": "GovTech",
@@ -16,12 +16,12 @@
   "scripts": {
     "build:sol": "yarn truffle build",
     "build:copy-src": "yarn babel src -d dist --ignore src/**/*.spec.ts,src/**/*.test.ts -x .js,.ts,.tsx --copy-files",
-    "build": "yarn build:sol && yarn typechain && yarn build:copy-src",
+    "build": "yarn build:sol && yarn typechain",
     "copy-types": "rm -rf types && mkdir -p types && cp src/contracts/*.d.ts types/ && mkdir -p dist/ts/contracts && cp src/contracts/*.d.ts dist/ts/contracts",
     "test:sol": "yarn truffle test",
     "test:js": "yarn jest --testPathPattern=src",
     "test_(TODO_FIX)": "yarn test:sol && yarn test:js",
-    "typechain": "typechain --target ethers-v5 \"build/contracts/*.json\" --outDir src/contracts && npm run copy-types"
+    "typechain": "typechain --target ethers-v5 \"build/contracts/*.json\" --outDir dist/typechain"
   },
   "jest": {
     "globalSetup": "./jest/setup.ts",
@@ -62,13 +62,6 @@
     "chai-as-promised": "^7.1.1",
     "commitizen": "4.0.3",
     "dotenv": "^8.2.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-prettier": "^6.9.0",
-    "eslint-plugin-chai-expect": "^1.1.1",
-    "eslint-plugin-chai-friendly": "^0.4.1",
-    "eslint-plugin-import": "^2.20.0",
-    "eslint-plugin-prettier": "^3.1.2",
     "ethers": "^5.0.8",
     "ganache-cli": "^6.9.1",
     "git-cz": "3.2.1",
@@ -79,8 +72,8 @@
     "solhint": "^2.3.0",
     "solhint-plugin-prettier": "0.0.3",
     "solium": "^1.2.5",
-    "truffle": "5.1.37",
-    "typechain": "^2.0.0",
+    "truffle": "^5.2.5",
+    "typechain": "^4.0.0",
     "typescript": "^3.9.7"
   },
   "config": {

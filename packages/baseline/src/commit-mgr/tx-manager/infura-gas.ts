@@ -1,8 +1,10 @@
 import { ethers } from "ethers";
 import { ITxManager } from ".";
-import { logger } from "../logger";
+import { getLogger } from "@tokenized_if/shared";
 import { jsonrpc, shieldContract } from "../blockchain";
 import { HDWallet } from "../../blockchain-mgr";
+
+const logger = getLogger("commit-mgr");
 
 export class InfuraGas implements ITxManager {
   constructor(private readonly config: any) {
@@ -20,7 +22,7 @@ export class InfuraGas implements ITxManager {
       data: txData,
       chainId: parseInt(process.env.ETH_CHAIN_ID, 10),
       gasLimit: 0,
-      nonce,
+      nonce
     };
 
     const gasEstimate = await wallet.estimateGas(unsignedTx);
@@ -47,7 +49,7 @@ export class InfuraGas implements ITxManager {
       const txData = shieldInterface.encodeFunctionData("verifyAndPush(uint256[],uint256[],bytes32)", [
         proof,
         publicInputs,
-        newCommitment,
+        newCommitment
       ]);
       const { signature, gasLimit } = await this.signTx(toAddress, fromAddress, txData);
       logger.debug(`Signature for relay: ${signature}`);
@@ -55,7 +57,7 @@ export class InfuraGas implements ITxManager {
       const transaction = {
         to: toAddress,
         data: txData,
-        gas: `${gasLimit}`,
+        gas: `${gasLimit}`
       };
       const res = await jsonrpc("relay_sendTransaction", [transaction, signature]);
       logger.debug(`relay_sendTransaction response: %o`, res);

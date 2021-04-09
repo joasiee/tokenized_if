@@ -2,15 +2,14 @@ import dotenv from "dotenv";
 import axios from "axios";
 import { ethers } from "ethers";
 
-import { logger } from "../logger";
+import { getLogger } from "@tokenized_if/shared";
 import { insertLeaf } from "../merkle-tree/leaves";
 import { merkleTrees } from "../db/models/MerkleTree";
 import { shieldContract } from "./shield-contract";
 import { newLeafEvent, subscribeMerkleEvents } from "./events";
 
-dotenv.config();
-
 let ws_provider;
+const logger = getLogger("commit-mgr");
 
 export const http_provider = new ethers.providers.JsonRpcProvider(process.env.ETH_CLIENT_HTTP);
 export const get_ws_provider = () => {

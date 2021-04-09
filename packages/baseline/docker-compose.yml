@@ -20,19 +20,24 @@ services:
     environment:
       MONGO_INITDB_ROOT_DATABASE: root-db
     volumes:
-      - ./ops/init-db.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - mongo:/data/db
     logging:
       options:
         max-size: 10m
     ports:
-      - 27117:27017
+      - 27017:27017
 
-  nats:
-    container_name: nats
-    image: nats
-    ports:
-      - 4222:4222
+  baseline:
+    build:
+      context: ../../.
+      dockerfile: packages/baseline/Dockerfile
+    profiles: ["production"]
+    depends_on:
+      - mongo
+      - ganache
+    environment:
+      NODE_ENV: production
+    command: yarn start
 
   mongo-express:
     image: mongo-express
