@@ -39,7 +39,7 @@ export class ZKPService {
         const source = readFileSync(filePath).toString();
         const artifacts = this.zok.compile(source);
         const keys = this.zok.setup(artifacts.program);
-        const verifier = this.zok.exportSolidityVerifier(keys.vk, "v2");
+        const verifier = this.zok.exportSolidityVerifier(keys.vk, "v1");
         if (compileContract(verifier, outputPath, "Verifier")) {
           await circuit.db.create(circuit.zokToModel(name, artifacts, keys, verifier));
           return null;

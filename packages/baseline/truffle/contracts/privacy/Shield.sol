@@ -20,13 +20,13 @@ contract Shield is IShield, MerkleTreeSHA256 {
     }
 
     function verifyAndPush(
-        uint256[] calldata _proof,
+        uint256[8] calldata _proof,
         uint256[] calldata _publicInputs,
         bytes32 _newCommitment
     ) external override returns (bool) {
 
         // verify the proof
-        bool result = verifier.verifyTx(_proof, _publicInputs);
+        bool result = verifier.verifyTx([_proof[0], _proof[1]], [[_proof[2], _proof[3]], [_proof[4], _proof[5]]], [_proof[6], _proof[7]], _publicInputs);
         require(result, "The proof failed verification in the verifier contract");
 
         // update contract states

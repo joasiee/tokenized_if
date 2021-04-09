@@ -6,9 +6,10 @@ pragma solidity ^0.6.9;
 @dev Example Verifier Implementation
 */
 interface IVerifier {
-
     function verifyTx(
-        uint256[] calldata proof,
-        uint256[] calldata publicInputs
-    ) external returns (bool result);
+            uint256[2] memory a,
+            uint256[2][2] memory b,
+            uint256[2] memory c, 
+            uint256[] memory input
+    ) external view returns (bool result);
 }

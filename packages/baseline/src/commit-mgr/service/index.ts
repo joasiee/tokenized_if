@@ -188,5 +188,6 @@ function modelToCommitment(model) {
 }
 
 function joinProofPoints(proof: Proof.ProofPoints) {
-  return [proof.getAList(), [proof.getB1List(), proof.getB2List()], proof.getCList()];
+  const list = [proof.getAList(), proof.getB1List(), proof.getB2List(), proof.getCList()];
+  return [].concat(...list);
 }
