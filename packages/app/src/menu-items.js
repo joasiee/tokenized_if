@@ -38,6 +38,14 @@ export default {
                     icon: 'feather icon-help-circle',
                     url: '/lsp/releaserequests'
                 },
+                {
+                    id: 'addshipment',
+                    title: 'Add shipments',
+                    type: 'item',
+                    role: 'lsp',
+                    icon: 'feather icon-help-circle',
+                    url: '/lsp/addshipment'
+                }
 
             ]
         },
