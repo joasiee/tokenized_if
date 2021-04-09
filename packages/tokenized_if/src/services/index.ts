@@ -7,6 +7,7 @@ import { getTokenRegistry } from '../db/registry_queries';
 import { tm, tokenSetup } from './token';
 import { Participant } from '../models/participant';
 import { createMessagingClient } from '@tokenized_if/messaging';
+import baselineSetup from './baseline';
 
 // Load in the .env file
 dotenv.config();
@@ -35,6 +36,11 @@ export async function setup() {
   // Retrieves token registry from the database, the tokenSetup function will branch, depending on if this token registry exists.
   await tokenSetup(await getTokenRegistry());
 
+  // Perform baseline setup as LSP
+  if (role === 'lsp') {
+    await baselineSetup();
+  }
+
   // Adds data into the database if it is the first run.
   if (firstRun) {
     const pubAddress = tm.signer.address;
@@ -56,6 +62,7 @@ export async function setup() {
         serverUrl: process.env.LSP_NATS,
         user: process.env.NAME,
       });
+      console.log('Requested LSP for admittance to Org Registry');
       await lspClient.publish<Participant>('admittance', participant);
     }
   }
