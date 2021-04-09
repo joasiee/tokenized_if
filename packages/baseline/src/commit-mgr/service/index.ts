@@ -94,7 +94,9 @@ export class CommitService {
         req.getProof().getInputsList(),
         req.getValue()
       );
-      return new Response.PushCommitment().setTxhash(result.txHash);
+      return new Response.PushCommitment()
+        .setTxhash(result.txHash)
+        .setCommitment(new Commitment().setValue(req.getValue()));
     } catch (err) {
       logger.error(`[baseline_verifyAndPush] ${err}`);
       return Error("Internal server error");

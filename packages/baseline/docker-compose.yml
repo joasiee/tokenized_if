@@ -27,6 +27,18 @@ services:
     ports:
       - 27017:27017
 
+  baseline:
+    build:
+      context: ../../.
+      dockerfile: packages/baseline/Dockerfile
+    profiles: ["production"]
+    depends_on:
+      - mongo
+      - ganache
+    environment:
+      NODE_ENV: production
+    command: yarn start
+
   mongo-express:
     image: mongo-express
     container_name: mongo-express

@@ -26,7 +26,7 @@ export class EthClient implements ITxManager {
       nonce,
       chainId: parseInt(process.env.ETH_CHAIN_ID, 10),
       gasLimit: 0,
-      gasPrice: gasPriceSet,
+      gasPrice: gasPriceSet
     };
 
     const gasEstimate = await wallet.estimateGas(unsignedTx);
@@ -45,8 +45,7 @@ export class EthClient implements ITxManager {
       const shieldContract: Shield = (await getContract(toAddress, "Shield")) as Shield;
       const options = { gasLimit: 1000000 };
       const result = await shieldContract.verifyAndPush(proof, publicInputs, "0x" + newCommitment, options);
-      txHash = result.hash;
-      await result.wait(1);
+      txHash = (await result.wait(1)).transactionHash;
     } catch (err) {
       logger.error(`[baseline_verifyAndPush]: ${err}`);
     }
