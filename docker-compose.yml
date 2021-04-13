@@ -1,0 +1,159 @@
+version: "3"
+services:
+  # # Base components
+  # container_name: ganache
+  #   image: trufflesuite/ganache-cli:latest
+  #   ports:
+  #     - 8545:8545
+  #   volumes:
+  #     - packages/baseline/ops/ganache_health.sh:/app/health-check.sh:delegated
+  #   healthcheck:
+  #     test: ["CMD", "sh", "health-check.sh"]
+  #     interval: 15s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 10s
+  #   command: ganache-cli -m "elephant season wise pyramid jaguar number away trap skirt guilt capital reveal" --networkId 101010 --gasLimit 10000000 --allowUnlimitedContractSize --noVMErrorsOnRPCResponse
+
+  # mongo:
+  #   container_name: mongo
+  #   image: mongo
+  #   environment:
+  #     MONGO_INITDB_ROOT_DATABASE: root-db
+  #       MONGO_HOST: 0.0.0.0
+  #       MONGO_INITDB_ROOT_USERNAME: root
+  #       MONGO_DB_NAME: baseline
+  #   volumes:
+  #     - docker_volumes/mongo:/data/db
+  #   logging:
+  #     options:
+  #       max-size: 10m
+  #   ports:
+  #     - 27017:27017
+
+  # mongo-express:
+  #   image: mongo-express
+  #   container_name: mongo-express
+  #   profiles: ["development"]
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_SERVER: mongo
+  #   depends_on:
+  #     - mongo
+  nats:
+    container_name: nats
+    image: nats
+    ports:
+        - 4222:4222
+
+  postgres_lsp:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      APP_DB_USER: "api"
+      APP_DB_PASS: "password"
+      APP_DB_NAME: "tokenized"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./packages/token_registry/ops/db:/docker-entrypoint-initdb.d/
+      - ./docker_volumes/pgdata_lsp:/var/lib/postgresql/data/
+      
+  postgres_imp:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      APP_DB_USER: "api"
+      APP_DB_PASS: "password"
+      APP_DB_NAME: "tokenized"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./packages/token_registry/ops/db:/docker-entrypoint-initdb.d/
+      - ./docker_volumes/pgdata_imp:/var/lib/postgresql/data/
+  
+  postgres_fin:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      APP_DB_USER: "api"
+      APP_DB_PASS: "password"
+      APP_DB_NAME: "tokenized"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./packages/token_registry/ops/db:/docker-entrypoint-initdb.d/
+      - ./docker_volumes/pgdata_fin:/var/lib/postgresql/data/
+
+  
+  
+  # Our apps
+  # app:
+  #   container_name: app
+  #   build:
+  #     context: ./packages/app/
+  #   ports:
+  #       - 8080:80
+  
+  
+    
+  # baseline:
+  #   container_name: baseline
+  #   build:
+  #       dockerfile: packages/baseline/Dockerfile
+  #   profiles: ["production"]
+  #   depends_on:
+  #       - mongo
+  #       - ganache
+  #   environment:
+  #       NODE_ENV: production
+  #   command: yarn start
+
+  tokenized_if_lsp:
+    container_name: tokenized_if_lsp
+    build:
+      context: ./
+      dockerfile: ./packages/tokenized_if/Dockerfile
+    env_file: ./packages/tokenized_if/.env.lsp
+    ports:
+        - 8090:80
+
+  tokenized_if_financer:
+    container_name: tokenized_if_financer
+    build:
+      context: ./
+      dockerfile: ./packages/tokenized_if/Dockerfile
+    env_file: ./packages/tokenized_if/.env.financer
+    ports:
+        - 8091:80
+
+  tokenized_if_importer:
+    container_name: tokenized_if_importer
+    build:
+      context: ./
+      dockerfile: ./packages/tokenized_if/Dockerfile
+    env_file: ./packages/tokenized_if/.env.importer
+    ports:
+              - 8092:80
