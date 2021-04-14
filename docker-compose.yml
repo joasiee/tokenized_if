@@ -1,46 +1,47 @@
 version: "3"
 services:
-  # # Base components
-  # container_name: ganache
-  #   image: trufflesuite/ganache-cli:latest
-  #   ports:
-  #     - 8545:8545
-  #   volumes:
-  #     - packages/baseline/ops/ganache_health.sh:/app/health-check.sh:delegated
-  #   healthcheck:
-  #     test: ["CMD", "sh", "health-check.sh"]
-  #     interval: 15s
-  #     timeout: 10s
-  #     retries: 3
-  #     start_period: 10s
-  #   command: ganache-cli -m "elephant season wise pyramid jaguar number away trap skirt guilt capital reveal" --networkId 101010 --gasLimit 10000000 --allowUnlimitedContractSize --noVMErrorsOnRPCResponse
+  # Base components
+  ganache:
+    container_name: ganache
+    image: trufflesuite/ganache-cli:latest
+    ports:
+      - 8545:8545
+    volumes:
+      - ./packages/baseline/ops/ganache_health.sh:/app/health-check.sh:delegated
+    healthcheck:
+      test: ["CMD", "sh", "health-check.sh"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    command: ganache-cli -m "elephant season wise pyramid jaguar number away trap skirt guilt capital reveal" --networkId 101010 --gasLimit 10000000 --allowUnlimitedContractSize --noVMErrorsOnRPCResponse
 
-  # mongo:
-  #   container_name: mongo
-  #   image: mongo
-  #   environment:
-  #     MONGO_INITDB_ROOT_DATABASE: root-db
-  #       MONGO_HOST: 0.0.0.0
-  #       MONGO_INITDB_ROOT_USERNAME: root
-  #       MONGO_DB_NAME: baseline
-  #   volumes:
-  #     - docker_volumes/mongo:/data/db
-  #   logging:
-  #     options:
-  #       max-size: 10m
-  #   ports:
-  #     - 27017:27017
+  mongo:
+    container_name: mongo
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_DATABASE: root-db
+      MONGO_HOST: 0.0.0.0
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_DB_NAME: baseline
+    volumes:
+      - ./docker_volumes/mongo:/data/db
+    logging:
+      options:
+        max-size: 10m
+    ports:
+      - 27017:27017
 
-  # mongo-express:
-  #   image: mongo-express
-  #   container_name: mongo-express
-  #   profiles: ["development"]
-  #   ports:
-  #     - 8081:8081
-  #   environment:
-  #     ME_CONFIG_MONGODB_SERVER: mongo
-  #   depends_on:
-  #     - mongo
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    profiles: ["development"]
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+    depends_on:
+      - mongo
   nats:
     container_name: nats
     image: nats
@@ -110,50 +111,53 @@ services:
   
   
   # Our apps
-  # app:
-  #   container_name: app
-  #   build:
-  #     context: ./packages/app/
-  #   ports:
-  #       - 8080:80
+  app:
+    container_name: app
+    build:
+      context: ./packages/app/
+    ports:
+        - 8080:80
   
-  
-    
-  # baseline:
-  #   container_name: baseline
-  #   build:
-  #       dockerfile: packages/baseline/Dockerfile
-  #   profiles: ["production"]
-  #   depends_on:
-  #       - mongo
-  #       - ganache
-  #   environment:
-  #       NODE_ENV: production
-  #   command: yarn start
+  baseline:
+    container_name: baseline
+    build:
+        context: .
+        dockerfile: packages/baseline/Dockerfile
+    depends_on:
+        - mongo
+        - ganache
+    environment:
+        NODE_ENV: production
+    command: yarn start
 
   tokenized_if_lsp:
     container_name: tokenized_if_lsp
-    build:
-      context: ./
-      dockerfile: ./packages/tokenized_if/Dockerfile
+    depends_on: 
+      - postgres_lsp
+      - nats
+    image: tokenized_if
     env_file: ./packages/tokenized_if/.env.lsp
     ports:
-        - 8090:80
+        - 3001:3001
+
 
   tokenized_if_financer:
     container_name: tokenized_if_financer
-    build:
-      context: ./
-      dockerfile: ./packages/tokenized_if/Dockerfile
+    image: tokenized_if
+    depends_on: 
+      - postgres_fin
+      - nats
     env_file: ./packages/tokenized_if/.env.financer
     ports:
-        - 8091:80
+        - 3002:3002
 
   tokenized_if_importer:
     container_name: tokenized_if_importer
-    build:
-      context: ./
-      dockerfile: ./packages/tokenized_if/Dockerfile
+    image:  tokenized_if
+
+    depends_on: 
+      - postgres_imp
+      - nats
     env_file: ./packages/tokenized_if/.env.importer
     ports:
-              - 8092:80
+      - 3003:3003

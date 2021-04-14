@@ -4,7 +4,6 @@ WORKDIR /usr/src/app
 
 COPY package.json .
 COPY lerna.json .
-COPY yarn.lock .
 COPY tsconfig.base.json .
 COPY tsconfig.json .
 COPY packages/baseline ./packages/baseline

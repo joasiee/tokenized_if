@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:14.16
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -7,31 +7,27 @@ RUN npm install -g typescript
 RUN npm install -g ts-node
 
 
-COPY packages/shared ../shared
-COPY packages/token_registry ../token_registry
-COPY packages/messaging  ../messaging
+COPY . .
 
-WORKDIR /usr/src/shared
+WORKDIR /usr/src/app/packages/shared
 RUN yarn --non-interactive
 RUN yarn run build
 
-WORKDIR /usr/src/token_registry
+WORKDIR /usr/src/app/packages/token_registry
 RUN yarn --non-interactive
 RUN yarn run build
 
-WORKDIR /usr/src/messaging
+WORKDIR /usr/src/app/packages/messaging
 RUN yarn --non-interactive
+
+WORKDIR /usr/src/app/packages/tokenized_if
+RUN yarn --non-interactive
+RUN yarn run build
 
 WORKDIR /usr/src/app
-COPY packages/tokenized_if/package.json ./
-
 RUN yarn --non-interactive
-# If you are building your code for production
-# RUN npm ci --only=production
+RUN yarn run build
 
-# Bundle app source
-COPY packages/tokenized_if/ .
-COPY tsconfig.base.json ../../tsconfig.base.json
-
+WORKDIR /usr/src/app/packages/tokenized_if/
 EXPOSE 80
 CMD ts-node -r dotenv-flow/config src/app.ts
