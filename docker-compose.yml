@@ -24,6 +24,7 @@ services:
       MONGO_HOST: 0.0.0.0
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_DB_NAME: baseline
+      MONGO_INITDB_ROOT_PASSWORD: password-db
     volumes:
       - ./docker_volumes/mongo:/data/db
     logging:
@@ -65,7 +66,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./packages/token_registry/ops/db:/docker-entrypoint-initdb.d/
+      - ./packages/tokenized_if/ops/db:/docker-entrypoint-initdb.d/
       - ./docker_volumes/pgdata_lsp:/var/lib/postgresql/data/
       
   postgres_imp:
@@ -85,7 +86,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - ./packages/token_registry/ops/db:/docker-entrypoint-initdb.d/
+      - ./packages/tokenized_if/ops/db:/docker-entrypoint-initdb.d/
       - ./docker_volumes/pgdata_imp:/var/lib/postgresql/data/
   
   postgres_fin:
@@ -105,7 +106,7 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      - ./packages/token_registry/ops/db:/docker-entrypoint-initdb.d/
+      - ./packages/tokenized_if/ops/db:/docker-entrypoint-initdb.d/
       - ./docker_volumes/pgdata_fin:/var/lib/postgresql/data/
 
   
@@ -116,7 +117,7 @@ services:
     build:
       context: ./packages/app/
     ports:
-        - 8080:80
+        - 9999:80
   
   baseline:
     container_name: baseline
@@ -138,7 +139,7 @@ services:
     image: tokenized_if
     env_file: ./packages/tokenized_if/.env.lsp
     ports:
-        - 3001:3001
+        - 3000:3000
 
 
   tokenized_if_financer:
@@ -154,10 +155,9 @@ services:
   tokenized_if_importer:
     container_name: tokenized_if_importer
     image:  tokenized_if
-
     depends_on: 
       - postgres_imp
       - nats
     env_file: ./packages/tokenized_if/.env.importer
     ports:
-      - 3003:3003
+      - 3001:3001

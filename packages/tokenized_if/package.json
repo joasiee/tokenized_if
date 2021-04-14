@@ -31,9 +31,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "@grpc/grpc-js": "^1.2.12",
-    "@tokenized_if/messaging": "../messaging",
-    "@tokenized_if/shared": "../shared",
-    "@tokenized_if/token-registry": "../token_registry",
+    "@tokenized_if/messaging": "^1.0.0",
+    "@tokenized_if/shared": "^1.0.0",
+    "@tokenized_if/token-registry": "^1.0.0",
     "dotenv": "^8.2.0",
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.1",

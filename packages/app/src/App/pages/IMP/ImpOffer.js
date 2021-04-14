@@ -29,7 +29,7 @@ class offer extends React.Component {
         console.log(this.state.requestedShipment);
         const result = { "price": this.state.price, "buyback": this.state.buyback };
         console.log(result);
-        fetch(`http://127.0.0.1:3001/api/shipments/${this.state.id}`, {
+        fetch(`http://tokenized_if_importer:3001/api/shipments/${this.state.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

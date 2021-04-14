@@ -11,14 +11,14 @@ class releaserequests extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-        fetch('http://localhost:3000/api/shipments')
+        fetch('http://tokenized_if_lsp:3000/api/shipments')
             .then(response => response.json())
             .then(data => this.setState({ jsondata: data }));
     }
     handleSubmit(event) {
         event.preventDefault();
         console.log(this.state.requestedShipment);
-        fetch(`http://localhost:3000/api/shipments/${this.state.requestedShipment}`, {
+        fetch(`http://tokenized_if_lsp:3000/api/shipments/${this.state.requestedShipment}`, {
             method: 'DELETE',
             body: this.state.requestedShipment,
         });

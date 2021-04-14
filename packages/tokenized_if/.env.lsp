@@ -9,6 +9,7 @@ APP_DB_USER=api
 APP_DB_PASS=password
 APP_DB_NAME=tokenized
 POSTGRES_PORT=5432
+POSTGRES_HOST=tokenized_if_postgres_lsp_1
 
 NATS_PORT=4222
 NATS_URL=nats://nats

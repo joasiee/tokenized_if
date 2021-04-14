@@ -12,7 +12,7 @@ class finoverview extends React.Component {
         };
     }
     componentDidMount() {
-        fetch('http://127.0.0.1:3002/api/offers')
+        fetch('http://tokenized_if_financer:3002/api/offers')
             .then(response => response.json())
             .then(data => this.setState({ data: data }));
     }

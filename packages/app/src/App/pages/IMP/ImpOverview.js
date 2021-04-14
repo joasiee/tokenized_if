@@ -11,7 +11,7 @@ class overviewitems extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-        fetch('http://localhost:3001/api/shipments')
+        fetch('http://tokenized_if_importer:3001/api/shipments')
             .then(response => response.json())
             .then(data => this.setState({ jsondata: data }));
     }
@@ -21,7 +21,7 @@ class overviewitems extends React.Component {
         const { name, value } = event.target;
         console.log(this.state.requestedShipment);
         if (name === 'repay') {
-            fetch(`http://localhost:3001/api/offers/${this.state.requestedShipment}/repay`, {
+            fetch(`http://tokenized_if_importer:3001/api/offers/${this.state.requestedShipment}/repay`, {
                 method: 'PUT',
             });
         }

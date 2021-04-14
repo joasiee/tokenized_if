@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "nats": "^2.0.1",
-    "@tokenized_if/shared": "../shared"
+    "@tokenized_if/shared": "^1.0.0"
   }
 }
