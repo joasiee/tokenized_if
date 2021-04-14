@@ -15,7 +15,7 @@ services:
   baseline:
     build:
       context: .
-      dockerfile: /packages/baseline/Dockerfile
+      dockerfile: packages/baseline/Dockerfile
     depends_on:
       - mongo-baseline
     command: yarn start
