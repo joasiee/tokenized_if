@@ -12,7 +12,7 @@ import { clearDBs } from "./util";
 import { config } from "../src/config";
 import { sha256 } from "@tokenized_if/shared";
 import { Proof } from "@tokenized_if/shared/src/proto/zkp_pb";
-import { Request } from "@tokenized_if/shared/src/proto/commit_pb";
+import { Request, Response, Commitment } from "@tokenized_if/shared/src/proto/commit_pb";
 
 chai.use(chaiMatch);
 
@@ -85,8 +85,11 @@ describe("Integration", function() {
       proof = result as Proof;
     });
 
+    let commitHash: string;
+    let txHash: string;
+
     it("should push proof to shield contract", async function() {
-      const commitHash = sha256(Buffer.from("random commit hash"));
+      commitHash = sha256(Buffer.from("random commit hash"));
       const req = new Request.VerifyAndPush()
         .setSender(verifierAddress)
         .setAddress(shieldAddress)
@@ -94,6 +97,39 @@ describe("Integration", function() {
         .setValue(commitHash);
       let result = await commitMgr.verifyAndPush(req);
       expect(result instanceof Error).to.be.false;
+      expect((result as Response.PushCommitment).getCommitment().getValue()).to.eq(commitHash);
+      txHash = (result as Response.PushCommitment).getTxhash();
+    });
+
+    let root: string;
+
+    it("should get root from commit manager", async function() {
+      const req = new Request.Root().setAddress(shieldAddress);
+      const res = await commitMgr.getRoot(req);
+      expect(res instanceof Error).to.be.false;
+      root = (res as Response.Root).getRoot();
+    });
+
+    let siblingPath: Commitment[];
+
+    it("should get proof from commit manager", async function() {
+      const req = new Request.Proof().setAddress(shieldAddress).setLeafindex(0);
+      let res = await commitMgr.getProof(req);
+      expect(res instanceof Error).to.be.false;
+      res = res as Response.Commitments;
+      expect(res.getCommitmentsList().length).to.eq(config.TREE_HEIGHT + 1);
+      expect(res.getCommitmentsList()[res.getCommitmentsList().length - 1].getValue()).to.eq(root);
+      siblingPath = res.getCommitmentsList();
+    });
+
+    it("should verify proof using commit manager", async function() {
+      const req = new Request.Verify()
+        .setAddress(shieldAddress)
+        .setCommit(commitHash)
+        .setRoot(root)
+        .setSiblingpathList(siblingPath);
+      const res = await commitMgr.verify(req);
+      expect(res.getValue()).to.be.true;
     });
   });
 
