@@ -12,11 +12,20 @@ export class HDWallet {
   private hdNode: utils.HDNode;
   private addressN: number;
   private provider: providers.Provider;
+  private privateKey: string;
+  private environment: string;
 
   private constructor() {
-    this.hdNode = utils.HDNode.fromMnemonic(process.env.BMGR_MNEMONIC);
-    this.addressN = 0;
-    this.provider = new providers.JsonRpcProvider(process.env.ETH_CLIENT_HTTP);
+    this.environment = process.env.NODE_ENV;
+    if (this.environment === "test") {
+      this.hdNode = utils.HDNode.fromMnemonic(process.env.BMGR_MNEMONIC);
+      this.addressN = 0;
+      this.provider = new providers.JsonRpcProvider(process.env.ETH_CLIENT_HTTP);
+    } else {
+      this.provider = new providers.JsonRpcProvider(process.env.GANACHE_URL);
+      this.privateKey = "0x" + process.env.PRIVATE_KEY;
+
+    }
   }
 
   /**
@@ -35,7 +44,11 @@ export class HDWallet {
    * @returns
    */
   public getWallet(): Wallet {
-    return new Wallet(this.hdNode.derivePath(defaultPathPrefix + this.addressN.toString()), this.provider);
+    if (this.environment === "test") {
+      return new Wallet(this.hdNode.derivePath(defaultPathPrefix + this.addressN.toString()), this.provider);
+    }
+    return new Wallet(this.privateKey, this.provider);
+
   }
 
   /**
