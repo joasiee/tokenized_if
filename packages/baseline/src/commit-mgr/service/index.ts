@@ -42,7 +42,7 @@ export class CommitService {
   async getRoot(req: Request.Root): Promise<Response.Root | Error> {
     try {
       const root = await updateTree(req.getAddress());
-      return new Response.Root().setRoot(root.hash);
+      return new Response.Root().setRoot(root);
     } catch (err) {
       logger.error(err);
       return Error("Internal server error");

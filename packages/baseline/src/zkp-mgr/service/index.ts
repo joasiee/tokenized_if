@@ -109,6 +109,7 @@ export class ZKPService {
         logger.debug(`Proof successfully generated for ${name}`);
         return circuit.zokToProtoProof(proof);
       } catch (error) {
+        logger.error(error);
         return Error(error);
       }
     } else {
