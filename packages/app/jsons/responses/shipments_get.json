@@ -1,0 +1,16 @@
+[
+  {
+      "id": 1,
+      "cargo_hash": "0x5b78156b9d53dc26775762bee46dccc4508f525c8ee25406932dd935bce22591",
+      "escrow_address": "0x609F06EbE0047Cd1A487acdb85d5373c8f61a5D0",
+      "owner": "isabel",
+      "cargo": {
+          "items": [
+              {
+                  "description": "cola cans",
+                  "amount": "100"
+              }
+          ]
+      }
+  }
+]
