@@ -4,8 +4,8 @@ import { Organization } from "@tokenized_if/shared/src/proto/organizations_pb";
 
 // Enforces Mongoose schema fields to protobuf schema.
 const schemaFields: Record<keyof Organization.AsObject, any> = {
-  name: { type: String, required: true, unique: true },
-  address: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
+  address: { type: String, required: true },
   msgurl: { type: String, required: true },
   msgkey: { type: String, required: true },
   zkpkey: { type: String, required: true }

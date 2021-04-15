@@ -20,5 +20,10 @@
     "truffle",
     "tests",
     "ops"
+  ],
+  "references": [
+    {
+      "path": "../shared"
+    }
   ]
 }

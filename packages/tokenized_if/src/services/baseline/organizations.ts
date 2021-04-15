@@ -1,12 +1,15 @@
-import * as grpc from '@grpc/grpc-js';
-import { OrganizationsClient } from '@tokenized_if/shared/src/proto/organizations_grpc_pb';
-import { AddGroupRequest, AddOrgRequest, Organization, OrgRegistry, Workgroup } from '@tokenized_if/shared/src/proto/organizations_pb';
-import { Participant } from '../../models/participant';
+import * as grpc from "@grpc/grpc-js";
+import { OrganizationsClient } from "@tokenized_if/shared/src/proto/organizations_grpc_pb";
+import {
+  AddGroupRequest,
+  AddOrgRequest,
+  Organization,
+  OrgRegistry,
+  Workgroup
+} from "@tokenized_if/shared/src/proto/organizations_pb";
+import { Participant } from "../../models/participant";
 
-const client = new OrganizationsClient(
-  `localhost:${process.env.BASELINE_PORT}`,
-  grpc.credentials.createInsecure(),
-);
+const client = new OrganizationsClient(`localhost:${process.env.BASELINE_PORT}`, grpc.credentials.createInsecure());
 
 export async function getOrgRegistry(name: string, address?: string): Promise<OrgRegistry> {
   return new Promise<OrgRegistry>((resolve, reject) => {
@@ -20,7 +23,7 @@ export async function getOrgRegistry(name: string, address?: string): Promise<Or
       return resolve(registry);
     });
   });
-};
+}
 
 export function deployOrgRegistry(name: string): Promise<OrgRegistry> {
   return new Promise<OrgRegistry>((resolve, reject) => {
@@ -33,7 +36,7 @@ export function deployOrgRegistry(name: string): Promise<OrgRegistry> {
       return resolve(registry);
     });
   });
-};
+}
 
 function mapParticipantToOrganization(participant: Participant): Organization {
   return new Organization()
@@ -56,13 +59,13 @@ export function addOrganization(participant: Participant): Promise<OrgRegistry> 
       return resolve(registry);
     });
   });
-};
+}
 
 export function addWorkgroup(verifierAddress: string, tokenRegistryAddress: string): Promise<OrgRegistry> {
   return new Promise<OrgRegistry>((resolve, reject) => {
-    const registry = new OrgRegistry().setName('importer-registry');
+    const registry = new OrgRegistry().setName("importer-registry");
     const workgroup = new Workgroup()
-      .setName('importer-workgroup')
+      .setName("importer-workgroup")
       .setVerifieraddress(verifierAddress)
       .setTokenaddress(tokenRegistryAddress);
     const req = new AddGroupRequest().setRegistry(registry).setWorkgroup(workgroup);
@@ -73,4 +76,4 @@ export function addWorkgroup(verifierAddress: string, tokenRegistryAddress: stri
       return resolve(registry);
     });
   });
-};
+}
