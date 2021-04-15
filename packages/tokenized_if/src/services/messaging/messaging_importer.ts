@@ -7,6 +7,7 @@ import { addShipment, getShipmentByHash } from "../../db/shipment_queries";
 import { tm } from "../token";
 import { getOfferByHash, setFinancer } from "../../db/offer_queries";
 import { AcceptOffer } from "../../models/offer";
+import { getFinancer } from "../baseline/helpers/organization_queries";
 
 // Load .env variables in process.env
 dotenv.config();
@@ -68,7 +69,7 @@ const subscriptions: Subscription = {
     const acceptRep = client.reply<AcceptOffer, boolean>('accept');
     (async () => {
       for await (const m of acceptRep) {
-        console.log(`(Importer) Subscription (accept) received: \nShipment hash: ${m.payload?.cargo_hash}\nFinancer address: ${m.payload.financer_address}`);
+        console.log(`(Importer) Subscription (accept) received: \nShipment hash: ${m.payload?.cargo_hash}\nFinancer: ${m.payload.financer}`);
         const offer = await getOfferByHash(m.payload.cargo_hash);
         console.log(`Escrow address: ${offer.shipment.escrow_address}`);
         // Check if offer is already accepted, by checking if we have a financer.
@@ -76,10 +77,11 @@ const subscriptions: Subscription = {
           m.respond(false);
         } else {
           // if not, assign deal to financer
+          const financer = await getFinancer(m.payload.financer);
           const escrow = tm.connectEscrowInstance(offer.shipment.escrow_address, tm.signer);
-          await escrow.setTokenDeal(tm.ethToWei(offer.price), tm.ethToWei(offer.buyback), m.payload.financer_address);
+          await escrow.setTokenDeal(tm.ethToWei(offer.price), tm.ethToWei(offer.buyback), financer.address);
           // Update financer of offer
-          await setFinancer(offer.id, m.payload.financer_address);
+          await setFinancer(offer.id, m.payload.financer);
           // Get deal from chain
           const deal = await tm.getTokenDeal(escrow);
           console.log("[DEAL] price: ", deal[0], ", buyBackprice: ", deal[1], ", token transferred to: ", deal[2]);

@@ -17,7 +17,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 		id SERIAL PRIMARY KEY,
 		cargo_hash TEXT,
 		escrow_address TEXT,
-		owner TEXT references participant,
+		owner TEXT,
 		cargo json
 	);
 

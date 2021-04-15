@@ -33,7 +33,7 @@ const subscriptions: Subscription = {
       console.log("Token registry set in DB by request from LSP");
 
       // Furthermore request org registries
-      ['importer', 'financer'].forEach(async role => {
+      ['importer', 'financer', 'lsp'].forEach(async role => {
         const reply = await lspClient.request<string, OrgRegistryReply>('org_registry', role);
         getOrgRegistry(reply.name, reply.address);
         console.log(`Org Registry ${reply.name} added`);

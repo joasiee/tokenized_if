@@ -8,6 +8,7 @@ import { tm, tokenSetup } from "./token";
 import { Participant } from "../models/participant";
 import { createMessagingClient } from "@tokenized_if/messaging";
 import baselineSetup from "./baseline";
+import { addOrganization } from "./baseline/organizations";
 
 // Load in the .env file
 dotenv.config();
@@ -65,6 +66,10 @@ export async function setup() {
       console.log("Requested LSP for admittance to Org Registry");
       await lspClient.connect();
       await lspClient.publish<Participant>("admittance", participant);
+    }
+    // Add LSP to its own registry
+    else {
+      await addOrganization(participant);
     }
   }
 }

@@ -1,6 +1,5 @@
 import { CreateOfferDao, Offer, OfferShipmentDao } from "../models/offer";
 import { query } from "./helpers/query";
-import { getParticipantByAddress } from "./participant_queries";
 
 function mapDaoToOffer(dao : OfferShipmentDao) : Offer {
     return {
@@ -38,9 +37,8 @@ export const createOffer = async function (offer : CreateOfferDao) : Promise<Off
     return insertedOffer;
 }
 
-export const setFinancer = async function (offerId: number, financerAddress: string) : Promise<void> {
-    const participant = await getParticipantByAddress(financerAddress);
-    await query("UPDATE offer SET financer=$1 WHERE id = $2", [participant.name, offerId]);
+export const setFinancer = async function (offerId: number, financer: string) : Promise<void> {
+    await query("UPDATE offer SET financer=$1 WHERE id = $2", [financer, offerId]);
 }
 
 export const getOfferById = async function (offerId: number) : Promise<Offer> {

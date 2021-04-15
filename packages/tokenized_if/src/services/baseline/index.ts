@@ -8,6 +8,8 @@ export default async function baselineSetup() {
   console.log(`Deployed importer registry at address: ${importerRegistry.getAddress()}`);
   const financerRegistry = await deployOrgRegistry("financer-registry");
   console.log(`Deployed financer registry at address: ${financerRegistry.getAddress()}`);
+  const lspRegistry = await deployOrgRegistry("lsp-registry");
+  console.log(`Deployed lsp registry at address: ${lspRegistry.getAddress()}`);
 
   // Compile, deploy and obtain verifier circuit
   const noopCircuit = "noopTest";

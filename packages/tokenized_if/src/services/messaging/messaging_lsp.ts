@@ -65,6 +65,10 @@ const subscriptions: Subscription = {
             registry = await getOrgRegistry('importer-registry');
             await m.respond({ name: registry.getName(), address: registry.getAddress() })
             break;
+          case 'lsp':
+            registry = await getOrgRegistry('lsp-registry');
+            await m.respond({ name: registry.getName(), address: registry.getAddress() })
+            break;
           default:
             break;
         }
