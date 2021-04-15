@@ -9,14 +9,6 @@ export const getParticipant = async function (name: string) : Promise<Participan
     return undefined;
 };
 
-export const getParticipantById = async function (id: number) : Promise<Participant> {
-    const { rows } = await query("SELECT * FROM participant WHERE id=$1", [id]);
-    if (rows.length > 0) {
-        return rows[0];
-    }
-    return undefined;
-};
-
 export const getAllParticipants = async function () : Promise<Participant[]> {
     const { rows } = await query("SELECT * FROM participant");
     return rows;

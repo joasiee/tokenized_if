@@ -6,7 +6,7 @@ import { AcceptOffer } from "../models/offer";
 import { tm } from "../services/token";
 import { errorMessage, successMessage } from "./helpers/status";
 import { getImporter } from "../services/baseline/helpers/organization_queries";
-import { getParticipantById } from "../db/participant_queries";
+import { getAllParticipants } from "../db/participant_queries";
 
 class OfferController {
   /** Returns all known offers */
@@ -24,7 +24,7 @@ class OfferController {
     const offerIdInt = parseInt(offerId);
     const offer = await getOfferById(offerIdInt);
     const importer = await getImporter(offer.shipment.owner);
-    const self = await getParticipantById(1);
+    const self = (await getAllParticipants())[0];
     const accept : AcceptOffer = {
       cargo_hash: offer.shipment.cargo_hash,
       financer: self.name,
