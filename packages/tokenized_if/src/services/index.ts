@@ -37,7 +37,7 @@ export async function setup() {
   await tokenSetup(await getTokenRegistry());
 
   // Perform baseline setup as LSP
-  if (role === "lsp") {
+  if (role === "lsp" && firstRun) {
     await baselineSetup();
   }
 
