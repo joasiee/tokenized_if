@@ -6,7 +6,7 @@ import Aux from "../../../hoc/_Aux";
 class overviewitems extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { value: '', jsondata: [], requestedShipment: '' };
+        this.state = { value: '', jsondata: [], requestedShipment: '', name: '' };
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -18,21 +18,22 @@ class overviewitems extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         console.log(event);
-        const { name, value } = event.target;
+        const { name } = this.state.name;
         console.log(this.state.requestedShipment);
-        if (name === 'repay') {
-            fetch(`http://localhost:3001/api/offers/${this.state.requestedShipment}/repay`, {
-                method: 'PUT',
-            });
-        }
-        if (name === 'release') {
-            fetch(`http://localhost:3001/api/shipments/${this.state.requestedShipment}/requestRelease`, {
-                method: 'PUT',
+        fetch(`http://localhost:3001/api/shipments/${this.state.requestedShipment}`, {
+                method: 'DELETE',
                 body: this.state.requestedShipment,
             }
-            ).then(data => alert(data))
+            ).then(data => {
+                console.log(data);
+                if (data.status === "error") {
+                    alert("Cannot release, you are not the current holder of the token");
+                } else {
+                    alert("Shipment successfully released, token burned");
+                }
+
+            })
                 ;
-        }
 
     }
     render() {
@@ -45,6 +46,7 @@ class overviewitems extends React.Component {
                                 <Card.Title as="h4">Overview of items</Card.Title>
                             </Card.Header>
                             <Card.Body>
+                            <Form onSubmit={this.handleSubmit}>
                                 <Table responsive hover striped>
                                     <thead>
                                         <tr>
@@ -67,7 +69,7 @@ class overviewitems extends React.Component {
                                                             <td>{items.description}</td>
                                                             <td>{items.amount}</td>
                                                             <td>
-                                                                < Button type="submit" hidden={index !== 0} name="Release" onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={items.releaseable === "false" ? true : false} variant={items.releaseable === "false" ? "secondary" : "primary"}>Release</Button></td>
+                                                                < Button type="submit" hidden={index !== 0} name="release" onClick={() => this.setState({ requestedShipment: shipment.id, name: "release" })} disabled={items.releaseable === "false" ? true : false} variant={items.releaseable === "false" ? "secondary" : "primary"}>Release</Button></td>
                                                         </tr>
                                                     )
                                                 }
@@ -78,6 +80,7 @@ class overviewitems extends React.Component {
                                         )}
                                     </tbody>
                                 </Table>
+                                </Form>
                             </Card.Body>
                         </Card>
                     </Col>

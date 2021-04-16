@@ -15,7 +15,7 @@ class impoverviewdeal extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-        fetch('http://localhost:3000/api/offers.json')
+        fetch('http://localhost:3001/api/offers')
             .then(response => response.json())
             .then(data => this.setState({ data: data }));
     }
@@ -75,7 +75,7 @@ class impoverviewdeal extends React.Component {
                                                         <td>{Math.round(100 * offer.price) / 100}</td>
                                                         <td>{Math.round(100 * offer.buyback) / 100}</td>
                                                         <td>{(offer.financer) ? "Yes" : "No"}</td>
-                                                        <td>{(index === 0) ? ((offer.financer) ? < Button type="submit" name="repay" onClick={() => this.setState({ id: offer.id })} variant="primary">Repay</Button> : "") : ""}
+                                                        <td>{(offer.financer) ? < Button type="submit" name="repay" onClick={() => this.setState({ id: offer.id, name: "repay" })} variant="primary">Repay</Button> : ""}
                                                         </td>
                                                     </tr>
                                                 )
