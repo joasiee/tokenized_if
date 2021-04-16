@@ -1,5 +1,5 @@
 export default {
-    defaultPath: '/dashboard/default',
+    defaultPath: '/profile',
     basename: '/', // only at build time to set, like /datta-able
     // basename: '/datta-able/react/default', // only at build time to set, like /datta-able
     layout: 'vertical', // vertical, horizontal (not available in lite version)

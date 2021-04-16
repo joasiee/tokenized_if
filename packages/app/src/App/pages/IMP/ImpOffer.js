@@ -16,10 +16,7 @@ class offer extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
     handleInputChange(event) {
-        console.log(event.target.value);
-        console.log(event.target.name);
         const { name, value } = event.target;
-        console.log(name);
         this.setState({
             [name]: value
         });
@@ -29,14 +26,14 @@ class offer extends React.Component {
         console.log(this.state.requestedShipment);
         const result = { "price": this.state.price, "buyback": this.state.buyback };
         console.log(result);
-        fetch(`http://tokenized_if_importer:3001/api/shipments/${this.state.id}`, {
+        fetch(`http://localhost:3001/api/shipments/${this.state.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(result),
         });
-        window.location.reload(false);
+        alert("Offer was made successfully");
     }
     render() {
         const { data } = this.state;

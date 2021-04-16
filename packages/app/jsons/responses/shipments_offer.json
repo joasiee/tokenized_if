@@ -1,0 +1,22 @@
+{
+  "status": "success",
+  "data": {
+      "id": 1,
+      "financer": null,
+      "price": "2.230000",
+      "buyback": "2.500000",
+      "shipment": {
+          "cargo": {
+              "items": [
+                  {
+                      "description": "cola cans",
+                      "amount": "100"
+                  }
+              ]
+          },
+          "cargo_hash": "0x5b78156b9d53dc26775762bee46dccc4508f525c8ee25406932dd935bce22591",
+          "owner": "isabel",
+          "escrow_address": "0x609F06EbE0047Cd1A487acdb85d5373c8f61a5D0"
+      }
+  }
+}

@@ -1,0 +1,18 @@
+[
+  {
+      "name": "isabel",
+      "address": "0x6f73049adcc6c752be22230c7e160ec4d17a5a5d",
+      "nats": "nats://localhost:4223",
+      "nats_key": "0x1234",
+      "zkp_key": "0x9876",
+      "role": "importer"
+  },
+  {
+      "name": "fiona",
+      "address": "0x8994d87997bb1b663421ac82196dcdf950d22f2a",
+      "nats": "nats://localhost:4224",
+      "nats_key": "0x1234",
+      "zkp_key": "0x9876",
+      "role": "financer"
+  }
+]
