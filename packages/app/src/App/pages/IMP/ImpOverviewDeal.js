@@ -3,7 +3,7 @@ import { Row, Col, Card, Table, Button, Form } from 'react-bootstrap';
 
 import Aux from "../../../hoc/_Aux";
 
-class finoverview extends React.Component {
+class impoverviewdeal extends React.Component {
     constructor(props) {
         super(props);
 
@@ -15,7 +15,7 @@ class finoverview extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-        fetch('http://localhost:3002/api/offers')
+        fetch('http://localhost:3001/api/offers')
             .then(response => response.json())
             .then(data => this.setState({ data: data }));
     }
@@ -27,7 +27,7 @@ class finoverview extends React.Component {
         console.log(this.state.id)
         console.log(this.state.name)
         if (this.state.name === 'takedeal') {
-            fetch(`http://localhost:3002/api/offers/${this.state.id}/accept`, {
+            fetch(`http://localhost:3001/api/offers/${this.state.id}/accept`, {
                 method: 'PUT',
             });
             alert("Accepted offer");
@@ -50,10 +50,10 @@ class finoverview extends React.Component {
                                         <thead>
                                             <tr>
                                                 <th>Deal</th>
-                                                <th>Importer</th>
+                                                <th>Financer</th>
                                                 <th>Price</th>
                                                 <th>Buyback</th>
-                                                <th>Action</th>
+                                                <th>Accepted</th>
                                             </tr>
                                         </thead>
 
@@ -65,10 +65,10 @@ class finoverview extends React.Component {
 
                                                     <tr>
                                                         <th scope="row">{offer.id}</th>
-                                                        <td>{offer.shipment.owner}</td>
+                                                        <td>{offer.financer}</td>
                                                         <td>{Math.round(100 * offer.price) / 100}</td>
                                                         <td>{Math.round(100 * offer.buyback) / 100}</td>
-                                                        <td>{(offer.financer) ? "accepted" : < Button type="submit" name="takedeal" onClick={() => this.setState({ id: offer.id, name: "takedeal" })}>Take deal</Button>}</td>
+                                                        <td>{(offer.financer) ? "Yes" : "No"}</td>
                                                     </tr>
                                                 )
                                                 // }
@@ -87,4 +87,4 @@ class finoverview extends React.Component {
     }
 }
 
-export default finoverview;
+export default impoverviewdeal;

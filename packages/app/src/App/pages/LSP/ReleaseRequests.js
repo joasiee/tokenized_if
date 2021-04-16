@@ -50,7 +50,7 @@ class releaserequests extends React.Component {
                                         <tbody>
                                             {this.state.jsondata.map(shipment => {
                                                 return (
-                                                    shipment.cargo.items.map(items => {
+                                                    shipment.cargo.items.map((items, index) => {
                                                         return (
 
                                                             <tr>
@@ -59,8 +59,8 @@ class releaserequests extends React.Component {
                                                                 <td>{items.description}</td>
                                                                 <td>{items.amount}</td>
 
-                                                                {/* <td>< Button type="submit" onClick={() => this.state.requestedShipment = shipment.id.toString() + ' ' + items.amount.toString()} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Release</Button></td> */}
-                                                                <td>< Button type="submit" onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Release</Button></td>
+                                                                {(index === 0) ?
+                                                                    <td>< Button type="submit" onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Release</Button></td> : ""}
 
 
                                                             </tr>

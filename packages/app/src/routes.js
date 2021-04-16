@@ -12,6 +12,7 @@ const addshipment = React.lazy(() => import('./App/pages/LSP/AddShipment'));
 const releaserequests = React.lazy(() => import('./App/pages/LSP/ReleaseRequests'));
 const impoverview = React.lazy(() => import('./App/pages/IMP/ImpOverview'));
 const offer = React.lazy(() => import('./App/pages/IMP/ImpOffer'));
+const offeroverview = React.lazy(() => import('./App/pages/IMP/ImpOverviewDeal'));
 const impwallet = React.lazy(() => import('./App/pages/LSP/ReleaseRequests'));
 const finoverview = React.lazy(() => import('./App/pages/FIN/FinOverview'));
 const fintokens = React.lazy(() => import('./App/pages/LSP/ReleaseRequests'));
@@ -26,6 +27,7 @@ const routes = [
     { path: '/lsp/addshipment', exact: true, name: 'Add shipments', component: addshipment },
     { path: '/imp/overview', exact: true, name: 'Importer overview', component: impoverview },
     { path: '/imp/offer', exact: true, name: 'Offer deal', component: offer },
+    { path: '/imp/overviewoffer', exact: true, name: 'Overview Offer', component: offeroverview },
     { path: '/imp/wallet', exact: true, name: 'Importer wallet', component: impwallet },
     { path: '/fin/overview', exact: true, name: 'Financier overview', component: finoverview },
     { path: '/fin/tokens', exact: true, name: 'Financier tokens', component: fintokens },

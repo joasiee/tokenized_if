@@ -37,7 +37,6 @@ class overviewitems extends React.Component {
     }
     render() {
         return (
-
             < Aux >
                 <Row>
                     <Col>
@@ -49,11 +48,10 @@ class overviewitems extends React.Component {
                                 <Table responsive hover striped>
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>Shipment id</th>
                                             <th>Description</th>
                                             <th>Amount</th>
                                             <th>Action</th>
-                                            {/* <th>Ask for release</th> */}
                                         </tr>
                                     </thead>
 
@@ -62,13 +60,14 @@ class overviewitems extends React.Component {
                                         {this.state.jsondata.map(shipment => {
                                             console.log(shipment)
                                             return (
-                                                shipment.cargo.items.map(items => {
+                                                shipment.cargo.items.map((items, index) => {
                                                     return (
                                                         <tr>
                                                             <th scope="row">{shipment.id}</th>
                                                             <td>{items.description}</td>
                                                             <td>{items.amount}</td>
-                                                            <td>< Button type="submit" name={items.tokenized ? "repay" : "release"} onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={items.releaseable === "false" ? true : false} variant={items.releaseable === "false" ? "secondary" : "primary"}>{(items.tokenized === "true") ? "Repay" : "Release"}</Button></td>
+                                                            {(index === 0) ?
+                                                                <td>< Button type="submit" name={items.tokenized ? "repay" : "release"} onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={items.releaseable === "false" ? true : false} variant={items.releaseable === "false" ? "secondary" : "primary"}>{(items.tokenized === "true") ? "Repay" : "Release"}</Button></td> : ""}
                                                         </tr>
                                                     )
                                                 }
