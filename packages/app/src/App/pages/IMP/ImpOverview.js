@@ -30,7 +30,7 @@ class overviewitems extends React.Component {
                 method: 'PUT',
                 body: this.state.requestedShipment,
             }
-            )
+            ).then(data => alert(data))
                 ;
         }
 
@@ -66,8 +66,8 @@ class overviewitems extends React.Component {
                                                             <th scope="row">{shipment.id}</th>
                                                             <td>{items.description}</td>
                                                             <td>{items.amount}</td>
-                                                            {(index === 0) ?
-                                                                <td>< Button type="submit" name={items.tokenized ? "repay" : "release"} onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={items.releaseable === "false" ? true : false} variant={items.releaseable === "false" ? "secondary" : "primary"}>{(items.tokenized === "true") ? "Repay" : "Release"}</Button></td> : ""}
+                                                            <td>
+                                                                < Button type="submit" hidden={index !== 0} name="Release" onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={items.releaseable === "false" ? true : false} variant={items.releaseable === "false" ? "secondary" : "primary"}>Release</Button></td>
                                                         </tr>
                                                     )
                                                 }

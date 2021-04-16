@@ -15,7 +15,7 @@ class impoverviewdeal extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-        fetch('http://localhost:3001/api/offers')
+        fetch('http://localhost:3000/api/offers.json')
             .then(response => response.json())
             .then(data => this.setState({ data: data }));
     }
@@ -31,6 +31,11 @@ class impoverviewdeal extends React.Component {
                 method: 'PUT',
             });
             alert("Accepted offer");
+        }
+        if (this.state.name === 'repay') {
+            fetch(`http://localhost:3001/api/offers/${this.state.id}/repay`, {
+                method: 'PUT',
+            });
         }
     }
 
@@ -54,12 +59,13 @@ class impoverviewdeal extends React.Component {
                                                 <th>Price</th>
                                                 <th>Buyback</th>
                                                 <th>Accepted</th>
+                                                <th>Repay</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                             {console.log(this.state.data)}
-                                            {this.state.data.map(offer => {
+                                            {this.state.data.map((offer, index) => {
                                                 console.log(offer)
                                                 return (
 
@@ -69,9 +75,10 @@ class impoverviewdeal extends React.Component {
                                                         <td>{Math.round(100 * offer.price) / 100}</td>
                                                         <td>{Math.round(100 * offer.buyback) / 100}</td>
                                                         <td>{(offer.financer) ? "Yes" : "No"}</td>
+                                                        <td>{(index === 0) ? ((offer.financer) ? < Button type="submit" name="repay" onClick={() => this.setState({ id: offer.id })} variant="primary">Repay</Button> : "") : ""}
+                                                        </td>
                                                     </tr>
                                                 )
-                                                // }
 
                                             }
                                             )}
