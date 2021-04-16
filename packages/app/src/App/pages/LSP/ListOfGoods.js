@@ -12,7 +12,7 @@ class listofgoods extends React.Component {
         };
     }
     componentDidMount() {
-        fetch('http://localhost:3000/api/shipments.json')
+        fetch('http://localhost:3000/api/shipments')
             .then(response => response.json())
             .then(data => this.setState({ data: data }));
     }

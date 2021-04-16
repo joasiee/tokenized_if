@@ -15,11 +15,7 @@ class finoverview extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-<<<<<<< HEAD
-        fetch('http://tokenized_if_financer:3002/api/offers')
-=======
-        fetch('http://localhost:3000/api/offers.json')
->>>>>>> jsons
+        fetch('http://localhost:3002/api/offers')
             .then(response => response.json())
             .then(data => this.setState({ data: data }));
     }
@@ -31,7 +27,7 @@ class finoverview extends React.Component {
         console.log(this.state.id)
         console.log(this.state.name)
         if (this.state.name === 'takedeal') {
-            fetch(`http://localhost:3001/api/offers/${this.state.id}/accept`, {
+            fetch(`http://localhost:3002/api/offers/${this.state.id}/accept`, {
                 method: 'PUT',
             });
             alert("Accepted offer");
@@ -69,7 +65,7 @@ class finoverview extends React.Component {
 
                                                     <tr>
                                                         <th scope="row">{offer.id}</th>
-                                                        <td>{offer.financer}</td>
+                                                        <td>{offer.shipment.owner}</td>
                                                         <td>{Math.round(100 * offer.price) / 100}</td>
                                                         <td>{Math.round(100 * offer.buyback) / 100}</td>
                                                         <td>< Button type="submit" name="takedeal" onClick={() => this.setState({ id: offer.id, name: "takedeal" })}>Take deal</Button></td>
