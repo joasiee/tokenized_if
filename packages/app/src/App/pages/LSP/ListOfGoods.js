@@ -32,7 +32,7 @@ class listofgoods extends React.Component {
                                 <Table responsive hover striped>
                                     <thead>
                                         <tr>
-                                            <th>Shipment</th>
+                                            <th>Shipment id</th>
                                             <th>Item</th>
                                             <th>Amount</th>
                                             <th>Importer</th>
@@ -53,7 +53,7 @@ class listofgoods extends React.Component {
                                                             <td>{item.amount}</td>
 
                                                             <td>{shipment.owner}</td>
-                                                            <td>{items.tokenized}</td>
+                                                            <td>{item.tokenized}</td>
                                                         </tr>
                                                     )
                                                 }

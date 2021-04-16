@@ -49,7 +49,7 @@ class overviewitems extends React.Component {
                                 <Table responsive hover striped>
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>Shipment id</th>
                                             <th>Description</th>
                                             <th>Amount</th>
                                             <th>Action</th>
