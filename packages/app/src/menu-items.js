@@ -72,6 +72,14 @@ export default {
                     icon: 'feather icon-volume-2',
                     url: '/imp/offer'
                 },
+                {
+                    id: 'overviewdeal',
+                    title: 'Overview deals',
+                    role: 'imp',
+                    type: 'item',
+                    icon: 'feather icon-package',
+                    url: '/imp/overviewoffer'
+                },
 
             ]
         },
