@@ -12,7 +12,7 @@ class listofgoods extends React.Component {
         };
     }
     componentDidMount() {
-        fetch('http://localhost:3000/api/shipments')
+        fetch('http://localhost:3000/api/shipments.json')
             .then(response => response.json())
             .then(data => this.setState({ data: data }));
     }
@@ -32,11 +32,11 @@ class listofgoods extends React.Component {
                                 <Table responsive hover striped>
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
+                                            <th>Shipment</th>
+                                            <th>Item</th>
+                                            <th>Amount</th>
                                             <th>Importer</th>
-                                            <th>Items</th>
-                                            <th>Released</th>
+                                            <th>Tokenized</th>
                                         </tr>
                                     </thead>
 
@@ -53,6 +53,7 @@ class listofgoods extends React.Component {
                                                             <td>{item.amount}</td>
 
                                                             <td>{shipment.owner}</td>
+                                                            <td>{items.tokenized}</td>
                                                         </tr>
                                                     )
                                                 }

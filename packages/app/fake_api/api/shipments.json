@@ -7,11 +7,15 @@
             "items": [
                 {
                     "description": "Iets",
-                    "amount": 5
+                    "amount": 5,
+                    "tokenized": "true",
+                    "releaseable": "true"
                 },
                 {
                     "description": "Nog Iets",
-                    "amount": 2
+                    "amount": 2,
+                    "tokenized": "false",
+                    "releaseable": "false"
                 }
             ]
         },
@@ -25,11 +29,15 @@
             "items": [
                 {
                     "description": "Iets",
-                    "amount": 12
+                    "amount": 12,
+                    "tokenized": "false",
+                    "releaseable": "false"
                 },
                 {
                     "description": "Nog Iets",
-                    "amount": 22
+                    "amount": 22,
+                    "tokenized": "true",
+                    "releaseable": "true"
                 }
             ]
         },

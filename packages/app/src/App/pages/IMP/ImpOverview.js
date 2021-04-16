@@ -11,7 +11,7 @@ class overviewitems extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-        fetch('http://localhost:3001/api/shipments')
+        fetch('http://localhost:3000/api/shipments.json')
             .then(response => response.json())
             .then(data => this.setState({ jsondata: data }));
     }
@@ -26,12 +26,12 @@ class overviewitems extends React.Component {
             });
         }
         if (name === 'release') {
-            // fetch(`http://localhost:3001/api/shipments/${this.state.requestedShipment}`, {
-            //     method: 'PUT',
-            //     body: this.state.requestedShipment,
-            // }
-            // )
-            ;
+            fetch(`http://localhost:3001/api/shipments/${this.state.requestedShipment}/requestRelease`, {
+                method: 'PUT',
+                body: this.state.requestedShipment,
+            }
+            )
+                ;
         }
 
     }
@@ -52,8 +52,8 @@ class overviewitems extends React.Component {
                                             <th>#</th>
                                             <th>Description</th>
                                             <th>Amount</th>
-                                            <th>Repay</th>
-                                            <th>Ask for release</th>
+                                            <th>Action</th>
+                                            {/* <th>Ask for release</th> */}
                                         </tr>
                                     </thead>
 
@@ -68,8 +68,7 @@ class overviewitems extends React.Component {
                                                             <th scope="row">{shipment.id}</th>
                                                             <td>{items.description}</td>
                                                             <td>{items.amount}</td>
-                                                            <td>< Button type="submit" name="repay" onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Repay</Button></td>
-                                                            <td>< Button type="submit" name="release" onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Release</Button></td>
+                                                            <td>< Button type="submit" name={items.tokenized ? "repay" : "release"} onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={items.releaseable === "false" ? true : false} variant={items.releaseable === "false" ? "secondary" : "primary"}>{(items.tokenized === "true") ? "Repay" : "Release"}</Button></td>
                                                         </tr>
                                                     )
                                                 }

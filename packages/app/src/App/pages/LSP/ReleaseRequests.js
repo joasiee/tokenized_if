@@ -11,7 +11,7 @@ class releaserequests extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-        fetch('http://localhost:3000/api/shipments')
+        fetch('http://localhost:3000/api/shipments.json')
             .then(response => response.json())
             .then(data => this.setState({ jsondata: data }));
     }
@@ -39,11 +39,11 @@ class releaserequests extends React.Component {
                                     <Table responsive hover striped>
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Name</th>
+                                                <th>Shipment id</th>
                                                 <th>Importer</th>
-                                                <th>Tokenized</th>
-                                                <th>Released</th>
+                                                <th>Item</th>
+                                                <th>Amount</th>
+                                                <th>Release</th>
                                             </tr>
                                         </thead>
 
@@ -55,9 +55,10 @@ class releaserequests extends React.Component {
 
                                                             <tr>
                                                                 <th scope="row">{shipment.id}</th>
+                                                                <td>{shipment.owner}</td>
                                                                 <td>{items.description}</td>
                                                                 <td>{items.amount}</td>
-                                                                <td>{shipment.owner}</td>
+
                                                                 {/* <td>< Button type="submit" onClick={() => this.state.requestedShipment = shipment.id.toString() + ' ' + items.amount.toString()} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Release</Button></td> */}
                                                                 <td>< Button type="submit" onClick={() => this.setState({ requestedShipment: shipment.id })} disabled={(items.amount > 10) ? true : false} variant={(items.amount > 10) ? "secondary" : "primary"}>Release</Button></td>
 
