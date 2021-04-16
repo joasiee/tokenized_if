@@ -17,6 +17,7 @@ class listofgoods extends React.Component {
             .then(data => this.setState({ data: data }));
     }
 
+
     render() {
         const { data } = this.state;
         return (

@@ -65,7 +65,7 @@ class finoverview extends React.Component {
 
                                                     <tr>
                                                         <th scope="row">{offer.id}</th>
-                                                        <td>{offer.financer}</td>
+                                                        <td>{offer.owner}</td>
                                                         <td>{Math.round(100 * offer.price) / 100}</td>
                                                         <td>{Math.round(100 * offer.buyback) / 100}</td>
                                                         <td>< Button type="submit" name="takedeal" onClick={() => this.setState({ id: offer.id, name: "takedeal" })}>Take deal</Button></td>
