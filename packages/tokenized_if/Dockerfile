@@ -1,33 +1,16 @@
-FROM node:14.16
+FROM node:14.16.0
 
-# Create app directory
 WORKDIR /usr/src/app
-RUN npm update -g yarn
-RUN npm install -g typescript
-RUN npm install -g ts-node
+COPY package.json .
+COPY lerna.json .
+COPY tsconfig.base.json .
+COPY tsconfig.json .
+COPY packages/tokenized_if ./packages/tokenized_if
+COPY packages/shared ./packages/shared
+COPY packages/token_registry ./packages/token_registry
+COPY packages/messaging ./packages/messaging
 
-
-COPY . .
-
-WORKDIR /usr/src/app/packages/shared
-RUN yarn --non-interactive
-RUN yarn run build
-
-WORKDIR /usr/src/app/packages/token_registry
-RUN yarn --non-interactive
-RUN yarn run build
-
-WORKDIR /usr/src/app/packages/messaging
-RUN yarn --non-interactive
+RUN yarn --pure-lockfile --non-interactive
+RUN yarn build
 
 WORKDIR /usr/src/app/packages/tokenized_if
-RUN yarn --non-interactive
-RUN yarn run build
-
-WORKDIR /usr/src/app
-RUN yarn --non-interactive
-RUN yarn run build
-
-WORKDIR /usr/src/app/packages/tokenized_if/
-EXPOSE 80
-CMD ts-node -r dotenv-flow/config src/app.ts

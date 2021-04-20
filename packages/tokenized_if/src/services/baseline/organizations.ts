@@ -9,7 +9,10 @@ import {
 } from "@tokenized_if/shared/src/proto/organizations_pb";
 import { Participant } from "../../models/participant";
 
-const client = new OrganizationsClient(`localhost:${process.env.BASELINE_PORT}`, grpc.credentials.createInsecure());
+const client = new OrganizationsClient(
+  `${process.env.BASELINE_HOST}:${process.env.BASELINE_PORT}`,
+  grpc.credentials.createInsecure()
+);
 
 export async function getOrgRegistry(name: string, address?: string): Promise<OrgRegistry> {
   return new Promise<OrgRegistry>((resolve, reject) => {
@@ -27,13 +30,15 @@ export async function getOrgRegistry(name: string, address?: string): Promise<Or
 
 export function deployOrgRegistry(name: string): Promise<OrgRegistry> {
   return new Promise<OrgRegistry>((resolve, reject) => {
-    const registry = new OrgRegistry();
-    registry.setName(name);
-    client.deployOrgRegistry(registry, (err, registry) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(registry);
+    client.waitForReady(Infinity, function() {
+      const registry = new OrgRegistry();
+      registry.setName(name);
+      client.deployOrgRegistry(registry, (err, registry) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(registry);
+      });
     });
   });
 }

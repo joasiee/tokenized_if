@@ -5,15 +5,7 @@ services:
     container_name: ganache
     image: trufflesuite/ganache-cli:latest
     ports:
-      - 8545:8545
-    volumes:
-      - ./packages/baseline/ops/ganache_health.sh:/app/health-check.sh:delegated
-    healthcheck:
-      test: ["CMD", "sh", "health-check.sh"]
-      interval: 15s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
+      - 8545
     command: ganache-cli -m "elephant season wise pyramid jaguar number away trap skirt guilt capital reveal" --networkId 101010 --gasLimit 10000000 --allowUnlimitedContractSize --noVMErrorsOnRPCResponse
 
   mongo:
@@ -21,108 +13,36 @@ services:
     image: mongo
     environment:
       MONGO_INITDB_ROOT_DATABASE: root-db
-      MONGO_HOST: 0.0.0.0
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_DB_NAME: baseline
-      MONGO_INITDB_ROOT_PASSWORD: password-db
     volumes:
-      - ./docker_volumes/mongo:/data/db
+      - mongo:/data/db
     logging:
       options:
         max-size: 10m
     ports:
-      - 27017:27017
+      - 27017
 
-  mongo-express:
-    image: mongo-express
-    container_name: mongo-express
-    profiles: ["development"]
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_SERVER: mongo
-    depends_on:
-      - mongo
-
-  nats_lsp:
-    container_name: nats_lsp
+  nats:
+    container_name: nats
     image: nats
     ports:
       - 4222
 
-  nats_importer:
-    container_name: nats_importer
-    image: nats
-    ports:
-      - 4223
-
-  nats_financer:
-    container_name: nats_financer
-    image: nats
-    ports:
-      - 4224
-
-  postgres_lsp:
+  postgres:
+    container_name: postgresdb
     image: postgres
     restart: always
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
-      APP_DB_USER: "api"
-      APP_DB_PASS: "password"
-      APP_DB_NAME: "tokenized"
-    healthcheck:
-      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root"]
-      timeout: 45s
-      interval: 10s
-      retries: 10
+      APP_DB_USER: api
+      APP_DB_PASS: password
+      APP_DB_NAME: tokenized
     ports:
-      - "5432:5432"
+      - 5432
     volumes:
       - ./packages/tokenized_if/ops/db:/docker-entrypoint-initdb.d/
-      - ./docker_volumes/pgdata_lsp:/var/lib/postgresql/data/
+      - pgdata:/var/lib/postgresql/data/
 
-  postgres_imp:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      APP_DB_USER: "api"
-      APP_DB_PASS: "password"
-      APP_DB_NAME: "tokenized"
-    healthcheck:
-      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root"]
-      timeout: 45s
-      interval: 10s
-      retries: 10
-    ports:
-      - "5433:5432"
-    volumes:
-      - ./packages/tokenized_if/ops/db:/docker-entrypoint-initdb.d/
-      - ./docker_volumes/pgdata_imp:/var/lib/postgresql/data/
-
-  postgres_fin:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      APP_DB_USER: "api"
-      APP_DB_PASS: "password"
-      APP_DB_NAME: "tokenized"
-    healthcheck:
-      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root"]
-      timeout: 45s
-      interval: 10s
-      retries: 10
-    ports:
-      - "5434:5432"
-    volumes:
-      - ./packages/tokenized_if/ops/db:/docker-entrypoint-initdb.d/
-      - ./docker_volumes/pgdata_fin:/var/lib/postgresql/data/
-
-  # Our apps
   app:
     container_name: app
     build:
@@ -135,39 +55,33 @@ services:
     build:
       context: .
       dockerfile: packages/baseline/Dockerfile
+    volumes:
+      - ./packages/baseline/.env.lsp:/usr/src/app/packages/baseline/.env.lsp:cached
     depends_on:
       - mongo
       - ganache
+    ports:
+      - 5000
     environment:
-      NODE_ENV: production
+      NODE_ENV: lsp
     command: yarn start
 
-  tokenized_if_lsp:
-    container_name: tokenized_if_lsp
+  tokenized_if:
+    container_name: tokenized_if
+    build:
+      context: .
+      dockerfile: packages/tokenized_if/Dockerfile
+    volumes:
+      - ./packages/tokenized_if/.env.lsp:/usr/src/app/packages/tokenized_if/.env.lsp:cached
     depends_on:
-      - postgres_lsp
-      - nats_lsp
-    image: tokenized_if
-    env_file: ./packages/tokenized_if/.env.lsp
+      - postgres
+      - nats
+      - baseline
+    environment:
+      NODE_ENV: lsp
     ports:
       - 3000:3000
-
-  tokenized_if_financer:
-    container_name: tokenized_if_financer
-    image: tokenized_if
-    depends_on:
-      - postgres_fin
-      - nats_financer
-    env_file: ./packages/tokenized_if/.env.financer
-    ports:
-      - 3002:3002
-
-  tokenized_if_importer:
-    container_name: tokenized_if_importer
-    image: tokenized_if
-    depends_on:
-      - postgres_imp
-      - nats_importer
-    env_file: ./packages/tokenized_if/.env.importer
-    ports:
-      - 3001:3001
+    command: yarn start
+volumes:
+  pgdata:
+  mongo:

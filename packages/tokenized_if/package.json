@@ -5,7 +5,7 @@
   "main": "dist/app.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/app.ts",
+    "start": "unset NAME && ts-node -r dotenv-flow/config src/app.ts",
     "start:lsp": "unset NAME && NODE_ENV=lsp ts-node -r dotenv-flow/config src/app.ts",
     "up:lsp": "docker-compose -p lsp --env-file .env.lsp up -d",
     "down:lsp": "docker-compose -p lsp --env-file .env.lsp down",

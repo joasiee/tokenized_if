@@ -144,6 +144,12 @@ describe("Integration", function() {
   }
 
   testCircuit("noopTest", "noop", ["5"], sha256(Buffer.from("noop commit")));
+
+  /**
+   * cant test both circuits at the same time, since Zokrates compiles verifiers with fixed number of inputs.
+   * Shield, IShield and IVerifier need to be adjusted accordingly each time,
+   * or the compiled verifier needs to be changed at runtime to allow for dynamically sized inputs.
+   */
   // testCircuit("addShipment", "noop group", shipmentArgs(), shipmentArgs()[0][0] + shipmentArgs()[0][1]);
 
   after(async function() {

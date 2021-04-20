@@ -17,28 +17,52 @@ import { txManagerServiceFactory } from "../tx-manager";
 
 const logger = getLogger("commit-mgr");
 
+/**
+ * Commit manager service for {@link CommitServer}.
+ */
 export class CommitService {
+  /**
+   * Init websocket with eth json rpc, start subscriptions with existing shield contracts.
+   */
   async init() {
     logger.debug("Initializing Commit service..");
     await get_ws_provider(); // Establish websocket connection
     await restartSubscriptions(); // Enable event listeners for active MerkleTrees
   }
 
+  /**
+   * Shutdown ws connection.
+   */
   async shutdown() {
     get_ws_provider().destroy();
   }
 
+  /**
+   * Get commit from local merkle tree.
+   * @param req
+   * @returns
+   */
   async getCommit(req: Request.Commit): Promise<Commitment> {
     const result = await getLeafByLeafIndex(req.getAddress(), req.getIndex());
     return modelToCommitment(result);
   }
 
+  /**
+   * Get multiple commits.
+   * @param req
+   * @returns
+   */
   getCommits(req: Request.Commits): Response.Commitments {
     const endLeafIndex = req.getStartindex() + req.getCount() - 1;
     const result = getLeavesByLeafIndexRange(req.getAddress(), req.getStartindex(), endLeafIndex);
     return new Response.Commitments().setCommitmentsList(result.map(modelToCommitment));
   }
 
+  /**
+   * Get root of tree.
+   * @param req
+   * @returns
+   */
   async getRoot(req: Request.Root): Promise<Response.Root | Error> {
     try {
       const root = await updateTree(req.getAddress());
@@ -49,6 +73,11 @@ export class CommitService {
     }
   }
 
+  /**
+   * Get sibling nodes for commitment, so that it can be verified.
+   * @param req
+   * @returns
+   */
   async getProof(req: Request.Proof): Promise<Response.Commitments | Error> {
     try {
       const pathNodes = await getSiblingPathByLeafIndex(req.getAddress(), req.getLeafindex());
@@ -59,6 +88,10 @@ export class CommitService {
     }
   }
 
+  /**
+   * Get list of tracked shield contracts.
+   * @returns
+   */
   async getTracked(): Promise<Response.Tracked> {
     const trackedContracts = await merkleTrees
       .find({
@@ -75,6 +108,11 @@ export class CommitService {
     return new Response.Tracked().setTrackedList(contractAddresses);
   }
 
+  /**
+   * Verify and push a proof into shield contract.
+   * @param req
+   * @returns
+   */
   async verifyAndPush(req: Request.VerifyAndPush): Promise<Response.PushCommitment | Error> {
     const record = await merkleTrees
       .findOne({ _id: `${req.getAddress()}_0` })
@@ -103,6 +141,11 @@ export class CommitService {
     }
   }
 
+  /**
+   * Start tracking a shield contract.
+   * @param req
+   * @returns
+   */
   async track(req: Request.Track): Promise<Response.Bool | Error> {
     const merkleTree = await merkleTrees.findOne({ _id: `${req.getAddress()}_0` });
     if (merkleTree && merkleTree.active === true) {
@@ -141,6 +184,11 @@ export class CommitService {
     return new Response.Bool().setValue(true);
   }
 
+  /**
+   * Untrack a shield contract.
+   * @param req
+   * @returns
+   */
   async untrack(req: Request.Untrack): Promise<Response.Bool | Error> {
     const prune = req.getPrune() || false;
     const foundTree = await merkleTrees
@@ -166,6 +214,11 @@ export class CommitService {
     return new Response.Bool().setValue(true);
   }
 
+  /**
+   * Verify that a commitment is in tree.
+   * @param req
+   * @returns
+   */
   async verify(req: Request.Verify): Promise<Response.Bool> {
     const siblingNodes = req.getSiblingpathList();
     const root = siblingNodes[siblingNodes.length - 1].getValue();
@@ -185,10 +238,20 @@ export class CommitService {
   }
 }
 
+/**
+ * Helper function to convert from model to protobuf.
+ * @param model
+ * @returns
+ */
 function modelToCommitment(model) {
   return new Commitment().setNumber(model.leafIndex).setValue(model.hash);
 }
 
+/**
+ * Joins proof points as single list.
+ * @param proof
+ * @returns
+ */
 function joinProofPoints(proof: Proof.ProofPoints) {
   const list = [proof.getAList(), proof.getB1List(), proof.getB2List(), proof.getCList()];
   return [].concat(...list);

@@ -44,7 +44,7 @@ class addshipment extends React.Component {
       cargo: { items: [{ description: this.state.itemd, amount: this.state.itema }] }
     };
     console.log(result);
-    fetch("http://localhost:3000/api/shipments", {
+    fetch("http://tokenized_if:3000/api/shipments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

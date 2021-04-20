@@ -17,7 +17,7 @@ const main = async function() {
   server.addService(OrganizationsService, org_mgr.OrganizationsServer);
   server.addService(ZKPService, zkp_mgr.ZKPServer);
   server.addService(CommitService, commit_mgr.CommitServer);
-  server.bindAsync(`localhost:${process.env.RPC_PORT}`, grpc.ServerCredentials.createInsecure(), (err, port) => {
+  server.bindAsync(`0.0.0.0:${process.env.RPC_PORT}`, grpc.ServerCredentials.createInsecure(), (err, port) => {
     if (err) {
       throw err;
     }
