@@ -9,6 +9,12 @@
 
 ## Running locally
 
+This will start a single stack, containing:
+
+- baseline backend
+- api backend
+- frontend
+
 ```
 docker-compose up -d
 ```
@@ -20,9 +26,7 @@ yarn
 yarn build
 ```
 
-## Running tests
-
-Make sure to build first.
+Then to run the tests:
 
 ```
 yarn lerna run test
