@@ -1,0 +1,87 @@
+version: "3"
+services:
+  # Base components
+  ganache:
+    container_name: ganache
+    image: trufflesuite/ganache-cli:latest
+    ports:
+      - 8545
+    command: ganache-cli -m "elephant season wise pyramid jaguar number away trap skirt guilt capital reveal" --networkId 101010 --gasLimit 10000000 --allowUnlimitedContractSize --noVMErrorsOnRPCResponse
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_DATABASE: root-db
+    volumes:
+      - mongo:/data/db
+    logging:
+      options:
+        max-size: 10m
+    ports:
+      - 27017
+
+  nats:
+    container_name: nats
+    image: nats
+    ports:
+      - 4222
+
+  postgres:
+    container_name: postgresdb
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      APP_DB_USER: api
+      APP_DB_PASS: password
+      APP_DB_NAME: tokenized
+    ports:
+      - 5432
+    volumes:
+      - ./packages/tokenized_if/ops/db:/docker-entrypoint-initdb.d/
+      - pgdata:/var/lib/postgresql/data/
+
+  app:
+    container_name: app
+    build:
+      context: ./packages/app/
+    ports:
+      - 9999:80
+
+  baseline:
+    container_name: baseline
+    build:
+      context: .
+      dockerfile: packages/baseline/Dockerfile
+    volumes:
+      - ./packages/baseline/.env.lsp:/usr/src/app/packages/baseline/.env.lsp:cached
+    depends_on:
+      - mongo
+      - ganache
+    ports:
+      - 5000
+    environment:
+      NODE_ENV: lsp
+    command: yarn start
+
+  tokenized_if:
+    container_name: tokenized_if
+    build:
+      context: .
+      dockerfile: packages/tokenized_if/Dockerfile
+    volumes:
+      - ./packages/tokenized_if/.env.lsp:/usr/src/app/packages/tokenized_if/.env.lsp:cached
+    depends_on:
+      - postgres
+      - nats
+      - baseline
+    environment:
+      NODE_ENV: lsp
+    ports:
+      - 3000:3000
+    command: yarn start
+volumes:
+  pgdata:
+  mongo:

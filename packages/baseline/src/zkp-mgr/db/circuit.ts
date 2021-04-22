@@ -50,7 +50,7 @@ export function zokToProtoProof(proof: zokProof): Proof {
 
 export function modelToProto(model: ICircuit): Circuit {
   const program = readFileSync(model.artifacts[0]);
-  const pk = readFileSync(model.artifacts[1]);
+  const pk = readFileSync(model.pk);
   return new Circuit()
     .setName(model.name)
     .setArtifacts(new Circuit.Artifacts().setProgram(program).setAbi(model.artifacts[1]))

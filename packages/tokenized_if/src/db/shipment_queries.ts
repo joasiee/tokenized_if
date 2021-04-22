@@ -1,4 +1,4 @@
-import { CreateShipmentDao, Shipment, ShipmentDao } from "../models/shipment";
+import { CreateShipmentDao, ShipmentDao } from "../models/shipment";
 import { query } from "./helpers/query";
 
 export const getAllShipments = async function () : Promise<ShipmentDao[]> {

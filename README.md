@@ -7,19 +7,27 @@
 - docker
 - docker-compose
 
-Possibly necessary:
-
-```
-npm install -g node-gyp
-```
-
 ## Running locally
 
-In root folder:
+This will start a single stack, containing:
+
+- baseline backend
+- api backend
+- frontend
+
+```
+docker-compose up -d
+```
+
+## Building locally
 
 ```
 yarn
 yarn build
-yarn start:baseline
-yarn start:api
+```
+
+Then to run the tests:
+
+```
+yarn lerna run test
 ```

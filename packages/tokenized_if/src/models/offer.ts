@@ -32,5 +32,5 @@ export interface OfferShipmentDao extends OfferDao {
 
 export interface AcceptOffer {
     cargo_hash: string,
-    financer_address: string,
+    financer: string,
 }

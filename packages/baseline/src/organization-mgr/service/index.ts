@@ -80,7 +80,7 @@ export class OrganizationsService {
     try {
       const model: orgregistry.IOrgRegistry = await orgregistry.db.findOne({ name: registry.getName() });
       let contract: OrgRegistryContract = (await getContract(
-        registry.getAddress(),
+        model.address,
         config.CONTRACTS.ORG_REGISTRY
       )) as OrgRegistryContract;
       // do not add if org is already added locally.
@@ -117,10 +117,12 @@ export class OrganizationsService {
    */
   async addWorkgroup(registry: OrgRegistry, workgroup: Workgroup): Promise<OrgRegistry> {
     logger.debug(`Trying to add workgroup ${workgroup.getName()} to registry ${registry.getName()}`);
+    logger.debug(JSON.stringify(registry.toObject()));
+    logger.debug(JSON.stringify(workgroup.toObject()));
     try {
       const model: orgregistry.IOrgRegistry = await orgregistry.db.findOne({ name: registry.getName() });
       let contract: OrgRegistryContract = (await getContract(
-        registry.getAddress(),
+        model.address,
         config.CONTRACTS.ORG_REGISTRY
       )) as OrgRegistryContract;
       if (model.groupsList.some(x => x.name === workgroup.getName())) {
@@ -135,7 +137,7 @@ export class OrganizationsService {
       await contract.registerInterfaces(
         utils.formatBytes32String(workgroup.getName()),
         workgroup.getTokenaddress(),
-        workgroup.getShieldaddress(),
+        shieldContract.address,
         workgroup.getVerifieraddress()
       );
       registry.getGroupsList().push(workgroup);

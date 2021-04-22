@@ -5,7 +5,7 @@
   "main": "dist/ts/index.js",
   "license": "ISC",
   "scripts": {
-    "start": "node -r esm -r dotenv-flow/config dist/ts/index.js",
+    "start": "ts-node -r esm -r dotenv-flow/config src/index.ts",
     "test": "make reset && sleep 5 && NODE_ENV=test ./node_modules/.bin/mocha -r esm -r dotenv-flow/config -r ts-node/register 'tests/**/*.test.ts' --timeout 200000 && make stop"
   },
   "dependencies": {

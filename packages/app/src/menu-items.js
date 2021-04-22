@@ -1,20 +1,20 @@
 export default {
     items: [
-        {
-            id: 'navigation',
-            title: 'Navigation',
-            type: 'group',
-            icon: 'icon-navigation',
-            children: [
-                {
-                    id: 'dashboard',
-                    title: 'Dashboard',
-                    type: 'item',
-                    url: '/dashboard/default',
-                    icon: 'feather icon-home',
-                }
-            ]
-        },
+        // {
+        //     id: 'navigation',
+        //     title: 'Navigation',
+        //     type: 'group',
+        //     icon: 'icon-navigation',
+        //     children: [
+        //         {
+        //             id: 'dashboard',
+        //             title: 'Dashboard',
+        //             type: 'item',
+        //             url: '/dashboard/default',
+        //             icon: 'feather icon-home',
+        //         }
+        //     ]
+        // },
         {
             id: 'lsp',
             title: 'LSP',
@@ -71,6 +71,14 @@ export default {
                     type: 'item',
                     icon: 'feather icon-volume-2',
                     url: '/imp/offer'
+                },
+                {
+                    id: 'overviewdeal',
+                    title: 'Overview deals',
+                    role: 'imp',
+                    type: 'item',
+                    icon: 'feather icon-package',
+                    url: '/imp/overviewoffer'
                 },
 
             ]

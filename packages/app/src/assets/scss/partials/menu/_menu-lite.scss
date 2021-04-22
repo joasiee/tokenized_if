@@ -5,10 +5,10 @@
     align-items: center;
 
     .b-bg {
-        background: $theme-color;
+        background: #fff;
         border-radius: 10px;
-        width: 35px;
-        height: 35px;
+        width: 60px;
+        height: 60px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -19,10 +19,11 @@
     }
 
     .b-title {
-        margin-left: 10px;
+        margin-left: 20px;
         font-weight: 100;
         color: #fff;
-        font-size: 18px;
+        font-size: 28px;
+        letter-spacing: 0.2em;
     }
 }
 

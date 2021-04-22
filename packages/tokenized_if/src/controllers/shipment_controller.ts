@@ -6,9 +6,9 @@ import web3 from "web3";
 import { createMessagingClient } from "@tokenized_if/messaging";
 import { CreateOfferDao, Offer } from "../models/offer";
 import { tm } from "../services/token";
-import { getAllFinancers, getLsp, getParticipant } from "../db/participant_queries";
 import { Participant } from "../models/participant";
 import { createOffer } from "../db/offer_queries";
+import { getFinancers, getImporter, getLsp } from "../services/baseline/helpers/organization_queries";
 
 class ShipmentController {
   async getAll(req: express.Request, res: express.Response) {
@@ -26,7 +26,7 @@ class ShipmentController {
     const cargoString = JSON.stringify(create.cargo);
     // Replace by baseline hash
     const cargoHash = web3.utils.sha3(cargoString);
-    const owner = await getParticipant(create.owner);
+    const owner = await getImporter(create.owner);
     const escrowInstance = await tm.deployImporterEscrow(cargoHash, owner.address);
     const shipment = await addShipment({
       owner: create.owner,
@@ -107,16 +107,23 @@ async function notifyImporterShipment(importer: Participant, shipment: Shipment)
 }
 
 async function notifyFinancersOffers(offer: Offer): Promise<void> {
-  const financers = await getAllFinancers();
+  const financers = await getFinancers();
 
   for (const financer of financers) {
+    try {
+      const financerClient = createMessagingClient({
+        serverUrl: financer.nats,
+      });
+      await financerClient.connect();
+      await financerClient.publish<Offer>('offer', offer);
+      console.log(`(Importer) Offer published to financer: ${financer.name}`);
+      await financerClient.disconnect();
+    } catch (err) {
+      console.log(err);
+    }
     const financerClient = createMessagingClient({
       serverUrl: financer.nats,
     });
-    await financerClient.connect();
-    await financerClient.publish<Offer>('offer', offer);
-    console.log(`(Importer) Offer published to financer: ${financer.name}`);
-    await financerClient.disconnect();
   }
 }
 

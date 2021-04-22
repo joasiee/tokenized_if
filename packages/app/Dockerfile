@@ -17,7 +17,7 @@ RUN npm install
 
 # Bundle app source
 COPY . .
-RUN npm run build
+RUN npm run build_
 
 EXPOSE 80
 CMD ["serve", "-s", "build","-l", "80"]
